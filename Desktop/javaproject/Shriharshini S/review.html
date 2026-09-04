@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Grand Horizon Reviews</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(0,0,0,0.65),
+rgba(0,0,0,0.65)),
+url("review-bg.jpg");
+
+background-size:cover;
+background-position:center;
+background-image: url(ground.jpg);
+
+min-height:100vh;
+
+}
+
+/* Header */
+
+header{
+
+    background:#2c2302;
+
+padding:15px 30px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.logo{
+
+font-size:28px;
+
+font-weight:bold;
+
+color:#d4af37;
+
+}
+
+nav ul{
+
+display:flex;
+list-style:none;
+gap:30px;
+font-weight: 600;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+color:white;
+
+font-size:18px;
+
+}
+
+nav a:hover{
+
+color:#d4af37;
+
+}
+
+/* Review Section */
+
+.reviews{
+
+padding:50px;
+
+text-align:center;
+
+}
+
+.reviews h1{
+
+font-size:45px;
+
+color:#d4af37;
+
+margin-bottom:20px;
+
+}
+
+.overall{
+
+width:250px;
+
+margin:auto;
+
+padding:20px;
+
+background:white;
+
+border-radius:15px;
+
+margin-bottom:40px;
+
+}
+
+.overall h2{
+
+font-size:40px;
+
+color:#d4af37;
+
+}
+
+.overall p{
+
+color:#555;
+
+margin-top:10px;
+
+}
+
+/* Cards */
+
+.container{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:30px;
+
+padding:20px;
+
+max-width:1300px;
+
+margin:auto;
+
+}
+
+.card{
+
+background:rgb(244, 228, 205);
+
+padding:25px;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.4);
+
+text-align:left;
+
+}
+
+.card h3{
+
+margin-bottom:10px;
+
+color:#333;
+
+}
+
+.star{
+
+font-size:22px;
+
+color:#f5c425;
+
+margin-bottom:15px;
+
+}
+
+.card p{
+
+line-height:26px;
+
+color:#666;
+
+margin-bottom:15px;
+
+}
+
+button{
+
+padding:12px 20px;
+
+border:none;
+
+background:#d4af37;
+
+color:white;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+button:hover{
+
+background:#b88c1d;
+
+}
+.add-review{
+
+width:500px;
+
+margin:40px auto;
+
+padding:30px;
+
+background:white;
+
+border-radius:15px;
+
+}
+
+.add-review input,
+.add-review select,
+.add-review textarea{
+
+width:100%;
+
+padding:12px;
+
+margin-bottom:15px;
+
+border:1px solid #ccc;
+
+border-radius:6px;
+
+}
+
+.add-review textarea{
+
+height:120px;
+
+resize:none;
+
+}
+/* Footer */
+
+footer{
+
+    background:#2c2302;
+
+padding:25px;
+
+text-align:center;
+
+color:white;
+
+margin-top:50px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+Grand Horizon
+
+</div>
+
+<nav>
+
+<ul>
+
+<li><a href="main.html">Home</a></li>
+
+<li><a href="rooms.html">Rooms</a></li>
+
+<li><a href="facilities.html">Facilities</a></li>
+
+<li><a href="gallery.html">Gallery</a></li>
+
+<li><a href="review.html">Reviews</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+<section class="reviews">
+
+<h1>Guest Reviews</h1>
+
+<div class="overall">
+
+<h2>4.8 ★</h2>
+
+<p>Based on 1,250 Reviews</p>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h3>Priya S.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Excellent hospitality and spacious rooms.
+Highly recommended.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Rahul K.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Amazing swimming pool and spa facilities.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Ananya R.</h3>
+
+<div class="star">★★★★☆</div>
+
+<p>
+Comfortable rooms with premium amenities.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>David M.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Excellent room service and friendly staff.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Karthik V.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+One of the best luxury hotels in Chennai.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Sneha P.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Clean rooms and elegant ambience.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>John A.</h3>
+
+<div class="star">★★★★☆</div>
+
+<p>
+Executive room city view was fantastic.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Meera D.</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Breakfast buffet was delicious.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Arun Kumar</h3>
+
+<div class="star">★★★★★</div>
+
+<p>
+Luxurious stay with excellent facilities.
+</p>
+
+<button onclick="review()">
+Helpful
+</button>
+
+</div>
+</section>
+<div class="add-review">
+
+<h2>Write a Review</h2>
+
+<input type="text" id="name" placeholder="Your Name">
+
+<select id="rating">
+<option>★★★★★</option>
+<option>★★★★☆</option>
+<option>★★★☆☆</option>
+<option>★★☆☆☆</option>
+<option>★☆☆☆☆</option>
+</select>
+
+<textarea id="message" placeholder="Write your review"></textarea>
+
+<button onclick="addReview()">
+Submit Review
+</button>
+
+</div>
+
+
+<div class="container" id="reviewContainer">
+
+<!-- Existing review cards here -->
+
+</div>
+
+
+
+
+<footer>
+
+© 2026 Grand Horizon Hotel & Resort | All Rights Reserved
+
+</footer>
+
+
+<script>
+
+function review(){
+
+alert("Thank you for your feedback!");
+
+}
+
+</script>
+<script>
+
+function addReview(){
+
+let name =
+document.getElementById("name").value;
+
+let rating =
+document.getElementById("rating").value;
+
+let message =
+document.getElementById("message").value;
+
+if(name=="" || message==""){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+let review = `
+
+<div class="card">
+
+<h3>${name}</h3>
+
+<div class="star">
+
+${rating}
+
+</div>
+
+<p>
+
+${message}
+
+</p>
+
+<button onclick="review()">
+
+Helpful
+
+</button>
+
+</div>
+
+`;
+
+document.getElementById("reviewContainer")
+.innerHTML += review;
+
+alert("Review Added Successfully!");
+
+document.getElementById("name").value="";
+document.getElementById("message").value="";
+
+}
+
+</script>
+
+</body>
+
+</html>

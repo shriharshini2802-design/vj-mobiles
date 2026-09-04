@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - VJ Mobiles</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 75% 45%, rgba(0, 120, 255, 0.18), transparent 30%),
+                linear-gradient(135deg, #020b18, #061a30 50%, #03101e);
+            color: white;
+            overflow: hidden;
+        }
+
+        /* BACKGROUND EFFECT */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            left: -250px;
+            bottom: -300px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 174, 255, 0.2);
+            box-shadow:
+                0 0 80px rgba(0, 174, 255, 0.08),
+                inset 0 0 80px rgba(0, 174, 255, 0.05);
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            right: -200px;
+            top: -180px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 100, 0.15);
+        }
+
+        /* HEADER */
+        .header {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0, 10, 25, 0.65);
+        }
+
+        .logo {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+            object-fit: contain;
+        }
+
+        .brand {
+            margin-left: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: #42d927;
+        }
+
+        .nav {
+            margin-left: auto;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            color: #43df25;
+        }
+
+        .admin-btn {
+            margin-left: 25px;
+            background: linear-gradient(135deg, #24c91d, #0a8d18);
+            padding: 10px 18px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(38, 220, 35, 0.25);
+        }
+
+        /* MAIN */
+        .main {
+            min-height: calc(100vh - 75px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+        }
+
+        .login-container {
+            width: 900px;
+            max-width: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 70px;
+        }
+
+        /* LEFT SIDE */
+        .login-info {
+            width: 350px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            background: white;
+            padding: 8px;
+            object-fit: contain;
+            box-shadow:
+                0 0 25px rgba(255,255,255,0.15),
+                0 0 60px rgba(0, 180, 255, 0.12);
+            margin-bottom: 25px;
+        }
+
+        .login-info h1 {
+            font-size: 32px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .login-info p {
+            color: #d0d7df;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* LOCK ICON */
+        .lock-circle {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 180, 255, 0.25);
+            margin: 30px auto 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 100, 180, 0.08);
+            box-shadow: 0 0 35px rgba(0, 150, 255, 0.1);
+        }
+
+        .lock {
+            width: 42px;
+            height: 35px;
+            border: 4px solid #18a9ff;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .lock::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 4px solid #18a9ff;
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+            top: -23px;
+            left: 6px;
+        }
+
+        /* LOGIN CARD */
+        .login-card {
+            width: 370px;
+            padding: 35px;
+            border-radius: 12px;
+            background: rgba(8, 32, 57, 0.8);
+            border: 1px solid rgba(100, 190, 255, 0.3);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.45),
+                inset 0 0 25px rgba(0,120,255,0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .login-card h2 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #e4eaf0;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 48px;
+            padding: 0 45px 0 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(130, 190, 230, 0.3);
+            outline: none;
+            background: rgba(8, 27, 48, 0.9);
+            color: white;
+            font-size: 14px;
+        }
+
+        .input-box input::placeholder {
+            color: #8998a8;
+        }
+
+        .input-box input:focus {
+            border-color: #31d92c;
+            box-shadow: 0 0 10px rgba(49, 217, 44, 0.12);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            cursor: pointer;
+            color: #9aa8b5;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #30d923, #12a81a);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+            box-shadow: 0 5px 18px rgba(25, 210, 30, 0.2);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(25, 210, 30, 0.35);
+        }
+
+        .secure {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #c6d0da;
+            font-size: 13px;
+        }
+
+        .secure span {
+            color: #4be53c;
+            margin-right: 5px;
+        }
+
+        /* ERROR */
+        .error {
+            display: none;
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            body {
+                overflow-y: auto;
+            }
+
+            .header {
+                height: 65px;
+                padding: 0 15px;
+            }
+
+            .logo {
+                width: 45px;
+                height: 45px;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .admin-btn {
+                margin-left: auto;
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+
+            .main {
+                min-height: calc(100vh - 65px);
+                padding: 25px 15px;
+            }
+
+            .login-container {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .login-info {
+                width: 100%;
+            }
+
+            .login-logo {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 15px;
+            }
+
+            .login-info h1 {
+                font-size: 27px;
+            }
+
+            .login-info p {
+                font-size: 13px;
+            }
+
+            .lock-circle {
+                display: none;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 400px;
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <!-- Change logo.png to your actual logo file -->
+        <img src="logo.png" class="logo" alt="VJ Mobiles Logo">
+
+        <div class="brand">
+            <span>VJ</span> MOBILES
+        </div>
+
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="accessories.html">Accessories</a>
+            <a href="trackorder.html">Track Order</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <a href="adminlogin.html" class="admin-btn">
+            Admin Login
+        </a>
+
+    </header>
+
+
+    <!-- MAIN LOGIN -->
+    <main class="main">
+
+        <div class="login-container">
+
+            <!-- LEFT -->
+            <div class="login-info">
+
+                <img src="logo.png"
+                     class="login-logo"
+                     alt="VJ Mobiles Logo">
+
+                <h1>ADMIN LOGIN</h1>
+
+                <p>
+                    Please login to access admin<br>
+                    panel
+                </p>
+
+                <div class="lock-circle">
+                    <div class="lock"></div>
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+            <div class="login-card">
+
+                <h2>Login to Admin Panel</h2>
+
+                <div id="errorMessage" class="error">
+                    Invalid username or password
+                </div>
+
+                <form id="adminLoginForm">
+
+                    <div class="input-group">
+                        <label>Username</label>
+
+                        <div class="input-box">
+                            <input
+                                type="text"
+                                id="username"
+                                placeholder="Enter username"
+                                required
+                            >
+                        </div>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label>Password</label>
+
+                        <div class="input-box">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter password"
+                                required
+                            >
+
+                            <span
+                                class="toggle-password"
+                                onclick="togglePassword()">
+                                👁
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="login-btn">
+                        LOGIN
+                    </button>
+
+                </form>
+
+
+                <div class="secure">
+                    <span>♙</span>
+                    Secure Admin Access
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // SHOW / HIDE PASSWORD
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            if (password.type === "password") {
+                password.type = "text";
+            } else {
+                password.type = "password";
+            }
+        }
+
+
+        // LOGIN
+        document
+            .getElementById("adminLoginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                const username =
+                    document.getElementById("username").value.trim();
+
+                const password =
+                    document.getElementById("password").value.trim();
+
+                const errorMessage =
+                    document.getElementById("errorMessage");
+
+
+                /*
+                   DEMO LOGIN
+
+                   Username: admin
+                   Password: admin123
+
+                   Later, if you have backend/database,
+                   replace this with API authentication.
+                */
+
+                if (username === "admin" && password === "admin123") {
+
+                    localStorage.setItem(
+                        "adminLoggedIn",
+                        "true"
+                    );
+
+                    window.location.href =
+                        "admin-dashboard.html";
+
+                } else {
+
+                    errorMessage.style.display = "block";
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

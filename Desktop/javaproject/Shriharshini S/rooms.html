@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rooms | Royal Paradise Hotel</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+       background-image: url(ground.jpg );
+
+}
+
+header{
+    background:#2c2302 ;
+    padding:15px 30px;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:gold;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+    font-weight: 600;
+}
+nav ul li a:hover{
+    color:#d4af37;
+}
+
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+}
+
+.title{
+    text-align:center;
+    padding:60px 0;
+}
+
+.title h1{
+    font-size:40px;
+    color:#b6c0d5;
+}
+
+.rooms{
+    width:90%;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+    padding-bottom:60px;
+}
+
+.room-card{
+    width:320px;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.room-card:hover{
+    transform:translateY(-8px);
+}
+
+.room-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.room-content{
+    padding:20px;
+}
+
+.room-content h2{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.price{
+    color:goldenrod;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.room-content ul{
+    margin-left:20px;
+    margin-bottom:20px;
+}
+
+.room-content li{
+    margin-bottom:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:gold;
+    color:black;
+    font-size:16px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#e0b400;
+}
+
+footer{
+    background:#2c2302;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<div class="logo">Grand Horizon</div>
+
+<ul>
+<li><a href="main.html">Home</a></li>
+<li><a href="rooms.html">Rooms</a></li>
+<li><a href="facilities.html">Facilities</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="review.html">Reviews</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+</header>
+<section class="title">
+<h1>Our Luxury Rooms</h1>
+</section>
+
+
+<section class="rooms">
+
+<div class="room-card">
+
+<img src="deluxe.jpg" alt="Deluxe Room">
+
+<div class="room-content">
+
+<h2>Deluxe Room</h2>
+
+<p class="price">₹5,000 / Night</p>
+
+<ul>
+<li>King Size Bed</li>
+<li>Free WiFi</li>
+<li>Breakfast Included</li>
+<li>Air Conditioning</li>
+</ul>
+
+<a href="deluxeroom.html"><button>Book Now</button></a>
+
+</div>
+
+</div>
+
+
+<div class="room-card">
+
+<img src="executive.jpg" alt="Executive Room">
+
+<div class="room-content">
+
+<h2>Executive Room</h2>
+
+<p class="price">₹8,000 / Night</p>
+
+<ul>
+<li>Private Balcony</li>
+<li>Mini Bar</li>
+<li>Smart TV</li>
+<li>City View</li>
+</ul>
+<a href="executiveroom.html">
+<button>Book Now</button></a>
+
+</div>
+
+</div>
+
+
+<div class="room-card">
+
+<img src="suite.jpg" alt="Suite Room">
+
+<div class="room-content">
+
+<h2>Suite Room</h2>
+
+<p class="price">₹12,000 / Night</p>
+
+<ul>
+<li>Living Area</li>
+<li>Premium Amenities</li>
+<li>Jacuzzi</li>
+<li>24/7 Room Service</li>
+</ul>
+
+<a href="suiteroom.html"><button>Book Now</button></a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 Grand Horizon Hotel & Resort | All Rights Reserved</p>
+
+</footer>
+
+</body>
+</html>

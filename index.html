@@ -1,0 +1,3643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>VJ Mobiles | Mobile Service & Accessories</title>
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #020c1d;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(0, 110, 255, 0.18),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(70, 255, 0, 0.10),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #01091a,
+                    #031a37,
+                    #020b1c
+                );
+        }
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: -1;
+
+            opacity: 0.18;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0, 150, 255, 0.08) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(0, 150, 255, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        header {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            height: 85px;
+
+            z-index: 1000;
+
+            background:
+                rgba(1, 10, 28, 0.95);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid
+                rgba(150, 255, 0, 0.45);
+        }
+
+        .navbar {
+
+            width: 94%;
+
+            max-width: 1450px;
+
+            height: 100%;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+
+            width: 120px;
+
+            height: 120px;
+
+            position: relative;
+
+            top: 17px;
+
+            z-index: 10;
+        }
+
+        .logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 50%;
+
+            filter:
+                drop-shadow(
+                    0 0 8px
+                    rgba(0, 255, 100, 0.25)
+                );
+        }
+
+
+        /* NAVIGATION */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 38px;
+        }
+
+        .nav-links a {
+
+            font-size: 16px;
+
+            font-weight: 500;
+
+            color: #fff;
+
+            position: relative;
+
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+
+            color: #80ff00;
+        }
+
+        .nav-links a.active::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: -12px;
+
+            width: 100%;
+
+            height: 3px;
+
+            border-radius: 5px;
+
+            background: #7cff00;
+
+            box-shadow:
+                0 0 10px
+                rgba(124, 255, 0, 0.7);
+        }
+
+
+        /* CALL */
+
+        .call-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 13px;
+        }
+
+        .call-info i {
+
+            font-size: 22px;
+
+            transform: rotate(-15deg);
+        }
+
+        .call-info strong {
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           USER AREA
+        ===================================================== */
+
+        .user-area {
+
+            position: relative;
+        }
+
+        .login-btn {
+
+            border: none;
+
+            padding: 13px 20px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #12a900,
+                    #45d900
+                );
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(50, 255, 0, 0.25);
+        }
+
+
+        /* ADMIN LOGIN BUTTON */
+        .admin-login-btn {
+            border: 1px solid #61e600;
+            padding: 11px 16px;
+            border-radius: 9px;
+            color: #61e600;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .admin-login-btn:hover {
+            background: #61e600;
+            color: #021225;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(50, 255, 0, 0.20);
+        }
+
+
+        .user-button {
+
+            border: none;
+
+            padding: 11px 16px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(15, 130, 0, 0.9);
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-weight: 600;
+        }
+
+
+        /* USER DROPDOWN */
+
+        .user-dropdown {
+
+            position: absolute;
+
+            top: 55px;
+
+            right: 0;
+
+            width: 230px;
+
+            background:
+                #061a32;
+
+            border:
+                1px solid
+                rgba(100, 255, 0, 0.35);
+
+            border-radius: 12px;
+
+            padding: 10px;
+
+            display: none;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .user-dropdown.show {
+
+            display: block;
+        }
+
+        .user-dropdown .user-name {
+
+            padding: 12px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            margin-bottom: 5px;
+        }
+
+        .user-dropdown button {
+
+            width: 100%;
+
+            border: none;
+
+            background: transparent;
+
+            color: white;
+
+            text-align: left;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+        .user-dropdown button:hover {
+
+            background:
+                rgba(100, 255, 0, 0.12);
+        }
+
+
+        /* MOBILE MENU */
+
+        .menu-btn {
+
+            display: none;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            min-height: 650px;
+
+            padding-top: 135px;
+
+            padding-bottom: 50px;
+
+            width: 90%;
+
+            max-width: 1300px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+        .hero-content h4 {
+
+            font-size: 22px;
+
+            font-weight: 500;
+
+            margin-bottom: 8px;
+        }
+
+        .hero-content h1 {
+
+            font-size:
+                clamp(40px, 5vw, 68px);
+
+            line-height: 1.05;
+
+            font-weight: 800;
+        }
+
+        .green {
+
+            color: #65d900;
+        }
+
+        .hero-content p {
+
+            margin-top: 22px;
+
+            color: #d8e0e8;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            max-width: 650px;
+        }
+
+        .hero-buttons {
+
+            margin-top: 30px;
+
+            display: flex;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+
+            border: none;
+
+            padding:
+                15px 27px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .primary-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #17a900,
+                    #55dd00
+                );
+
+            color: white;
+        }
+
+        .secondary-btn {
+
+            background:
+                #f3a900;
+
+            color: white;
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,0.25);
+        }
+
+
+        /* HERO PHONE */
+
+        .hero-visual {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 420px;
+
+            position: relative;
+        }
+
+        .phone {
+
+            width: 245px;
+
+            height: 480px;
+
+            border-radius: 35px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    #1c82e8,
+                    #021e43 50%,
+                    #00a72e
+                );
+
+            border:
+                4px solid
+                #9dd9ff;
+
+            transform:
+                rotate(9deg);
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0, 0, 0, 0.5),
+
+                0 0 40px
+                rgba(0, 130, 255, 0.25);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phone::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 12px;
+
+            width: 90px;
+            height: 25px;
+
+            border-radius: 20px;
+
+            background: #010914;
+        }
+
+        .phone-logo {
+
+            width: 170px;
+            height: 170px;
+
+            background:
+                rgba(255,255,255,0.96);
+
+            border-radius: 50%;
+
+            padding: 8px;
+        }
+
+        .phone-logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            border-radius: 50%;
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ===================================================== */
+
+        .features {
+
+            width: 90%;
+
+            max-width: 1250px;
+
+            margin:
+                0 auto 35px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            border:
+                1px solid
+                rgba(0, 170, 255, 0.4);
+
+            border-radius: 14px;
+
+            background:
+                rgba(2, 22, 48, 0.9);
+        }
+
+        .feature {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 22px;
+
+            border-right:
+                1px solid
+                rgba(255,255,255,0.1);
+        }
+
+        .feature:last-child {
+
+            border-right: none;
+        }
+
+        .feature i {
+
+            font-size: 35px;
+
+            color: #69e000;
+        }
+
+        .feature h4 {
+
+            font-size: 15px;
+        }
+
+        .feature p {
+
+            color: #b9c5d1;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats {
+
+            width: 90%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            background:
+                #f4f4f4;
+
+            color: #071225;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            margin-bottom: 55px;
+        }
+
+        .stat {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 20px;
+
+            border-right:
+                1px solid
+                #ccc;
+        }
+
+        .stat:last-child {
+
+            border-right: none;
+        }
+
+        .stat i {
+
+            font-size: 42px;
+
+            color: #1599dd;
+        }
+
+        .stat strong {
+
+            font-size: 30px;
+        }
+
+        .stat span {
+
+            display: block;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           REVIEWS
+        ===================================================== */
+
+        .reviews {
+
+            width: 90%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding-bottom: 80px;
+        }
+
+        .section-title {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+
+            font-size: 30px;
+        }
+
+        .stars {
+
+            color: #ffc400;
+
+            margin-top: 8px;
+
+            letter-spacing: 4px;
+        }
+
+        .review-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .review-card {
+
+            padding: 25px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(3, 25, 51, 0.9);
+
+            border:
+                1px solid
+                rgba(0, 160, 240, 0.25);
+        }
+
+        .review-card h3 {
+
+            margin-bottom: 8px;
+        }
+
+        .review-card .stars {
+
+            margin-bottom: 12px;
+        }
+
+        .review-card p {
+
+            color: #d2dbe4;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           AUTH MODAL
+        ===================================================== */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,0.78);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 3000;
+
+            padding: 20px;
+        }
+
+        .modal.show {
+
+            display: flex;
+        }
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 450px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #06213e,
+                    #020c1c
+                );
+
+            border:
+                1px solid
+                rgba(100,255,0,0.5);
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            position: relative;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.7);
+        }
+
+        .close {
+
+            position: absolute;
+
+            right: 18px;
+
+            top: 12px;
+
+            font-size: 27px;
+
+            color: #aaa;
+
+            cursor: pointer;
+        }
+
+        .modal-box h2 {
+
+            margin-bottom: 7px;
+
+            font-size: 27px;
+        }
+
+        .modal-subtitle {
+
+            color: #aebdca;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                #244b6d;
+
+            background:
+                #071a31;
+
+            color: white;
+
+            outline: none;
+        }
+
+        .form-group input:focus {
+
+            border-color:
+                #61e600;
+        }
+
+        .form-submit {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #12a500,
+                    #53dc00
+                );
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .switch-auth {
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #aeb9c4;
+
+            font-size: 13px;
+        }
+
+        .switch-auth span {
+
+            color: #6eff00;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .error-message {
+
+            color: #ff6262;
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+
+            display: none;
+        }
+
+
+        /* =====================================================
+           ACTIVITY MODAL
+        ===================================================== */
+
+        .activity-list {
+
+            max-height: 430px;
+
+            overflow-y: auto;
+        }
+
+        .activity-item {
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border-left:
+                4px solid
+                #5be000;
+        }
+
+        .activity-item h4 {
+
+            font-size: 15px;
+
+            margin-bottom: 4px;
+        }
+
+        .activity-item p {
+
+            color: #bdc9d4;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .empty-activity {
+
+            text-align: center;
+
+            color: #aab7c3;
+
+            padding: 30px 10px;
+        }
+
+
+        /* =====================================================
+           BOOKING / ORDER MODAL
+        ===================================================== */
+
+        .product-info {
+
+            background:
+                rgba(100,255,0,0.08);
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 18px;
+
+            border:
+                1px solid
+                rgba(100,255,0,0.2);
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            min-width: 280px;
+
+            padding: 15px 18px;
+
+            background:
+                #09263f;
+
+            border-left:
+                4px solid
+                #61e000;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.4);
+
+            transform:
+                translateX(400px);
+
+            transition: 0.4s;
+
+            z-index: 5000;
+        }
+
+        .toast.show {
+
+            transform:
+                translateX(0);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width:1100px) {
+
+            .nav-links {
+
+                gap: 20px;
+            }
+
+            .call-info {
+
+                display: none;
+            }
+
+            .hero {
+
+                width: 92%;
+            }
+        }
+
+
+        @media(max-width:850px) {
+
+            header {
+
+                height: 75px;
+            }
+
+            .logo {
+
+                width: 95px;
+
+                height: 95px;
+
+                top: 10px;
+            }
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 75px;
+
+                left: 0;
+
+                width: 100%;
+
+                background: #020d20;
+
+                flex-direction: column;
+
+                padding: 25px;
+
+                gap: 20px;
+
+                border-bottom:
+                    1px solid
+                    #42d400;
+            }
+
+            .nav-links.show {
+
+                display: flex;
+            }
+
+            .nav-links a.active::after {
+
+                display: none;
+            }
+
+            .menu-btn {
+
+                display: block;
+            }
+
+            .hero {
+
+                grid-template-columns: 1fr;
+
+                padding-top: 115px;
+
+                text-align: center;
+            }
+
+            .hero-content p {
+
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+
+                justify-content: center;
+            }
+
+            .hero-visual {
+
+                min-height: 350px;
+            }
+
+            .phone {
+
+                width: 190px;
+
+                height: 360px;
+            }
+
+            .phone-logo {
+
+                width: 130px;
+
+                height: 130px;
+            }
+
+            .features {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .feature {
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,0.1);
+            }
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid
+                    #ccc;
+
+                padding: 15px;
+            }
+
+            .stat:last-child {
+
+                border-bottom: none;
+            }
+
+            .review-grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media(max-width:550px) {
+
+            .login-btn {
+
+                padding:
+                    10px 12px;
+
+                font-size: 12px;
+            }
+
+            .features {
+
+                grid-template-columns: 1fr;
+            }
+
+            .feature {
+
+                border-right: none;
+            }
+
+            .hero-content h1 {
+
+                font-size: 40px;
+            }
+
+            .hero-content p {
+
+                font-size: 14px;
+            }
+
+            .modal-box {
+
+                padding: 24px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header>
+
+    <div class="navbar">
+
+
+        <a href="index.html"
+           class="logo">
+
+            <img src="logo.png"
+                 alt="VJ Mobiles Logo">
+
+        </a>
+
+
+        <nav class="nav-links"
+             id="navLinks">
+
+            <a href="index.html"
+               class="active">
+                Home
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="accessories.html">
+                Accessories
+            </a>
+
+            <a href="trackorder.html">
+                Track Order
+            </a>
+
+
+            <a href="contact.html">
+                Contact Us
+            </a>
+
+        </nav>
+
+
+
+        <!-- USER AREA -->
+
+        <div class="user-area"
+             id="userArea">
+
+            <button class="login-btn"
+                    id="loginButton"
+                    onclick="openLogin()">
+
+                <i class="fa-regular fa-user"></i>
+
+                &nbsp;
+
+                Login / Sign Up
+
+            </button>
+
+
+            <button class="user-button"
+                    id="userButton"
+                    onclick="toggleUserDropdown()"
+                    style="display:none;">
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span id="userButtonName">
+                    User
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </button>
+
+
+            <div class="user-dropdown"
+                 id="userDropdown">
+
+                <div class="user-name">
+
+                    <strong id="dropdownUserName">
+                        User
+                    </strong>
+
+                    <br>
+
+                    <small id="dropdownUserEmail">
+                        email
+                    </small>
+
+                </div>
+
+
+                <button onclick="openActivities()">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    &nbsp; My Activities
+
+                </button>
+
+
+                <button onclick="openAccount()">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    &nbsp; My Account
+
+                </button>
+
+
+                <button onclick="logout()">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    &nbsp; Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN LOGIN -->
+        <a href="adminlogin.html"
+           class="admin-login-btn">
+            <i class="fa-solid fa-user-shield"></i>
+            &nbsp; Admin Login
+        </a>
+
+
+        <div class="menu-btn"
+             onclick="toggleMenu()">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero"
+         id="home">
+
+
+    <div class="hero-content">
+
+        <h4>
+            Your Trusted
+        </h4>
+
+        <h1>
+
+            MOBILE SERVICE &
+
+            <br>
+
+            <span class="green">
+                ACCESSORIES PARTNER
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Expert mobile repair, genuine spare parts,
+            quality accessories and convenient doorstep
+            service — all in one place.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <button class="primary-btn"
+                    onclick="bookService()">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                &nbsp;
+
+                Book a Service
+
+            </button>
+
+
+            <button class="secondary-btn"
+                    onclick="orderAccessory()">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                &nbsp;
+
+                Shop Accessories
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+        <div class="phone">
+
+            <div class="phone-logo">
+
+                <img src="logo.png"
+                     alt="VJ Mobiles">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section class="features">
+
+
+    <div class="feature">
+
+        <i class="fa-solid fa-house-circle-check"></i>
+
+        <div>
+
+            <h4>
+                Doorstep Service
+            </h4>
+
+            <p>
+                We come to you
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <i class="fa-solid fa-truck-fast"></i>
+
+        <div>
+
+            <h4>
+                Fast Delivery
+            </h4>
+
+            <p>
+                Quick & Reliable
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <i class="fa-solid fa-user-gear"></i>
+
+        <div>
+
+            <h4>
+                Expert Technicians
+            </h4>
+
+            <p>
+                Professional Solutions
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <i class="fa-solid fa-certificate"></i>
+
+        <div>
+
+            <h4>
+                Genuine Parts
+            </h4>
+
+            <p>
+                100% Quality Assured
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     STATISTICS
+========================================================= -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-star"></i>
+
+        <div>
+
+            <strong>
+                4.5/5
+            </strong>
+
+            <span>
+                Customer Rating
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-box-open"></i>
+
+        <div>
+
+            <strong>
+                250+
+            </strong>
+
+            <span>
+                Orders Completed
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <i class="fa-solid fa-mobile-screen-button"></i>
+
+        <div>
+
+            <strong>
+                1500+
+            </strong>
+
+            <span>
+                Mobiles Serviced
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     REVIEWS
+========================================================= -->
+
+<section class="reviews">
+
+    <div class="section-title">
+
+        <h2>
+            WHAT OUR CUSTOMERS SAY
+        </h2>
+
+        <div class="stars">
+            ★★★★★
+        </div>
+
+    </div>
+
+
+    <div class="review-grid">
+
+
+        <div class="review-card">
+
+            <h3>
+                Arun Kumar
+            </h3>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+
+                Excellent service!
+                Doorstep service was really convenient.
+                Highly recommended VJ Mobiles.
+
+            </p>
+
+        </div>
+
+
+        <div class="review-card">
+
+            <h3>
+                Priya S.
+            </h3>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+
+                Quick response and professional service.
+                My phone is working like new!
+
+            </p>
+
+        </div>
+
+
+        <div class="review-card">
+
+            <h3>
+                Karthik R.
+            </h3>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+
+                Genuine spare parts and affordable pricing.
+                Very trusted service center.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     LOGIN / SIGNUP MODAL
+========================================================= -->
+
+<div class="modal"
+     id="authModal">
+
+
+    <div class="modal-box">
+
+        <span class="close"
+              onclick="closeModal('authModal')">
+
+            &times;
+
+        </span>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p class="modal-subtitle">
+                Login to access your VJ Mobiles account.
+            </p>
+
+
+            <div class="error-message"
+                 id="loginError">
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                >
+
+            </div>
+
+
+            <button class="form-submit"
+                    onclick="loginUser()">
+
+                Login
+
+            </button>
+
+
+            <div class="switch-auth">
+
+                Don't have an account?
+
+                <span onclick="showSignup()">
+                    Create Account
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SIGNUP -->
+
+        <div id="signupForm"
+             style="display:none;">
+
+            <h2>
+                Create Account
+            </h2>
+
+            <p class="modal-subtitle">
+                Create your VJ Mobiles customer account.
+            </p>
+
+
+            <div class="error-message"
+                 id="signupError">
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="signupPhone"
+                    placeholder="Enter mobile number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="signupConfirmPassword"
+                    placeholder="Confirm password"
+                >
+
+            </div>
+
+
+            <button class="form-submit"
+                    onclick="signupUser()">
+
+                Create Account
+
+            </button>
+
+
+            <div class="switch-auth">
+
+                Already have an account?
+
+                <span onclick="showLogin()">
+                    Login
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     BOOK SERVICE MODAL
+========================================================= -->
+
+<div class="modal"
+     id="serviceModal">
+
+
+    <div class="modal-box">
+
+        <span class="close"
+              onclick="closeModal('serviceModal')">
+
+            &times;
+
+        </span>
+
+
+        <h2>
+            Book a Service
+        </h2>
+
+        <p class="modal-subtitle">
+            Your booking will be saved to your account.
+        </p>
+
+
+        <div class="product-info">
+
+            <strong>
+                Service:
+            </strong>
+
+            <span id="serviceName">
+                Mobile Repair
+            </span>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Mobile Model
+            </label>
+
+            <input
+                type="text"
+                id="serviceMobile"
+                placeholder="Example: iPhone 15"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Problem
+            </label>
+
+            <input
+                type="text"
+                id="serviceProblem"
+                placeholder="Describe your problem"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Service Type
+            </label>
+
+            <select
+                id="serviceMode"
+                style="
+                    width:100%;
+                    padding:13px;
+                    background:#071a31;
+                    color:white;
+                    border:1px solid #244b6d;
+                    border-radius:8px;
+                "
+            >
+
+                <option>
+                    Doorstep Service
+                </option>
+
+                <option>
+                    Shop Service
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button class="form-submit"
+                onclick="saveServiceBooking()">
+
+            Confirm Service Booking
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ORDER MODAL
+========================================================= -->
+
+<div class="modal"
+     id="orderModal">
+
+
+    <div class="modal-box">
+
+        <span class="close"
+              onclick="closeModal('orderModal')">
+
+            &times;
+
+        </span>
+
+
+        <h2>
+            Order Accessories
+        </h2>
+
+        <p class="modal-subtitle">
+            Your order will be saved to your account.
+        </p>
+
+
+        <div class="form-group">
+
+            <label>
+                Select Product
+            </label>
+
+            <select
+                id="accessoryProduct"
+                style="
+                    width:100%;
+                    padding:13px;
+                    background:#071a31;
+                    color:white;
+                    border:1px solid #244b6d;
+                    border-radius:8px;
+                "
+            >
+
+                <option>
+                    Fast Charging Cable
+                </option>
+
+                <option>
+                    25W Fast Charger
+                </option>
+
+                <option>
+                    Wireless Earbuds
+                </option>
+
+                <option>
+                    Tempered Glass
+                </option>
+
+                <option>
+                    Mobile Back Cover
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Delivery Address
+            </label>
+
+            <input
+                type="text"
+                id="orderAddress"
+                placeholder="Enter delivery address"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                id="orderQuantity"
+                value="1"
+                min="1"
+            >
+
+        </div>
+
+
+        <button class="form-submit"
+                onclick="saveOrder()">
+
+            Place Order
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ACTIVITIES MODAL
+========================================================= -->
+
+<div class="modal"
+     id="activityModal">
+
+
+    <div class="modal-box">
+
+        <span class="close"
+              onclick="closeModal('activityModal')">
+
+            &times;
+
+        </span>
+
+
+        <h2>
+            My Activities
+        </h2>
+
+        <p class="modal-subtitle">
+            Your orders and service bookings.
+        </p>
+
+
+        <div class="activity-list"
+             id="activityList">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ACCOUNT MODAL
+========================================================= -->
+
+<div class="modal"
+     id="accountModal">
+
+
+    <div class="modal-box">
+
+        <span class="close"
+              onclick="closeModal('accountModal')">
+
+            &times;
+
+        </span>
+
+
+        <h2>
+            My Account
+        </h2>
+
+        <p class="modal-subtitle">
+            Your VJ Mobiles account details.
+        </p>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-user"></i>
+                Name
+            </h4>
+
+            <p id="accountName">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-envelope"></i>
+                Email
+            </h4>
+
+            <p id="accountEmail">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-phone"></i>
+                Phone
+            </h4>
+
+            <p id="accountPhone">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-calendar"></i>
+                Account Created
+            </h4>
+
+            <p id="accountCreated">
+                -
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div class="toast"
+     id="toast">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastMessage">
+        Success
+    </span>
+
+</div>
+
+
+
+<script>
+
+    /* =====================================================
+       USER DATABASE
+       
+       localStorage structure:
+
+       vjMobilesUsers = {
+           email: {
+               name,
+               email,
+               phone,
+               password,
+               createdAt,
+               activities: []
+           }
+       }
+
+       Current user:
+       vjCurrentUser
+    ===================================================== */
+
+
+    let users =
+        JSON.parse(
+            localStorage.getItem("vjMobilesUsers")
+        ) || {};
+
+
+    let currentUserEmail =
+        localStorage.getItem("vjCurrentUser");
+
+
+    /* =====================================================
+       SAVE USERS
+    ===================================================== */
+
+    function saveUsers() {
+
+        localStorage.setItem(
+            "vjMobilesUsers",
+            JSON.stringify(users)
+        );
+    }
+
+
+    /* =====================================================
+       PAGE LOAD
+    ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            updateUserUI();
+
+        }
+    );
+
+
+    /* =====================================================
+       OPEN LOGIN
+    ===================================================== */
+
+    function openLogin() {
+
+        document
+            .getElementById("authModal")
+            .classList.add("show");
+
+        showLogin();
+
+    }
+
+
+    /* =====================================================
+       SHOW LOGIN
+    ===================================================== */
+
+    function showLogin() {
+
+        document
+            .getElementById("loginForm")
+            .style.display = "block";
+
+        document
+            .getElementById("signupForm")
+            .style.display = "none";
+
+        document
+            .getElementById("loginError")
+            .style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       SHOW SIGNUP
+    ===================================================== */
+
+    function showSignup() {
+
+        document
+            .getElementById("loginForm")
+            .style.display = "none";
+
+        document
+            .getElementById("signupForm")
+            .style.display = "block";
+
+        document
+            .getElementById("signupError")
+            .style.display = "none";
+
+    }
+
+
+    /* =====================================================
+       SIGN UP
+    ===================================================== */
+
+    function signupUser() {
+
+        const name =
+            document
+                .getElementById("signupName")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("signupEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const phone =
+            document
+                .getElementById("signupPhone")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("signupPassword")
+                .value;
+
+
+        const confirmPassword =
+            document
+                .getElementById("signupConfirmPassword")
+                .value;
+
+
+        const error =
+            document.getElementById(
+                "signupError"
+            );
+
+
+        /* VALIDATION */
+
+        if (
+            !name ||
+            !email ||
+            !phone ||
+            !password ||
+            !confirmPassword
+        ) {
+
+            showError(
+                error,
+                "Please fill all the fields."
+            );
+
+            return;
+        }
+
+
+        if (
+            !email.includes("@")
+        ) {
+
+            showError(
+                error,
+                "Please enter a valid email."
+            );
+
+            return;
+        }
+
+
+        if (
+            phone.length < 10
+        ) {
+
+            showError(
+                error,
+                "Please enter a valid mobile number."
+            );
+
+            return;
+        }
+
+
+        if (
+            password.length < 6
+        ) {
+
+            showError(
+                error,
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            showError(
+                error,
+                "Passwords do not match."
+            );
+
+            return;
+        }
+
+
+        if (users[email]) {
+
+            showError(
+                error,
+                "An account with this email already exists."
+            );
+
+            return;
+        }
+
+
+        /* CREATE ACCOUNT */
+
+        users[email] = {
+
+            name: name,
+
+            email: email,
+
+            phone: phone,
+
+            password: password,
+
+            createdAt:
+                new Date().toISOString(),
+
+            activities: []
+
+        };
+
+
+        saveUsers();
+
+
+        /* LOGIN USER AUTOMATICALLY */
+
+        currentUserEmail = email;
+
+        localStorage.setItem(
+            "vjCurrentUser",
+            email
+        );
+
+
+        closeModal("authModal");
+
+        updateUserUI();
+
+        showToast(
+            "Account created successfully!"
+        );
+
+
+        /* CLEAR FORM */
+
+        document
+            .getElementById("signupName")
+            .value = "";
+
+        document
+            .getElementById("signupEmail")
+            .value = "";
+
+        document
+            .getElementById("signupPhone")
+            .value = "";
+
+        document
+            .getElementById("signupPassword")
+            .value = "";
+
+        document
+            .getElementById("signupConfirmPassword")
+            .value = "";
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    function loginUser() {
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        const error =
+            document.getElementById(
+                "loginError"
+            );
+
+
+        if (
+            !email ||
+            !password
+        ) {
+
+            showError(
+                error,
+                "Please enter email and password."
+            );
+
+            return;
+        }
+
+
+        const user =
+            users[email];
+
+
+        if (
+            !user ||
+            user.password !== password
+        ) {
+
+            showError(
+                error,
+                "Invalid email or password."
+            );
+
+            return;
+        }
+
+
+        currentUserEmail = email;
+
+
+        localStorage.setItem(
+            "vjCurrentUser",
+            email
+        );
+
+
+        closeModal("authModal");
+
+        updateUserUI();
+
+        showToast(
+            "Login successful. Welcome back, " +
+            user.name + "!"
+        );
+
+
+        document
+            .getElementById("loginEmail")
+            .value = "";
+
+        document
+            .getElementById("loginPassword")
+            .value = "";
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    function logout() {
+
+        currentUserEmail = null;
+
+        localStorage.removeItem(
+            "vjCurrentUser"
+        );
+
+
+        document
+            .getElementById("userDropdown")
+            .classList.remove("show");
+
+
+        updateUserUI();
+
+        showToast(
+            "You have been logged out."
+        );
+
+    }
+
+
+    /* =====================================================
+       UPDATE USER UI
+    ===================================================== */
+
+    function updateUserUI() {
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        const userButton =
+            document.getElementById(
+                "userButton"
+            );
+
+
+        if (
+            currentUserEmail &&
+            users[currentUserEmail]
+        ) {
+
+            const user =
+                users[currentUserEmail];
+
+
+            loginButton.style.display =
+                "none";
+
+            userButton.style.display =
+                "flex";
+
+
+            document
+                .getElementById(
+                    "userButtonName"
+                )
+                .textContent =
+                user.name.split(" ")[0];
+
+
+            document
+                .getElementById(
+                    "dropdownUserName"
+                )
+                .textContent =
+                user.name;
+
+
+            document
+                .getElementById(
+                    "dropdownUserEmail"
+                )
+                .textContent =
+                user.email;
+
+        }
+
+        else {
+
+            loginButton.style.display =
+                "block";
+
+            userButton.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       USER DROPDOWN
+    ===================================================== */
+
+    function toggleUserDropdown() {
+
+        document
+            .getElementById("userDropdown")
+            .classList.toggle("show");
+
+    }
+
+
+    /* =====================================================
+       CHECK LOGIN
+    ===================================================== */
+
+    function requireLogin() {
+
+        if (
+            !currentUserEmail ||
+            !users[currentUserEmail]
+        ) {
+
+            openLogin();
+
+            showToast(
+                "Please login to continue."
+            );
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+    /* =====================================================
+       BOOK SERVICE
+    ===================================================== */
+function bookService() {
+
+    window.location.href = "services.html";
+
+}
+
+    /* =====================================================
+       SAVE SERVICE BOOKING
+    ===================================================== */
+
+    function saveServiceBooking() {
+
+        if (!requireLogin()) {
+
+            return;
+
+        }
+
+
+        const mobile =
+            document
+                .getElementById(
+                    "serviceMobile"
+                )
+                .value
+                .trim();
+
+
+        const problem =
+            document
+                .getElementById(
+                    "serviceProblem"
+                )
+                .value
+                .trim();
+
+
+        const mode =
+            document
+                .getElementById(
+                    "serviceMode"
+                )
+                .value;
+
+
+        const service =
+            document
+                .getElementById(
+                    "serviceName"
+                )
+                .textContent;
+
+
+        if (
+            !mobile ||
+            !problem
+        ) {
+
+            showToast(
+                "Please enter all service details."
+            );
+
+            return;
+
+        }
+
+
+        const activity = {
+
+            type: "SERVICE",
+
+            title:
+                service,
+
+            details:
+                "Mobile: " +
+                mobile +
+                " | Problem: " +
+                problem +
+                " | Mode: " +
+                mode,
+
+            status:
+                "Booking Received",
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        users[currentUserEmail]
+            .activities
+            .unshift(activity);
+
+
+        saveUsers();
+
+
+        closeModal("serviceModal");
+
+        showToast(
+            "Service booking saved to your account!"
+        );
+
+
+        document
+            .getElementById(
+                "serviceMobile"
+            )
+            .value = "";
+
+        document
+            .getElementById(
+                "serviceProblem"
+            )
+            .value = "";
+
+    }
+
+
+    /* =====================================================
+       ORDER ACCESSORY
+    ===================================================== */
+
+    function orderAccessory() {
+
+    window.location.href = "accessories.html";
+
+}
+
+
+    /* =====================================================
+       SAVE ORDER
+    ===================================================== */
+
+    function saveOrder() {
+
+        if (!requireLogin()) {
+
+            return;
+
+        }
+
+
+        const product =
+            document
+                .getElementById(
+                    "accessoryProduct"
+                )
+                .value;
+
+
+        const address =
+            document
+                .getElementById(
+                    "orderAddress"
+                )
+                .value
+                .trim();
+
+
+        const quantity =
+            document
+                .getElementById(
+                    "orderQuantity"
+                )
+                .value;
+
+
+        if (!address) {
+
+            showToast(
+                "Please enter delivery address."
+            );
+
+            return;
+
+        }
+
+
+        /* GENERATE ORDER ID */
+
+        const orderId =
+            "VJM-" +
+            Date.now()
+                .toString()
+                .slice(-8);
+
+
+        const activity = {
+
+            type: "ORDER",
+
+            title:
+                product,
+
+            orderId:
+                orderId,
+
+            details:
+                "Quantity: " +
+                quantity +
+                " | Delivery: " +
+                address,
+
+            status:
+                "Order Placed",
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        users[currentUserEmail]
+            .activities
+            .unshift(activity);
+
+
+        saveUsers();
+
+
+        closeModal("orderModal");
+
+
+        showToast(
+            "Order " +
+            orderId +
+            " placed successfully!"
+        );
+
+
+        document
+            .getElementById(
+                "orderAddress"
+            )
+            .value = "";
+
+    }
+
+
+    /* =====================================================
+       SHOW ACTIVITIES
+    ===================================================== */
+
+    function openActivities() {
+
+        if (!requireLogin()) {
+
+            return;
+
+        }
+
+
+        document
+            .getElementById(
+                "userDropdown"
+            )
+            .classList.remove("show");
+
+
+        const user =
+            users[currentUserEmail];
+
+
+        const list =
+            document.getElementById(
+                "activityList"
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (
+            !user.activities ||
+            user.activities.length === 0
+        ) {
+
+            list.innerHTML = `
+
+                <div class="empty-activity">
+
+                    <i
+                        class="fa-solid fa-clock-rotate-left"
+                        style="
+                            font-size:40px;
+                            margin-bottom:12px;
+                        "
+                    ></i>
+
+                    <br>
+
+                    No activities yet.
+
+                    <br>
+
+                    Your orders and service
+                    bookings will appear here.
+
+                </div>
+
+            `;
+
+        }
+
+        else {
+
+            user.activities.forEach(
+                function(activity) {
+
+                    const date =
+                        new Date(
+                            activity.date
+                        );
+
+
+                    const formattedDate =
+                        date.toLocaleString();
+
+
+                    let icon =
+                        "fa-circle-check";
+
+
+                    if (
+                        activity.type ===
+                        "ORDER"
+                    ) {
+
+                        icon =
+                            "fa-box";
+
+                    }
+
+                    else if (
+                        activity.type ===
+                        "SERVICE"
+                    ) {
+
+                        icon =
+                            "fa-screwdriver-wrench";
+
+                    }
+
+
+                    list.innerHTML += `
+
+                        <div class="activity-item">
+
+                            <h4>
+
+                                <i
+                                    class="fa-solid ${icon}"
+                                ></i>
+
+                                ${activity.type}
+
+                                -
+                                
+                                ${activity.title}
+
+                            </h4>
+
+                            <p>
+
+                                ${activity.details}
+
+                            </p>
+
+                            ${
+                                activity.orderId
+                                ?
+                                `<p>
+                                    <strong>
+                                        Order ID:
+                                    </strong>
+                                    ${activity.orderId}
+                                </p>`
+                                :
+                                ""
+                            }
+
+                            <p>
+
+                                <strong>
+                                    Status:
+                                </strong>
+
+                                ${activity.status}
+
+                            </p>
+
+                            <p>
+
+                                <i
+                                    class="fa-regular fa-clock"
+                                ></i>
+
+                                ${formattedDate}
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "activityModal"
+            )
+            .classList.add("show");
+
+    }
+
+
+    /* =====================================================
+       ACCOUNT
+    ===================================================== */
+
+    function openAccount() {
+
+        if (!requireLogin()) {
+
+            return;
+
+        }
+
+
+        const user =
+            users[currentUserEmail];
+
+
+        document
+            .getElementById(
+                "accountName"
+            )
+            .textContent =
+            user.name;
+
+
+        document
+            .getElementById(
+                "accountEmail"
+            )
+            .textContent =
+            user.email;
+
+
+        document
+            .getElementById(
+                "accountPhone"
+            )
+            .textContent =
+            user.phone;
+
+
+        document
+            .getElementById(
+                "accountCreated"
+            )
+            .textContent =
+            new Date(
+                user.createdAt
+            ).toLocaleString();
+
+
+        document
+            .getElementById(
+                "userDropdown"
+            )
+            .classList.remove("show");
+
+
+        document
+            .getElementById(
+                "accountModal"
+            )
+            .classList.add("show");
+
+    }
+
+
+    /* =====================================================
+       CLOSE MODAL
+    ===================================================== */
+
+    function closeModal(id) {
+
+        document
+            .getElementById(id)
+            .classList.remove("show");
+
+    }
+
+
+    /* =====================================================
+       ERROR MESSAGE
+    ===================================================== */
+
+    function showError(
+        element,
+        message
+    ) {
+
+        element.textContent =
+            message;
+
+        element.style.display =
+            "block";
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        document
+            .getElementById(
+                "toastMessage"
+            )
+            .textContent =
+            message;
+
+
+        toast.classList.add("show");
+
+
+        setTimeout(
+            function() {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+    }
+
+
+    /* =====================================================
+       MOBILE NAV
+    ===================================================== */
+
+    function toggleMenu() {
+
+        document
+            .getElementById("navLinks")
+            .classList.toggle("show");
+
+    }
+
+
+    /* =====================================================
+       CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const userArea =
+                document.getElementById(
+                    "userArea"
+                );
+
+
+            if (
+                !userArea.contains(
+                    event.target
+                )
+            ) {
+
+                document
+                    .getElementById(
+                        "userDropdown"
+                    )
+                    .classList.remove(
+                        "show"
+                    );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE MODALS BY CLICKING OUTSIDE
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target.classList
+                    .contains("modal")
+            ) {
+
+                event.target
+                    .classList
+                    .remove("show");
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

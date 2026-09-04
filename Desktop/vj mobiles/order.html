@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>VJ Mobiles - Place Your Order</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <img src="logo.png"
+             alt="VJ Mobiles">
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="services.html">
+            Services
+        </a>
+
+        <a href="accessories.html">
+            Accessories
+        </a>
+
+        <a href="trackorder.html">
+            Track Order
+        </a>
+
+        <a href="#">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <button class="admin-btn">
+        ♙ Admin Login
+    </button>
+
+</header>
+
+
+
+<main class="order-page">
+
+
+    <!-- LEFT PRODUCT -->
+
+    <div class="selected-product">
+
+        <div class="selected-image">
+
+            <img id="productImage"
+                 src=""
+                 alt="Selected Product">
+
+        </div>
+
+
+        <h1 id="productName">
+            Product
+        </h1>
+
+
+        <h2>
+            ₹<span id="productPrice">
+                0
+            </span>
+        </h2>
+
+
+        <div class="product-tags">
+
+            <span>✓ Best Quality</span>
+
+            <span>✓ Warranty</span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CENTER FORM -->
+
+    <div class="order-form">
+
+        <h1>PLACE YOUR ORDER</h1>
+
+        <p>
+            Fill in the details below
+        </p>
+
+
+        <form id="orderForm">
+
+
+            <label>
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                required
+            >
+
+
+
+            <label>
+                Mobile Number
+            </label>
+
+            <input
+                type="tel"
+                id="mobile"
+                placeholder="Enter mobile number"
+                maxlength="10"
+                required
+            >
+
+
+
+            <label>
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter email address"
+                required
+            >
+
+
+
+            <label>
+                Delivery Address
+            </label>
+
+            <textarea
+                id="address"
+                placeholder="Enter delivery address"
+                required>
+            </textarea>
+
+
+
+            <label>
+                Product
+            </label>
+
+            <input
+                type="text"
+                id="selectedProduct"
+                readonly
+            >
+
+
+
+            <label>
+                Quantity
+            </label>
+
+            <select id="quantity">
+
+                <option value="1">
+                    1
+                </option>
+
+                <option value="2">
+                    2
+                </option>
+
+                <option value="3">
+                    3
+                </option>
+
+                <option value="4">
+                    4
+                </option>
+
+                <option value="5">
+                    5
+                </option>
+
+            </select>
+
+
+
+            <!-- PRICE BOX -->
+
+            <div class="price-summary">
+
+
+                <div>
+
+                    <span>
+                        Price
+                    </span>
+
+                    <strong>
+                        ₹<span id="priceBox">
+                            0
+                        </span>
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong id="quantityBox">
+                        1
+                    </strong>
+
+                </div>
+
+
+
+                <div>
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong>
+                        ₹<span id="totalBox">
+                            0
+                        </span>
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="place-order-button">
+
+                PLACE ORDER
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="why-shop">
+
+        <h2>
+            WHY SHOP WITH<br>
+            VJ MOBILES?
+        </h2>
+
+
+        <div class="why-item">
+
+            <span>✓</span>
+
+            <div>
+                <b>Genuine</b>
+                <p>Products</p>
+            </div>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>🔒</span>
+
+            <div>
+                <b>Secure</b>
+                <p>Payments</p>
+            </div>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>🚚</span>
+
+            <div>
+                <b>Fast</b>
+                <p>Delivery</p>
+            </div>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>✓</span>
+
+            <div>
+                <b>Quality</b>
+                <p>Assured</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

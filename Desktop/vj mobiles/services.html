@@ -1,0 +1,3561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>VJ Mobiles | Services</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #020d20;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =========================================
+           BACKGROUND
+        ========================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(0, 120, 255, 0.14),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 85% 70%,
+                    rgba(50, 255, 0, 0.10),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #01091a,
+                    #031b38,
+                    #020d20
+                );
+        }
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: -1;
+
+            opacity: 0.22;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0, 150, 255, 0.08) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(0, 150, 255, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+        }
+
+
+        /* =========================================
+           NAVBAR
+        ========================================== */
+
+        header {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 85px;
+
+            z-index: 1000;
+
+            background:
+                rgba(1, 10, 28, 0.96);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid
+                rgba(150, 255, 0, 0.45);
+        }
+
+        .navbar {
+
+            width: 94%;
+            max-width: 1450px;
+
+            height: 100%;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================== */
+
+        .logo {
+
+            width: 120px;
+            height: 120px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            top: 17px;
+
+            z-index: 10;
+
+            flex-shrink: 0;
+        }
+
+        .logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 50%;
+
+            filter:
+                drop-shadow(
+                    0 0 8px
+                    rgba(0, 255, 100, 0.25)
+                );
+        }
+
+
+        /* =========================================
+           NAV LINKS
+        ========================================== */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            margin-left: 20px;
+
+            flex: 1;
+        }
+
+        .nav-links a {
+
+            position: relative;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            transition: 0.3s;
+
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+
+            color: #8cff00;
+        }
+
+        .nav-links a.active {
+
+            color: white;
+        }
+
+        .nav-links a.active::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: -12px;
+
+            width: 100%;
+
+            height: 3px;
+
+            border-radius: 5px;
+
+            background: #8cff00;
+
+            box-shadow:
+                0 0 8px
+                rgba(140, 255, 0, 0.7);
+        }
+
+
+        /* =========================================
+           USER AREA
+        ========================================== */
+
+        .user-area {
+
+            position: relative;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================================
+           LOGIN BUTTON
+        ========================================== */
+
+        .login-btn {
+
+            border: none;
+
+            padding: 12px 17px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #12a900,
+                    #45d900
+                );
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: 0.3s;
+
+            white-space: nowrap;
+        }
+
+        .login-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(50, 255, 0, 0.25);
+        }
+
+
+        /* =========================================
+           USER BUTTON
+        ========================================== */
+
+        .user-button {
+
+            border: none;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(15, 130, 0, 0.9);
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-weight: 600;
+        }
+
+        .user-button:hover {
+
+            background: #1ca900;
+        }
+
+
+        /* =========================================
+           USER DROPDOWN
+        ========================================== */
+
+        .user-dropdown {
+
+            position: absolute;
+
+            top: 55px;
+
+            right: 0;
+
+            width: 230px;
+
+            background: #061a32;
+
+            border:
+                1px solid
+                rgba(100, 255, 0, 0.35);
+
+            border-radius: 12px;
+
+            padding: 10px;
+
+            display: none;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .user-dropdown.show {
+
+            display: block;
+        }
+
+        .user-dropdown .user-name {
+
+            padding: 12px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            margin-bottom: 5px;
+        }
+
+        .user-dropdown button {
+
+            width: 100%;
+
+            border: none;
+
+            background: transparent;
+
+            color: white;
+
+            text-align: left;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+        .user-dropdown button:hover {
+
+            background:
+                rgba(100, 255, 0, 0.12);
+        }
+
+
+        /* =========================================
+           ADMIN BUTTON
+        ========================================== */
+
+        .admin-btn {
+
+            border: 1px solid #61e600;
+
+            padding: 11px 16px;
+
+            border-radius: 9px;
+
+            background: transparent;
+
+            color: #61e600;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            white-space: nowrap;
+
+            flex-shrink: 0;
+        }
+
+        .admin-btn:hover {
+
+            background: #61e600;
+
+            color: #021225;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(50, 255, 0, 0.20);
+        }
+
+
+        /* =========================================
+           MOBILE MENU
+        ========================================== */
+
+        .menu-btn {
+
+            display: none;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================================
+           MAIN SERVICES SECTION
+        ========================================== */
+
+        .services-section {
+
+            min-height: 100vh;
+
+            padding-top: 125px;
+
+            padding-bottom: 30px;
+
+            position: relative;
+        }
+
+
+        /* =========================================
+           DECORATIVE PHONE
+        ========================================== */
+
+        .phone-outline {
+
+            position: absolute;
+
+            right: 8%;
+
+            top: 150px;
+
+            width: 180px;
+
+            height: 320px;
+
+            border:
+                3px solid
+                rgba(0, 174, 255, 0.12);
+
+            border-radius: 30px;
+
+            transform: rotate(12deg);
+
+            pointer-events: none;
+        }
+
+        .phone-outline::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 55px;
+
+            height: 8px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(0, 174, 255, 0.12);
+
+            top: 12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+        }
+
+
+        /* =========================================
+           PAGE TITLE
+        ========================================== */
+
+        .page-heading {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .page-heading h1 {
+
+            font-size:
+                clamp(38px, 5vw, 58px);
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            text-shadow:
+                0 0 15px
+                rgba(255,255,255,0.08);
+        }
+
+        .page-heading p {
+
+            margin-top: 5px;
+
+            font-size: 17px;
+
+            color: #d5dce5;
+        }
+
+
+        /* =========================================
+           SERVICES GRID
+        ========================================== */
+
+        .services-grid {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        /* =========================================
+           SERVICE CARD
+        ========================================== */
+
+        .service-card {
+
+            min-height: 265px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 25px;
+
+            border-radius: 17px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(5, 38, 75, 0.95),
+                    rgba(1, 18, 43, 0.97)
+                );
+
+            border:
+                1px solid
+                rgba(88, 190, 255, 0.32);
+
+            box-shadow:
+                inset 0 0 25px
+                rgba(0, 110, 255, 0.05);
+
+            transition:
+                transform 0.35s,
+                border-color 0.35s,
+                box-shadow 0.35s;
+        }
+
+        .service-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            right: -70px;
+            top: -70px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(0, 190, 255, 0.08);
+        }
+
+        .service-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(112, 255, 0, 0.7);
+
+            box-shadow:
+
+                0 15px 40px
+                rgba(0, 0, 0, 0.35),
+
+                0 0 20px
+                rgba(60, 255, 0, 0.08);
+        }
+
+
+        /* =========================================
+           SERVICE NUMBER
+        ========================================== */
+
+        .service-number {
+
+            position: absolute;
+
+            top: 14px;
+            left: 14px;
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #28bd00,
+                    #73ff00
+                );
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 0 15px
+                rgba(76, 255, 0, 0.3);
+        }
+
+
+        /* =========================================
+           SERVICE ICON
+        ========================================== */
+
+        .service-icon {
+
+            position: absolute;
+
+            right: 30px;
+
+            top: 55px;
+
+            width: 125px;
+
+            height: 125px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 80px;
+
+            color: #e9f7ff;
+
+            filter:
+                drop-shadow(
+                    0 0 10px
+                    rgba(0, 170, 255, 0.25)
+                );
+
+            transition: 0.35s;
+        }
+
+        .service-card:hover
+        .service-icon {
+
+            transform:
+                scale(1.08)
+                rotate(-3deg);
+
+            color: #b9fca0;
+
+            filter:
+                drop-shadow(
+                    0 0 15px
+                    rgba(100, 255, 0, 0.3)
+                );
+        }
+
+
+        /* =========================================
+           SERVICE TEXT
+        ========================================== */
+
+        .service-content {
+
+            position: absolute;
+
+            left: 25px;
+
+            bottom: 25px;
+
+            z-index: 2;
+        }
+
+        .service-content h2 {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+        }
+
+        .service-content h3 {
+
+            margin-top: 2px;
+
+            font-size: 18px;
+
+            font-weight: 500;
+
+            color: #f4f7fb;
+        }
+
+
+        /* =========================================
+           BOOK SERVICE BUTTON
+        ========================================== */
+
+        .book-btn {
+
+            margin-top: 13px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 12px;
+
+            border-radius: 6px;
+
+            background:
+                rgba(2, 18, 38, 0.9);
+
+            border:
+                1px solid
+                rgba(100, 255, 0, 0.15);
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            transition: 0.3s;
+
+            cursor: pointer;
+        }
+
+        .book-btn i {
+
+            color: #b2ff00;
+
+            font-size: 11px;
+        }
+
+        .book-btn:hover {
+
+            background: #22a900;
+
+            border-color: #22a900;
+
+            transform:
+                translateX(4px);
+        }
+
+        .book-btn:hover i {
+
+            color: white;
+        }
+
+
+        /* =========================================
+           INDIVIDUAL ICON STYLES
+        ========================================== */
+
+        .display-icon {
+
+            transform:
+                rotate(-8deg);
+        }
+
+        .battery-icon {
+
+            color: #72ff00;
+        }
+
+        .speaker-icon {
+
+            color: #b7c5d0;
+        }
+
+        .mic-icon {
+
+            color: #c6d0d8;
+        }
+
+        .charging-icon {
+
+            color: #b8d8ec;
+        }
+
+        .unknown-icon {
+
+            font-size: 100px;
+
+            color: white;
+
+            text-shadow:
+                0 0 15px
+                rgba(160, 255, 100, 0.5);
+        }
+
+
+        /* =========================================
+           BOTTOM FEATURES
+        ========================================== */
+
+        .features {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: 35px auto 0;
+
+            min-height: 100px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            border-radius: 15px;
+
+            background:
+                rgba(2, 22, 48, 0.9);
+
+            border:
+                1px solid
+                rgba(0, 139, 218, 0.28);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.2);
+        }
+
+        .feature {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px 25px;
+
+            border-right:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .feature:last-child {
+
+            border-right: none;
+        }
+
+        .feature-icon {
+
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 35px;
+
+            color: #6cff00;
+
+            flex-shrink: 0;
+        }
+
+        .feature h4 {
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+        .feature p {
+
+            margin-top: 2px;
+
+            color: #c6d0db;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           MODAL
+        ========================================== */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.75);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 3000;
+
+            padding: 20px;
+        }
+
+        .modal.active {
+
+            display: flex;
+        }
+
+
+        /* =========================================
+           AUTH MODAL
+        ========================================== */
+
+        .auth-modal-box {
+
+            width: 100%;
+
+            max-width: 450px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #06213e,
+                    #020c1c
+                );
+
+            border:
+                1px solid
+                rgba(100,255,0,0.5);
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            position: relative;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.7);
+        }
+
+        .auth-modal-box h2 {
+
+            margin-bottom: 7px;
+
+            font-size: 27px;
+        }
+
+        .modal-subtitle {
+
+            color: #aebdca !important;
+
+            font-size: 13px !important;
+
+            margin-bottom: 22px !important;
+        }
+
+        .form-group {
+
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+            color: white;
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                #244b6d;
+
+            background:
+                #071a31;
+
+            color: white;
+
+            outline: none;
+        }
+
+        .form-group input:focus {
+
+            border-color:
+                #61e600;
+        }
+
+        .form-submit {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #12a500,
+                    #53dc00
+                );
+
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .switch-auth {
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #aeb9c4;
+
+            font-size: 13px;
+        }
+
+        .switch-auth span {
+
+            color: #6eff00;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .error-message {
+
+            color: #ff6262;
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+
+            display: none;
+        }
+
+
+        /* =========================================
+           ACTIVITY MODAL
+        ========================================== */
+
+        .modal-box {
+
+            width: 100%;
+
+            max-width: 450px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #061c37,
+                    #020d20
+                );
+
+            border:
+                1px solid
+                #32d000;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            position: relative;
+
+            box-shadow:
+                0 20px 70px
+                rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-box h2 {
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
+        }
+
+        .modal-box > p {
+
+            color: #aaa;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+
+            position: absolute;
+
+            right: 18px;
+
+            top: 15px;
+
+            font-size: 24px;
+
+            color: #aaa;
+
+            cursor: pointer;
+        }
+
+        .activity-list {
+
+            max-height: 430px;
+
+            overflow-y: auto;
+        }
+
+        .activity-item {
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border-left:
+                4px solid
+                #5be000;
+        }
+
+        .activity-item h4 {
+
+            font-size: 15px;
+
+            margin-bottom: 4px;
+        }
+
+        .activity-item p {
+
+            color: #bdc9d4;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin-bottom: 4px;
+        }
+
+        .empty-activity {
+
+            text-align: center;
+
+            color: #aab7c3;
+
+            padding: 30px 10px;
+        }
+
+
+        /* =========================================
+           TOAST
+        ========================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            min-width: 280px;
+
+            padding: 15px 18px;
+
+            background:
+                #09263f;
+
+            border-left:
+                4px solid
+                #61e000;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.4);
+
+            transform:
+                translateX(400px);
+
+            transition: 0.4s;
+
+            z-index: 5000;
+        }
+
+        .toast.show {
+
+            transform:
+                translateX(0);
+        }
+
+
+        /* =========================================
+           RESPONSIVE 1100
+        ========================================== */
+
+        @media (max-width: 1100px) {
+
+            .nav-links {
+
+                gap: 18px;
+
+                margin-left: 10px;
+            }
+
+            .services-grid {
+
+                width: 94%;
+            }
+
+            .features {
+
+                width: 94%;
+            }
+
+            .admin-btn {
+
+                padding: 10px 12px;
+
+                font-size: 12px;
+            }
+        }
+
+
+        /* =========================================
+           RESPONSIVE 900
+        ========================================== */
+
+        @media (max-width: 900px) {
+
+            header {
+
+                height: 75px;
+            }
+
+            .logo {
+
+                width: 95px;
+
+                height: 95px;
+
+                top: 12px;
+            }
+
+            .nav-links {
+
+                display: none;
+
+                position: absolute;
+
+                top: 75px;
+
+                left: 0;
+
+                width: 100%;
+
+                margin: 0;
+
+                padding: 25px;
+
+                flex-direction: column;
+
+                gap: 20px;
+
+                background: #020d20;
+
+                border-bottom:
+                    1px solid
+                    #2aa900;
+            }
+
+            .nav-links.show {
+
+                display: flex;
+            }
+
+            .nav-links a.active::after {
+
+                display: none;
+            }
+
+            .menu-btn {
+
+                display: block;
+            }
+
+            .services-section {
+
+                padding-top: 105px;
+            }
+
+            .services-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .features {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .feature:nth-child(2) {
+
+                border-right: none;
+            }
+
+            .feature:nth-child(1),
+            .feature:nth-child(2) {
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,0.08);
+            }
+
+            .phone-outline {
+
+                display: none;
+            }
+        }
+
+
+        /* =========================================
+           RESPONSIVE 600
+        ========================================== */
+
+        @media (max-width: 600px) {
+
+            .login-btn {
+
+                padding: 10px 11px;
+
+                font-size: 11px;
+            }
+
+            .admin-btn {
+
+                display: none;
+            }
+
+            .page-heading h1 {
+
+                font-size: 36px;
+            }
+
+            .page-heading p {
+
+                font-size: 14px;
+
+                padding: 0 20px;
+            }
+
+            .services-grid {
+
+                grid-template-columns: 1fr;
+
+                width: 90%;
+            }
+
+            .service-card {
+
+                min-height: 250px;
+            }
+
+            .service-icon {
+
+                right: 25px;
+
+                top: 50px;
+            }
+
+            .service-content h2 {
+
+                font-size: 25px;
+            }
+
+            .service-content h3 {
+
+                font-size: 16px;
+            }
+
+            .features {
+
+                grid-template-columns: 1fr;
+
+                width: 90%;
+            }
+
+            .feature {
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,0.08);
+            }
+
+            .feature:last-child {
+
+                border-bottom: none;
+            }
+
+            .user-button {
+
+                padding: 10px 11px;
+
+                font-size: 12px;
+            }
+
+            .user-button i:last-child {
+
+                display: none;
+            }
+
+            .user-dropdown {
+
+                right: -5px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================== -->
+
+<header>
+
+    <div class="navbar">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+
+            <img
+                src="logo.png"
+                alt="VJ Mobiles Logo"
+            >
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav
+            class="nav-links"
+            id="navLinks"
+        >
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a
+                href="services.html"
+                class="active"
+            >
+                Services
+            </a>
+
+            <a href="accessories.html">
+                Accessories
+            </a>
+
+            <a href="trackorder.html">
+                Track Order
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="about.html">
+                About Us
+            </a>
+
+        </nav>
+
+
+        <!-- USER AREA -->
+
+        <div
+            class="user-area"
+            id="userArea"
+        >
+
+            <!-- LOGGED IN USER -->
+
+            <button
+                class="user-button"
+                id="userButton"
+                onclick="toggleUserDropdown()"
+                style="display:none;"
+            >
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span id="userButtonName">
+                    User
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </button>
+
+
+            <!-- USER DROPDOWN -->
+
+            <div
+                class="user-dropdown"
+                id="userDropdown"
+            >
+
+                <div class="user-name">
+
+                    <strong id="dropdownUserName">
+                        User
+                    </strong>
+
+                    <br>
+
+                    <small id="dropdownUserEmail">
+                        email
+                    </small>
+
+                </div>
+
+
+                <button onclick="openActivities()">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    &nbsp;
+
+                    My Activities
+
+                </button>
+
+
+                <button onclick="openAccount()">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    &nbsp;
+
+                    My Account
+
+                </button>
+
+
+                <button onclick="logout()">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    &nbsp;
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN LOGIN -->
+
+        <button class="admin-btn" onclick="window.location.href='adminlogin.html'">
+    ♙ Admin Login
+</button>
+
+
+        <!-- MOBILE MENU -->
+
+        <div
+            class="menu-btn"
+            onclick="toggleMenu()"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     SERVICES PAGE
+========================================== -->
+
+<main class="services-section">
+
+
+    <!-- DECORATIVE PHONE -->
+
+    <div class="phone-outline"></div>
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading">
+
+        <h1>
+            OUR SERVICES
+        </h1>
+
+        <p>
+            Choose a service category to get started
+        </p>
+
+    </div>
+
+
+    <!-- SERVICES GRID -->
+
+    <div class="services-grid">
+
+
+        <!-- =====================================
+             01 DISPLAY
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                01
+            </div>
+
+            <div
+                class="service-icon display-icon"
+            >
+
+                <i
+                    class="fa-solid fa-mobile-screen-button"
+                ></i>
+
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    DISPLAY
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Display Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             02 BATTERY
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                02
+            </div>
+
+            <div
+                class="service-icon battery-icon"
+            >
+
+                <i
+                    class="fa-solid fa-battery-three-quarters"
+                ></i>
+
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    BATTERY
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Battery Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             03 SPEAKER
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                03
+            </div>
+
+            <div
+                class="service-icon speaker-icon"
+            >
+
+                <i
+                    class="fa-solid fa-volume-high"
+                ></i>
+
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    SPEAKER
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Speaker Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             04 MIC
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                04
+            </div>
+
+            <div
+                class="service-icon mic-icon"
+            >
+
+                <i
+                    class="fa-solid fa-microphone"
+                ></i>
+
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    MIC
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Mic Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             05 CHARGING
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                05
+            </div>
+
+            <div
+                class="service-icon charging-icon"
+            >
+
+                <i
+                    class="fa-solid fa-charging-station"
+                ></i>
+
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    CHARGING
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Charging Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             06 UNKNOWN
+        ====================================== -->
+
+        <div class="service-card">
+
+            <div class="service-number">
+                06
+            </div>
+
+            <div
+                class="service-icon unknown-icon"
+            >
+                ?
+            </div>
+
+            <div class="service-content">
+
+                <h2>
+                    UNKNOWN
+                </h2>
+
+                <h3>
+                    PROBLEM
+                </h3>
+
+                <button
+                    class="book-btn"
+                    onclick="goToBooking('Unknown Problem')"
+                >
+
+                    Book Service
+
+                    <i
+                        class="fa-solid fa-arrow-right"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         BOTTOM FEATURES
+    ====================================== -->
+
+    <div class="features">
+
+
+        <!-- DOORSTEP -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i
+                    class="fa-solid fa-house-circle-check"
+                ></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+                    Doorstep Service
+                </h4>
+
+                <p>
+                    We come to you
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERY -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i
+                    class="fa-solid fa-truck-fast"
+                ></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+                    Fast Delivery
+                </h4>
+
+                <p>
+                    Quick & Reliable
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TECHNICIANS -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i
+                    class="fa-solid fa-user-gear"
+                ></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+                    Expert Technicians
+                </h4>
+
+                <p>
+                    Professional Solutions
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PARTS -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+
+                <i
+                    class="fa-solid fa-certificate"
+                ></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+                    Genuine Parts
+                </h4>
+
+                <p>
+                    100% Quality Assured
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     LOGIN / SIGNUP MODAL
+========================================== -->
+
+<div
+    class="modal"
+    id="authModal"
+>
+
+    <div class="auth-modal-box">
+
+
+        <span
+            class="close-modal"
+            onclick="closeModal('authModal')"
+        >
+            &times;
+        </span>
+
+
+        <!-- =====================================
+             LOGIN FORM
+        ====================================== -->
+
+        <div id="loginForm">
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p class="modal-subtitle">
+                Login to access your VJ Mobiles account.
+            </p>
+
+
+            <div
+                class="error-message"
+                id="loginError"
+            ></div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                >
+
+            </div>
+
+
+            <button
+                class="form-submit"
+                onclick="loginUser()"
+            >
+                Login
+            </button>
+
+
+            <div class="switch-auth">
+
+                Don't have an account?
+
+                <span onclick="showSignup()">
+                    Create Account
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             SIGNUP FORM
+        ====================================== -->
+
+        <div
+            id="signupForm"
+            style="display:none;"
+        >
+
+            <h2>
+                Create Account
+            </h2>
+
+            <p class="modal-subtitle">
+                Create your VJ Mobiles customer account.
+            </p>
+
+
+            <div
+                class="error-message"
+                id="signupError"
+            ></div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="signupPhone"
+                    placeholder="Enter mobile number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="signupConfirmPassword"
+                    placeholder="Confirm password"
+                >
+
+            </div>
+
+
+            <button
+                class="form-submit"
+                onclick="signupUser()"
+            >
+                Create Account
+            </button>
+
+
+            <div class="switch-auth">
+
+                Already have an account?
+
+                <span onclick="showLogin()">
+                    Login
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     ACTIVITIES MODAL
+========================================== -->
+
+<div
+    class="modal"
+    id="activityModal"
+>
+
+    <div class="modal-box">
+
+        <span
+            class="close-modal"
+            onclick="closeModal('activityModal')"
+        >
+            &times;
+        </span>
+
+
+        <h2>
+            My Activities
+        </h2>
+
+        <p>
+            Your orders and service bookings.
+        </p>
+
+
+        <div
+            class="activity-list"
+            id="activityList"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     ACCOUNT MODAL
+========================================== -->
+
+<div
+    class="modal"
+    id="accountModal"
+>
+
+    <div class="modal-box">
+
+        <span
+            class="close-modal"
+            onclick="closeModal('accountModal')"
+        >
+            &times;
+        </span>
+
+
+        <h2>
+            My Account
+        </h2>
+
+        <p>
+            Your VJ Mobiles account details.
+        </p>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-user"></i>
+                Name
+            </h4>
+
+            <p id="accountName">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-envelope"></i>
+                Email
+            </h4>
+
+            <p id="accountEmail">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-phone"></i>
+                Phone
+            </h4>
+
+            <p id="accountPhone">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="activity-item">
+
+            <h4>
+                <i class="fa-solid fa-calendar"></i>
+                Account Created
+            </h4>
+
+            <p id="accountCreated">
+                -
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     TOAST
+========================================== -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastMessage">
+        Success
+    </span>
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================================
+       USER DATABASE
+       SAME STORAGE AS INDEX.HTML
+    ========================================== */
+
+    let users =
+        JSON.parse(
+            localStorage.getItem("vjMobilesUsers")
+        ) || {};
+
+
+    let currentUserEmail =
+        localStorage.getItem("vjCurrentUser");
+
+
+    /* =========================================
+       PENDING SERVICE
+       
+       Stores the service clicked before
+       login/signup.
+    ========================================== */
+
+    let pendingService = null;
+
+
+    /* =========================================
+       SAVE USERS
+    ========================================== */
+
+    function saveUsers() {
+
+        localStorage.setItem(
+            "vjMobilesUsers",
+            JSON.stringify(users)
+        );
+
+    }
+
+
+    /* =========================================
+       PAGE LOAD
+    ========================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            updateUserUI();
+
+        }
+    );
+
+
+    /* =========================================
+       MOBILE MENU
+    ========================================== */
+
+    function toggleMenu() {
+
+        const nav =
+            document.getElementById(
+                "navLinks"
+            );
+
+        nav.classList.toggle("show");
+
+    }
+
+
+    /* =========================================
+       ADMIN LOGIN
+    ========================================== */
+
+    function adminLogin() {
+
+        window.location.href =
+            "admin-login.html";
+
+    }
+
+
+    /* =========================================
+       OPEN LOGIN
+    ========================================== */
+
+    function openLogin() {
+
+        document
+            .getElementById("authModal")
+            .classList.add("active");
+
+        showLogin();
+
+    }
+
+
+    /* =========================================
+       SHOW LOGIN
+    ========================================== */
+
+    function showLogin() {
+
+        document
+            .getElementById("loginForm")
+            .style.display = "block";
+
+        document
+            .getElementById("signupForm")
+            .style.display = "none";
+
+        document
+            .getElementById("loginError")
+            .style.display = "none";
+
+    }
+
+
+    /* =========================================
+       SHOW SIGNUP
+    ========================================== */
+
+    function showSignup() {
+
+        document
+            .getElementById("loginForm")
+            .style.display = "none";
+
+        document
+            .getElementById("signupForm")
+            .style.display = "block";
+
+        document
+            .getElementById("signupError")
+            .style.display = "none";
+
+    }
+
+
+    /* =========================================
+       SIGN UP
+    ========================================== */
+
+    function signupUser() {
+
+        const name =
+            document
+                .getElementById("signupName")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("signupEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const phone =
+            document
+                .getElementById("signupPhone")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("signupPassword")
+                .value;
+
+
+        const confirmPassword =
+            document
+                .getElementById(
+                    "signupConfirmPassword"
+                )
+                .value;
+
+
+        const error =
+            document.getElementById(
+                "signupError"
+            );
+
+
+        if (
+            !name ||
+            !email ||
+            !phone ||
+            !password ||
+            !confirmPassword
+        ) {
+
+            showError(
+                error,
+                "Please fill all the fields."
+            );
+
+            return;
+
+        }
+
+
+        if (!email.includes("@")) {
+
+            showError(
+                error,
+                "Please enter a valid email."
+            );
+
+            return;
+
+        }
+
+
+        if (phone.length < 10) {
+
+            showError(
+                error,
+                "Please enter a valid mobile number."
+            );
+
+            return;
+
+        }
+
+
+        if (password.length < 6) {
+
+            showError(
+                error,
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            showError(
+                error,
+                "Passwords do not match."
+            );
+
+            return;
+
+        }
+
+
+        if (users[email]) {
+
+            showError(
+                error,
+                "An account with this email already exists."
+            );
+
+            return;
+
+        }
+
+
+        /* CREATE ACCOUNT */
+
+        users[email] = {
+
+            name: name,
+
+            email: email,
+
+            phone: phone,
+
+            password: password,
+
+            createdAt:
+                new Date().toISOString(),
+
+            activities: []
+
+        };
+
+
+        saveUsers();
+
+
+        /* AUTOMATIC LOGIN */
+
+        currentUserEmail = email;
+
+        localStorage.setItem(
+            "vjCurrentUser",
+            email
+        );
+
+
+        closeModal("authModal");
+
+        updateUserUI();
+
+
+        showToast(
+            "Account created successfully!"
+        );
+
+
+        /* =====================================
+           IF USER CLICKED BOOK SERVICE BEFORE
+           SIGNUP, CONTINUE TO BOOKING PAGE
+        ====================================== */
+
+        continueToPendingBooking();
+
+    }
+
+
+    /* =========================================
+       LOGIN
+    ========================================== */
+
+    function loginUser() {
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        const error =
+            document.getElementById(
+                "loginError"
+            );
+
+
+        if (
+            !email ||
+            !password
+        ) {
+
+            showError(
+                error,
+                "Please enter email and password."
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            users[email];
+
+
+        if (
+            !user ||
+            user.password !== password
+        ) {
+
+            showError(
+                error,
+                "Invalid email or password."
+            );
+
+            return;
+
+        }
+
+
+        currentUserEmail = email;
+
+
+        localStorage.setItem(
+            "vjCurrentUser",
+            email
+        );
+
+
+        closeModal("authModal");
+
+        updateUserUI();
+
+
+        showToast(
+            "Login successful. Welcome back, " +
+            user.name +
+            "!"
+        );
+
+
+        document
+            .getElementById("loginEmail")
+            .value = "";
+
+        document
+            .getElementById("loginPassword")
+            .value = "";
+
+
+        /* CONTINUE BOOKING */
+
+        continueToPendingBooking();
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================== */
+
+    function logout() {
+
+        currentUserEmail = null;
+
+        localStorage.removeItem(
+            "vjCurrentUser"
+        );
+
+
+        document
+            .getElementById("userDropdown")
+            .classList.remove("show");
+
+
+        updateUserUI();
+
+
+        showToast(
+            "You have been logged out."
+        );
+
+    }
+
+
+    /* =========================================
+       UPDATE USER UI
+    ========================================== */
+
+    function updateUserUI() {
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const userButton =
+            document.getElementById(
+                "userButton"
+            );
+
+
+        if (
+            currentUserEmail &&
+            users[currentUserEmail]
+        ) {
+
+            const user =
+                users[currentUserEmail];
+
+
+            loginButton.style.display =
+                "none";
+
+
+            userButton.style.display =
+                "flex";
+
+
+            document
+                .getElementById(
+                    "userButtonName"
+                )
+                .textContent =
+                user.name.split(" ")[0];
+
+
+            document
+                .getElementById(
+                    "dropdownUserName"
+                )
+                .textContent =
+                user.name;
+
+
+            document
+                .getElementById(
+                    "dropdownUserEmail"
+                )
+                .textContent =
+                user.email;
+
+        }
+
+        else {
+
+            loginButton.style.display =
+                "block";
+
+
+            userButton.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    /* =========================================
+       USER DROPDOWN
+    ========================================== */
+
+    function toggleUserDropdown() {
+
+        document
+            .getElementById("userDropdown")
+            .classList.toggle("show");
+
+    }
+
+
+    /* =========================================
+       BOOK SERVICE
+       
+       THIS IS THE IMPORTANT PART.
+       
+       If user is logged in:
+           → book-service.html
+
+       If user is NOT logged in:
+           → Login / Signup modal
+           → after login/signup
+           → book-service.html
+    ========================================== */
+
+    function goToBooking(service) {
+
+        /* USER NOT LOGGED IN */
+
+        if (
+            !currentUserEmail ||
+            !users[currentUserEmail]
+        ) {
+
+            pendingService = service;
+
+            openLogin();
+
+            showToast(
+                "Please login or create an account to book a service."
+            );
+
+            return;
+
+        }
+
+
+        /* USER ALREADY LOGGED IN */
+
+        window.location.href =
+            "book-service.html?service=" +
+            encodeURIComponent(service);
+
+    }
+
+
+    /* =========================================
+       CONTINUE PENDING BOOKING
+       
+       Called after successful Login/Signup.
+    ========================================== */
+
+    function continueToPendingBooking() {
+
+        if (!pendingService) {
+
+            return;
+
+        }
+
+
+        const service =
+            pendingService;
+
+
+        pendingService = null;
+
+
+        window.location.href =
+            "book-service.html?service=" +
+            encodeURIComponent(service);
+
+    }
+
+
+    /* =========================================
+       OPEN ACTIVITIES
+    ========================================== */
+
+    function openActivities() {
+
+        if (
+            !currentUserEmail ||
+            !users[currentUserEmail]
+        ) {
+
+            openLogin();
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("userDropdown")
+            .classList.remove("show");
+
+
+        const user =
+            users[currentUserEmail];
+
+
+        const list =
+            document.getElementById(
+                "activityList"
+            );
+
+
+        list.innerHTML = "";
+
+
+        if (
+            !user.activities ||
+            user.activities.length === 0
+        ) {
+
+            list.innerHTML = `
+
+                <div class="empty-activity">
+
+                    <i
+                        class="fa-solid fa-clock-rotate-left"
+                        style="
+                            font-size:40px;
+                            margin-bottom:12px;
+                        "
+                    ></i>
+
+                    <br>
+
+                    No activities yet.
+
+                    <br>
+
+                    Your orders and service
+                    bookings will appear here.
+
+                </div>
+
+            `;
+
+        }
+
+        else {
+
+            user.activities.forEach(
+                function(activity) {
+
+                    const date =
+                        new Date(
+                            activity.date
+                        );
+
+
+                    const formattedDate =
+                        date.toLocaleString();
+
+
+                    let icon =
+                        "fa-circle-check";
+
+
+                    if (
+                        activity.type ===
+                        "ORDER"
+                    ) {
+
+                        icon =
+                            "fa-box";
+
+                    }
+
+                    else if (
+                        activity.type ===
+                        "SERVICE"
+                    ) {
+
+                        icon =
+                            "fa-screwdriver-wrench";
+
+                    }
+
+
+                    list.innerHTML += `
+
+                        <div class="activity-item">
+
+                            <h4>
+
+                                <i
+                                    class="fa-solid ${icon}"
+                                ></i>
+
+                                ${activity.type}
+
+                                -
+
+                                ${activity.title}
+
+                            </h4>
+
+
+                            <p>
+
+                                ${activity.details}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Status:
+                                </strong>
+
+                                ${activity.status}
+
+                            </p>
+
+
+                            <p>
+
+                                <i
+                                    class="fa-regular fa-clock"
+                                ></i>
+
+                                ${formattedDate}
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "activityModal"
+            )
+            .classList.add("active");
+
+    }
+
+
+    /* =========================================
+       OPEN ACCOUNT
+    ========================================== */
+
+    function openAccount() {
+
+        if (
+            !currentUserEmail ||
+            !users[currentUserEmail]
+        ) {
+
+            openLogin();
+
+            return;
+
+        }
+
+
+        const user =
+            users[currentUserEmail];
+
+
+        document
+            .getElementById("accountName")
+            .textContent =
+            user.name;
+
+
+        document
+            .getElementById("accountEmail")
+            .textContent =
+            user.email;
+
+
+        document
+            .getElementById("accountPhone")
+            .textContent =
+            user.phone;
+
+
+        document
+            .getElementById("accountCreated")
+            .textContent =
+            new Date(
+                user.createdAt
+            ).toLocaleString();
+
+
+        document
+            .getElementById("userDropdown")
+            .classList.remove("show");
+
+
+        document
+            .getElementById("accountModal")
+            .classList.add("active");
+
+    }
+
+
+    /* =========================================
+       CLOSE MODAL
+    ========================================== */
+
+    function closeModal(id) {
+
+        document
+            .getElementById(id)
+            .classList.remove("active");
+
+    }
+
+
+    /* =========================================
+       SHOW ERROR
+    ========================================== */
+
+    function showError(
+        element,
+        message
+    ) {
+
+        element.textContent =
+            message;
+
+        element.style.display =
+            "block";
+
+    }
+
+
+    /* =========================================
+       TOAST
+    ========================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        document
+            .getElementById(
+                "toastMessage"
+            )
+            .textContent =
+            message;
+
+
+        toast.classList.add("show");
+
+
+        setTimeout(
+            function() {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+    }
+
+
+    /* =========================================
+       CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+    ========================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const userArea =
+                document.getElementById(
+                    "userArea"
+                );
+
+
+            if (
+                !userArea.contains(
+                    event.target
+                )
+            ) {
+
+                document
+                    .getElementById(
+                        "userDropdown"
+                    )
+                    .classList.remove(
+                        "show"
+                    );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       CLOSE MODALS WHEN CLICKING OUTSIDE
+    ========================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target.classList
+                    .contains("modal")
+            ) {
+
+                event.target
+                    .classList
+                    .remove("active");
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>

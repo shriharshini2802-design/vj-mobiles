@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VM Mobiles - Track Order / Service</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #02142f;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            width: 100%;
+            height: 105px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 12px 45px;
+
+            background: #031633;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            border: 3px solid #35d11d;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav {
+            display: flex;
+            align-items: center;
+
+            gap: 32px;
+        }
+
+
+        .nav-link {
+            position: relative;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .nav-link:hover {
+            color: #35d11d;
+        }
+
+
+        .nav-link::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: -8px;
+
+            width: 0;
+            height: 2px;
+
+            background: #35d11d;
+
+            transition: 0.3s;
+        }
+
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+
+        /* ADMIN LOGIN */
+
+        .admin-btn {
+            border: none;
+
+            background: #35d11d;
+
+            color: #ffffff;
+
+            padding: 14px 22px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .admin-btn:hover {
+            background: #28ae15;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           MAIN SECTION
+        ===================================================== */
+
+        .main {
+            width: 100%;
+
+            min-height: calc(100vh - 105px);
+
+            padding: 35px 40px 30px;
+
+            background:
+                radial-gradient(
+                    circle at 78% 45%,
+                    rgba(0, 104, 255, 0.12),
+                    transparent 35%
+                ),
+                #02142f;
+        }
+
+
+        .content {
+            width: 100%;
+            max-width: 1450px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 45px;
+        }
+
+
+        /* =====================================================
+           LEFT TRACKING CARD
+        ===================================================== */
+
+        .track-box {
+            width: 52%;
+
+            padding: 32px;
+
+            background: rgba(3, 27, 56, 0.90);
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.28);
+        }
+
+
+        .track-box h1 {
+            font-size: 32px;
+
+            line-height: 1.2;
+
+            margin-bottom: 12px;
+        }
+
+
+        .subtitle {
+            color: #cdd5e1;
+
+            font-size: 17px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           ORDER / SERVICE TABS
+        ===================================================== */
+
+        .tabs {
+            display: flex;
+
+            margin-bottom: 18px;
+        }
+
+
+        .tab {
+            border: none;
+
+            padding: 14px 30px;
+
+            background: #102945;
+
+            color: #d9dee7;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .tab:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+
+        .tab:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+
+        .tab:hover {
+            background: #1a385b;
+        }
+
+
+        .tab.active {
+            background: #35d11d;
+
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           INPUT ROW
+        ===================================================== */
+
+        .input-row {
+            width: 100%;
+
+            display: flex;
+
+            margin-bottom: 24px;
+        }
+
+
+        .input-row input {
+            flex: 1;
+
+            height: 62px;
+
+            border: none;
+            outline: none;
+
+            padding: 0 20px;
+
+            background: #f4f4f4;
+
+            color: #222;
+
+            font-size: 16px;
+
+            border-radius: 10px 0 0 10px;
+        }
+
+
+        .input-row input::placeholder {
+            color: #777;
+        }
+
+
+        .track-btn {
+            width: 190px;
+
+            height: 62px;
+
+            border: none;
+
+            background: #35d11d;
+
+            color: #ffffff;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            border-radius: 0 10px 10px 0;
+
+            transition: 0.3s;
+        }
+
+
+        .track-btn:hover {
+            background: #28ae15;
+        }
+
+
+        /* =====================================================
+           OR
+        ===================================================== */
+
+        .or {
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 20px;
+
+            margin: 3px 0 20px;
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        .or::before,
+        .or::after {
+            content: "";
+
+            height: 1px;
+
+            flex: 1;
+
+            background: rgba(255,255,255,0.15);
+        }
+
+
+        /* =====================================================
+           INFO BOX
+        ===================================================== */
+
+        .info {
+            width: 100%;
+
+            padding: 16px 18px;
+
+            background: rgba(20, 53, 91, 0.65);
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 8px;
+
+            color: #e1e7ef;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           RIGHT IMAGE
+        ===================================================== */
+
+        .visual {
+            width: 46%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .visual img {
+            width: 100%;
+
+            max-width: 650px;
+
+            height: auto;
+
+            display: block;
+
+            object-fit: contain;
+        }
+
+
+        /* =====================================================
+           TRACKING STATUS
+        ===================================================== */
+
+        .tracking {
+            width: 100%;
+
+            max-width: 1450px;
+
+            margin: 45px auto 0;
+
+            padding: 0 10px;
+        }
+
+
+        .steps {
+            width: 100%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            position: relative;
+        }
+
+
+        /* LINE */
+
+        .steps::before {
+            content: "";
+
+            position: absolute;
+
+            top: 31px;
+
+            left: 45px;
+
+            right: 45px;
+
+            height: 4px;
+
+            background: #c7cbd2;
+
+            z-index: 0;
+        }
+
+
+        .progress-line {
+            position: absolute;
+
+            top: 31px;
+
+            left: 45px;
+
+            width: 0;
+
+            height: 4px;
+
+            background: #35d11d;
+
+            z-index: 0;
+
+            transition: width 0.8s ease;
+        }
+
+
+        .step {
+            width: 16.66%;
+
+            text-align: center;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        .step-icon {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto;
+
+            border-radius: 50%;
+
+            background: #061b39;
+
+            border: 3px solid #d3d8df;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            transition: 0.4s;
+        }
+
+
+        .step.active .step-icon {
+            background: #35d11d;
+
+            border-color: #35d11d;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 0 18px rgba(53,209,29,0.35);
+        }
+
+
+        .step.completed .step-icon {
+            border-color: #35d11d;
+
+            color: #35d11d;
+        }
+
+
+        .step-text {
+            margin-top: 14px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #f1f3f6;
+        }
+
+
+        /* =====================================================
+           POPUP
+        ===================================================== */
+
+        .overlay {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,0.65);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: 0.3s;
+
+            z-index: 1000;
+        }
+
+
+        .overlay.show {
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+        .popup {
+            position: fixed;
+
+            top: 50%;
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                scale(0.8);
+
+            width: 380px;
+
+            max-width: calc(100% - 30px);
+
+            padding: 30px;
+
+            background: #061b39;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,0.5);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: 0.3s;
+
+            z-index: 1001;
+        }
+
+
+        .popup.show {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+        }
+
+
+        .popup-icon {
+            width: 62px;
+            height: 62px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #35d11d;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
+
+        .popup h2 {
+            margin-bottom: 10px;
+
+            font-size: 23px;
+        }
+
+
+        .popup p {
+            color: #cbd4e1;
+
+            line-height: 1.5;
+
+            margin-bottom: 20px;
+        }
+
+
+        .close-popup {
+            border: none;
+
+            background: #35d11d;
+
+            color: #ffffff;
+
+            padding: 11px 25px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .close-popup:hover {
+            background: #28ae15;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - TABLET
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .header {
+                padding: 12px 25px;
+            }
+
+
+            .content {
+                flex-direction: column;
+            }
+
+
+            .track-box {
+                width: 100%;
+            }
+
+
+            .visual {
+                width: 100%;
+            }
+
+
+            .visual img {
+                max-width: 600px;
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .header {
+                height: auto;
+
+                min-height: 80px;
+
+                padding: 10px 15px;
+            }
+
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+
+            .nav {
+                gap: 10px;
+            }
+
+
+            .nav-link {
+                font-size: 12px;
+            }
+
+
+            .admin-btn {
+                padding: 10px 12px;
+
+                font-size: 11px;
+            }
+
+
+            .main {
+                padding: 20px 15px 25px;
+            }
+
+
+            .track-box {
+                padding: 22px 18px;
+            }
+
+
+            .track-box h1 {
+                font-size: 24px;
+            }
+
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+
+            .input-row {
+                flex-direction: column;
+            }
+
+
+            .input-row input {
+                width: 100%;
+
+                height: 55px;
+
+                border-radius: 8px;
+
+                margin-bottom: 8px;
+            }
+
+
+            .track-btn {
+                width: 100%;
+
+                height: 55px;
+
+                border-radius: 8px;
+            }
+
+
+            .tracking {
+                overflow-x: auto;
+
+                padding-bottom: 10px;
+            }
+
+
+            .steps {
+                min-width: 800px;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 450px) {
+
+            .header {
+                align-items: center;
+            }
+
+
+            .logo {
+                width: 52px;
+                height: 52px;
+            }
+
+
+            .nav {
+                gap: 7px;
+            }
+
+
+            .nav-link {
+                font-size: 10px;
+            }
+
+
+            .admin-btn {
+                padding: 8px 9px;
+
+                font-size: 9px;
+            }
+
+
+            .tabs {
+                width: 100%;
+            }
+
+
+            .tab {
+                flex: 1;
+
+                padding: 12px 7px;
+
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="header">
+
+        <!-- Your logo -->
+        <a href="index.html" class="logo">
+            <img
+                src="logo.png"
+                alt="VM Mobiles Logo"
+            >
+        </a>
+
+
+        <!-- Navigation -->
+        <nav class="nav">
+
+            <!-- BOOKINGS -->
+
+    <a href="index.html" class="nav-link">
+        Home
+    </a>
+
+    <a href="services.html" class="nav-link">
+        Services
+    </a>
+
+    <a href="accessories.html" class="nav-link">
+        Accessories
+    </a>
+
+    <a href="trackorder.html" class="nav-link active">
+        Track Order
+    </a>
+
+    <a href="contact.html" class="nav-link">
+        Contact
+    </a>
+
+</nav>
+
+            <!-- ADMIN LOGIN -->
+            <button class="admin-btn" onclick="window.location.href='adminlogin.html'">
+    ♙ Admin Login
+</button>
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main">
+
+
+        <div class="content">
+
+
+            <!-- =================================================
+                 LEFT TRACKING SECTION
+            ================================================= -->
+
+            <section class="track-box">
+
+
+                <h1>
+                    TRACK YOUR ORDER / SERVICE
+                </h1>
+
+
+                <p class="subtitle">
+                    Enter your details to track
+                </p>
+
+
+
+                <!-- ORDER / SERVICE TAB -->
+
+                <div class="tabs">
+
+                    <button
+                        class="tab active"
+                        id="orderTab"
+                        onclick="selectTab('order')"
+                    >
+                        ORDER ID
+                    </button>
+
+
+                    <button
+                        class="tab"
+                        id="serviceTab"
+                        onclick="selectTab('service')"
+                    >
+                        SERVICE ID
+                    </button>
+
+                </div>
+
+
+
+                <!-- ID INPUT -->
+
+                <div class="input-row">
+
+                    <input
+                        type="text"
+                        id="idInput"
+                        placeholder="e.g. ORD-10025"
+                    >
+
+
+                    <button
+                        class="track-btn"
+                        onclick="trackById()"
+                    >
+                        TRACK NOW
+                    </button>
+
+                </div>
+
+
+
+                <!-- OR -->
+
+                <div class="or">
+                    OR
+                </div>
+
+
+
+                <!-- MOBILE NUMBER -->
+
+                <div class="input-row">
+
+                    <input
+                        type="tel"
+                        id="mobileInput"
+                        placeholder="e.g. 9876543210"
+                        maxlength="10"
+                    >
+
+
+                    <button
+                        class="track-btn"
+                        onclick="trackByMobile()"
+                    >
+                        TRACK NOW
+                    </button>
+
+                </div>
+
+
+
+                <!-- INFORMATION -->
+
+                <div class="info">
+
+                    ℹ️ &nbsp;
+
+                    You will see real-time updates of your
+                    order / service status
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RIGHT IMAGE
+            ================================================= -->
+
+            <section class="visual">
+
+                <img
+                    src="tracking.png"
+                    alt="Order Tracking"
+                >
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             TRACKING STATUS
+        ===================================================== -->
+
+        <section class="tracking">
+
+
+            <div class="steps">
+
+
+                <!-- GREEN PROGRESS LINE -->
+
+                <div
+                    class="progress-line"
+                    id="progressLine"
+                ></div>
+
+
+
+                <!-- STEP 1 -->
+
+                <div
+                    class="step active"
+                    id="step1"
+                >
+
+                    <div class="step-icon">
+                        📋
+                    </div>
+
+                    <p class="step-text">
+                        Order Placed
+                    </p>
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div
+                    class="step"
+                    id="step2"
+                >
+
+                    <div class="step-icon">
+                        📄
+                    </div>
+
+                    <p class="step-text">
+                        Admin Approved
+                    </p>
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div
+                    class="step"
+                    id="step3"
+                >
+
+                    <div class="step-icon">
+                        📦
+                    </div>
+
+                    <p class="step-text">
+                        Order Packed
+                    </p>
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div
+                    class="step"
+                    id="step4"
+                >
+
+                    <div class="step-icon">
+                        🚚
+                    </div>
+
+                    <p class="step-text">
+                        Shipped
+                    </p>
+
+                </div>
+
+
+
+                <!-- STEP 5 -->
+
+                <div
+                    class="step"
+                    id="step5"
+                >
+
+                    <div class="step-icon">
+                        🛵
+                    </div>
+
+                    <p class="step-text">
+                        Out for Delivery
+                    </p>
+
+                </div>
+
+
+
+                <!-- STEP 6 -->
+
+                <div
+                    class="step"
+                    id="step6"
+                >
+
+                    <div class="step-icon">
+                        ✓
+                    </div>
+
+                    <p class="step-text">
+                        Delivered
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         POPUP OVERLAY
+    ===================================================== -->
+
+    <div
+        class="overlay"
+        id="overlay"
+        onclick="closePopup()"
+    ></div>
+
+
+
+    <!-- =====================================================
+         POPUP
+    ===================================================== -->
+
+    <div
+        class="popup"
+        id="popup"
+    >
+
+        <div class="popup-icon">
+            ✓
+        </div>
+
+
+        <h2 id="popupTitle">
+            Tracking Started
+        </h2>
+
+
+        <p id="popupMessage">
+            Your tracking details are being processed.
+        </p>
+
+
+        <button
+            class="close-popup"
+            onclick="closePopup()"
+        >
+            OK
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           CURRENT TAB
+        ===================================================== */
+
+        let currentTab = "order";
+
+
+
+        /* =====================================================
+           SELECT ORDER / SERVICE
+        ===================================================== */
+
+        function selectTab(type) {
+
+            currentTab = type;
+
+
+            const orderTab =
+                document.getElementById("orderTab");
+
+            const serviceTab =
+                document.getElementById("serviceTab");
+
+            const input =
+                document.getElementById("idInput");
+
+
+            orderTab.classList.remove("active");
+
+            serviceTab.classList.remove("active");
+
+
+            if (type === "order") {
+
+                orderTab.classList.add("active");
+
+                input.placeholder =
+                    "e.g. ORD-10025";
+
+            }
+
+
+            else {
+
+                serviceTab.classList.add("active");
+
+                input.placeholder =
+                    "e.g. SER-10025";
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           TRACK BY ORDER / SERVICE ID
+        ===================================================== */
+
+        function trackById() {
+
+            const input =
+                document.getElementById("idInput");
+
+            const value =
+                input.value.trim();
+
+
+            if (value === "") {
+
+                showPopup(
+                    "Enter Details",
+                    "Please enter your Order ID or Service ID."
+                );
+
+                input.focus();
+
+                return;
+            }
+
+
+            if (currentTab === "order") {
+
+                showPopup(
+                    "Order Found",
+                    "Tracking started for Order ID: " + value
+                );
+
+            }
+
+
+            else {
+
+                showPopup(
+                    "Service Found",
+                    "Tracking started for Service ID: " + value
+                );
+
+            }
+
+
+            startTracking();
+
+        }
+
+
+
+        /* =====================================================
+           TRACK BY MOBILE NUMBER
+        ===================================================== */
+
+        function trackByMobile() {
+
+            const input =
+                document.getElementById("mobileInput");
+
+            const mobile =
+                input.value.trim();
+
+
+            if (mobile === "") {
+
+                showPopup(
+                    "Enter Mobile Number",
+                    "Please enter your mobile number."
+                );
+
+                input.focus();
+
+                return;
+            }
+
+
+            if (!/^[0-9]{10}$/.test(mobile)) {
+
+                showPopup(
+                    "Invalid Number",
+                    "Please enter a valid 10-digit mobile number."
+                );
+
+                input.focus();
+
+                return;
+            }
+
+
+            showPopup(
+                "Tracking Started",
+                "Tracking details found for mobile number: " + mobile
+            );
+
+
+            startTracking();
+
+        }
+
+
+
+        /* =====================================================
+           START TRACKING ANIMATION
+        ===================================================== */
+
+        function startTracking() {
+
+            const steps =
+                document.querySelectorAll(".step");
+
+            const progressLine =
+                document.getElementById("progressLine");
+
+
+            /* RESET */
+
+            steps.forEach(function(step, index) {
+
+                if (index !== 0) {
+
+                    step.classList.remove("active");
+
+                    step.classList.remove("completed");
+
+                }
+
+            });
+
+
+            progressLine.style.width = "0%";
+
+
+            let currentStep = 0;
+
+
+            const timer =
+                setInterval(function() {
+
+
+                    if (currentStep >= steps.length) {
+
+                        clearInterval(timer);
+
+                        return;
+
+                    }
+
+
+                    steps[currentStep]
+                        .classList.add("active");
+
+
+                    if (currentStep > 0) {
+
+                        steps[currentStep - 1]
+                            .classList.add("completed");
+
+                    }
+
+
+                    /* Calculate progress */
+
+                    const percentage =
+                        (currentStep /
+                        (steps.length - 1)) * 100;
+
+
+                    progressLine.style.width =
+                        "calc(" + percentage + "% - 0px)";
+
+
+                    currentStep++;
+
+
+                }, 700);
+
+        }
+
+
+
+        /* =====================================================
+           POPUP
+        ===================================================== */
+
+        function showPopup(title, message) {
+
+            document.getElementById("popupTitle")
+                .textContent = title;
+
+
+            document.getElementById("popupMessage")
+                .textContent = message;
+
+
+            document.getElementById("popup")
+                .classList.add("show");
+
+
+            document.getElementById("overlay")
+                .classList.add("show");
+
+        }
+
+
+
+        /* =====================================================
+           CLOSE POPUP
+        ===================================================== */
+
+        function closePopup() {
+
+            document.getElementById("popup")
+                .classList.remove("show");
+
+
+            document.getElementById("overlay")
+                .classList.remove("show");
+
+        }
+
+
+
+        /* =====================================================
+           ADMIN LOGIN
+        ===================================================== */
+
+        function openAdminLogin() {
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+
+
+
+        /* =====================================================
+           ENTER KEY SUPPORT
+        ===================================================== */
+
+        document
+            .getElementById("idInput")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    trackById();
+
+                }
+
+            });
+
+
+        document
+            .getElementById("mobileInput")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    trackByMobile();
+
+                }
+
+            });
+
+
+    </script>
+
+</body>
+</html>

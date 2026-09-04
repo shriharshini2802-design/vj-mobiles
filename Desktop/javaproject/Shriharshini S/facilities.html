@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Facilities | Grand Horizon Hotel</title>
+
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    background-image: url(ground.jpg);
+
+}
+
+/* Navbar */
+
+header{
+    background:#2c2302;
+    padding:15px 30px;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:gold;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+}
+
+/* Heading */
+
+.title{
+    text-align:center;
+    padding:60px 0;
+}
+
+.title h1{
+    color:#abbbe1;
+    font-size:42px;
+}
+
+.title p{
+    color:#e3d8d8;
+    margin-top:10px;
+}
+
+/* Facilities */
+
+.facilities{
+    width:90%;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:30px;
+
+    padding-bottom:70px;
+}
+
+.card{
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+
+    transition:0.3s;
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+}
+
+.content{
+
+    padding:20px;
+}
+
+.content h2{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.content p{
+    color:#555;
+    line-height:1.6;
+}
+
+footer{
+    background:#2c2302;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+</style>
+</head>
+<body>
+<header>
+<nav>
+
+<div class="logo">
+Grand Horizon
+</div>
+
+<ul>
+
+<li><a href="main.html">Home</a></li>
+
+<li><a href="rooms.html">Rooms</a></li>
+
+<li><a href="facilities.html">Facilities</a></li>
+
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="review.html">Review</a></li>
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+
+<section class="title">
+
+<h1>Our Facilities</h1>
+
+<p>
+Enjoy world-class amenities during your stay
+</p>
+
+</section>
+
+
+<section class="facilities">
+
+<div class="card">
+
+<img src="pool.jpg">
+
+<div class="content">
+
+<h2>Swimming Pool</h2>
+
+<p>
+Relax in our luxurious outdoor pool with
+beautiful surroundings.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="gym.jpg">
+
+<div class="content">
+
+<h2>Fitness Center</h2>
+
+<p>
+Modern gym equipped with advanced fitness
+machines and trainers.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="spa.jpg">
+
+<div class="content">
+
+<h2>Spa & Wellness</h2>
+
+<p>
+Experience rejuvenation through massage,
+therapy and wellness treatments.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="restaurant.jpg">
+
+<div class="content">
+
+<h2>Restaurant</h2>
+
+<p>
+Taste delicious international cuisines
+prepared by expert chefs.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="conference.jpg">
+
+<div class="content">
+
+<h2>Conference Hall</h2>
+
+<p>
+Perfect venue for meetings, seminars,
+events and corporate gatherings.
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="pickup.jpg">
+
+<div class="content">
+
+<h2>Airport Pickup</h2>
+
+<p>
+Convenient transportation services
+available 24/7 for our guests.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+
+© 2026 Grand Horizon Hotel & Resort |
+All Rights Reserved
+
+</p>
+
+</footer>
+
+</body>
+</html>

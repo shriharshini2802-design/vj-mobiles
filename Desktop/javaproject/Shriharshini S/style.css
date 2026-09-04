@@ -1,0 +1,90 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background-size: center;
+background-image: url(home.jpg);
+}
+
+header{
+background:#2c2302;
+padding:15px 30px;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+color:gold;
+font-size:28px;
+font-weight:bold;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:30px;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+font-size:18px;
+font-weight: 600;
+}
+
+.hero{
+height:90vh;
+background:url("hotel.jpg");
+background-size:cover;
+background-position:center;
+
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+margin-top:140px;
+margin-right: 500px;
+}
+
+.content{
+background:rgba(0,0,0,0.5);
+padding:40px;
+border-radius:10px;
+}
+
+.content h1{
+color:white;
+font-size:50px;
+margin-bottom:20px;
+}
+
+.content p{
+color:white;
+font-size:18px;
+margin-bottom:25px;
+}
+
+button{
+padding:12px 30px;
+border:none;
+background:gold;
+font-size:18px;
+cursor:pointer;
+border-radius:5px;
+}
+
+footer{
+    background:#2c2302;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:50px;
+}

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Executive Room Booking</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(0,0,0,0.65),
+rgba(0,0,0,0.65)),
+url("executive.jpg");
+
+background-size:cover;
+background-position:center;
+
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.booking-box{
+
+width:520px;
+
+background:rgba(20,20,20,0.9);
+
+padding:40px;
+
+border-radius:15px;
+
+backdrop-filter:blur(10px);
+
+box-shadow:0 0 20px rgba(212,175,55,0.3);
+
+}
+
+.booking-box h1{
+
+text-align:center;
+
+color:#D4AF37;
+
+margin-bottom:10px;
+
+}
+
+.booking-box p{
+
+text-align:center;
+
+color:white;
+
+margin-bottom:30px;
+
+}
+
+.room-details{
+
+background:#1a1a1a;
+
+padding:18px;
+
+border-radius:8px;
+
+margin-bottom:25px;
+
+}
+
+.room-details h3{
+
+color:#D4AF37;
+
+margin-bottom:12px;
+
+}
+
+.room-details ul{
+
+padding-left:20px;
+
+color:white;
+
+}
+
+.room-details li{
+
+margin-bottom:8px;
+
+}
+
+.input-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+color:white;
+
+margin-bottom:8px;
+
+}
+
+input{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+outline:none;
+
+border-radius:5px;
+
+background:#222;
+
+color:white;
+
+}
+
+.btn{
+
+width:100%;
+
+padding:15px;
+
+background:#D4AF37;
+
+border:none;
+
+border-radius:5px;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+margin-top:10px;
+
+}
+
+.btn:hover{
+
+background:#c99f2c;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="booking-box">
+
+<h1>Executive Room</h1>
+
+<p>Experience Premium Comfort</p>
+
+<div class="room-details">
+
+<h3>Room Features</h3>
+
+<ul>
+
+<li>King Size Bed</li>
+
+<li>Mini Bar</li>
+
+<li>Smart TV</li>
+
+<li>City View</li>
+
+<li>Luxury Bathroom</li>
+
+<li>Free Wi-Fi</li>
+
+<li>24/7 Room Service</li>
+
+</ul>
+
+</div>
+
+<form>
+
+<div class="input-group">
+
+<label>Guest Name</label>
+
+<input type="text"
+placeholder="Enter Your Name">
+
+</div>
+
+<div class="input-group">
+
+<label>Email Address</label>
+
+<input type="email"
+placeholder="Enter Email">
+
+</div>
+
+<div class="input-group">
+
+<label>Phone Number</label>
+
+<input type="tel"
+placeholder="Phone Number">
+
+</div>
+
+<div class="input-group">
+
+<label>Check-In Date</label>
+
+<input type="date">
+
+</div>
+
+<div class="input-group">
+
+<label>Check-Out Date</label>
+
+<input type="date">
+
+</div>
+
+<div class="input-group">
+
+<label>Guests</label>
+
+<input type="number"
+min="1"
+max="6">
+
+</div>
+
+<button class="btn">
+
+Confirm Booking
+
+</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

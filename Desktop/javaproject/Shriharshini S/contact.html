@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact Us</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(0,0,0,0.6),
+rgba(0,0,0,0.6)),
+url("contact-bg.jpg");
+
+background-size:cover;
+background-position:center;
+background-image: url(ground.jpg);
+height:100vh;
+
+}
+
+header{
+
+    background:#2c2302;
+    padding:15px 30px;
+
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    color:#d4af37;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:40px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+}
+
+nav ul li a:hover{
+    color:#d4af37;
+}
+
+.container{
+
+width:90%;
+margin:auto;
+padding-top: 120px;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+gap:100px;
+
+min-height: 100vh;
+
+}
+
+/* Left Box */
+
+.contact-box{
+
+width:330px;
+
+padding:35px;
+
+background:rgba(255,255,255,0.1);
+
+backdrop-filter:blur(10px);
+
+border-radius:20px;
+
+color:white;
+
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+
+}
+
+.contact-box h2{
+
+font-size:35px;
+
+margin-bottom:25px;
+
+color:#d4af37;
+
+}
+
+.contact-box p{
+
+margin-bottom:18px;
+
+font-size:17px;
+
+line-height:30px;
+
+}
+
+/* Form */
+
+.form-box{
+
+width:600px;
+
+padding:40px;
+
+background:white;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+}
+
+.form-box h2{
+
+margin-bottom:25px;
+
+color:#333;
+
+}
+
+input,textarea{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:18px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+textarea{
+
+height:150px;
+
+resize:none;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+background:#d4af37;
+
+font-size:18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+button:hover{
+
+background:#b88c1d;
+
+}
+footer{
+
+    background:#2c2302;
+
+padding:25px;
+
+text-align:center;
+
+color:white;
+
+font-size:17px;
+
+font-family:Arial, Helvetica, sans-serif;
+
+border-top:1px solid rgba(255,255,255,0.1);
+
+}
+
+footer p{
+
+letter-spacing:0.5px;
+
+}
+
+</style>
+
+</head>
+<script>
+
+function sendMessage(){
+
+alert("Message has been sent successfully!");
+
+}
+</script>
+<body>
+<header>
+<div class="logo">
+Grand Horizon
+</div>
+<nav>
+<ul>
+<li><a href="main.html">Home</a></li>
+<li><a href="rooms.html">Rooms</a></li>
+<li><a href="facilities.html">Facilities</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="review.html">Reviews</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</nav>
+</header>
+<div class="container">
+<div class="contact-box">
+<h2>Contact Us</h2>
+<p>📍 Grand Horizon Hotel,<br>
+Chennai, Tamil Nadu</p>
+<p>📞 +91 9876543210</p>
+<p>✉ info@grandhorizon.com</p>
+<p>🕒 Open 24 Hours</p>
+</div>
+<div class="form-box">
+<h2>Send Message</h2>
+
+<input type="text" placeholder="Your Name">
+
+<input type="email" placeholder="Email Address">
+
+<input type="text" placeholder="Phone Number">
+
+<textarea placeholder="Message"></textarea>
+
+<button onclick="sendMessage()">
+Send Message
+</button>
+
+</div>
+
+</div>
+<footer>
+
+<p>
+© 2026 Grand Horizon Hotel & Resort | All Rights Reserved
+</p>
+
+</footer>
+
+</body>
+</html>

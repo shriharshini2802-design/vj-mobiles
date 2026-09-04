@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VJ Mobiles | Contact Us</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    color:white;
+    background:
+        radial-gradient(circle at 15% 30%,rgba(0,100,255,.18),transparent 35%),
+        radial-gradient(circle at 85% 70%,rgba(0,255,80,.08),transparent 35%),
+        #020b1c;
+    min-height:100vh;
+}
+
+/* ================= NAVBAR ================= */
+
+header{
+    height:86px;
+    background:rgba(2,10,27,.97);
+    border-bottom:1px solid #1c89a8;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 4%;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    width:125px;
+    height:125px;
+    border-radius: 50%;
+    object-fit:contain;
+    margin-top:30px;
+    z-index:10;
+}
+
+nav{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:42px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-size:16px;
+    font-weight:500;
+    position:relative;
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#65ff18;
+}
+
+nav a.active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-12px;
+    height:3px;
+    background:#65ff18;
+    border-radius:5px;
+}
+
+.admin-btn{
+    background-color: #0cef14;
+    background:linear-gradient(135deg,#0cef14,#22dc37);
+    padding:12px 24px;
+    border-radius:10px;
+    color:rgb(234, 241, 233)!important;
+    font-weight:600;
+    box-shadow:0 0 18px rgba(22, 243, 29, 0.997);
+}
+
+/* ================= HERO ================= */
+
+.contact-hero{
+    min-height:330px;
+
+    display:flex;
+    align-items:center;
+
+    padding:45px 5%;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,12,30,.97),
+            rgba(2,20,45,.70),
+            rgba(2,10,25,.35)
+        ),
+        url("contact-bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:650px;
+}
+
+.get-touch{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:8px 18px;
+
+    border:1px solid #00aaff;
+    border-radius:30px;
+
+    color:#bdeaff;
+
+    margin-bottom:12px;
+}
+
+.contact-hero h1{
+    font-size:68px;
+    line-height:1;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.contact-hero h1 span{
+    color:#65ff18;
+}
+
+.contact-hero p{
+    margin-top:25px;
+    color:#e1e9f2;
+    font-size:19px;
+    line-height:1.6;
+}
+
+/* ================= MAIN ================= */
+
+.contact-section{
+    width:94%;
+    max-width:1450px;
+
+    margin:20px auto 10px;
+
+    display:grid;
+    grid-template-columns:390px 1fr;
+
+    gap:16px;
+}
+
+/* ================= CONTACT INFO ================= */
+
+.contact-info{
+    border:1px solid #079fd2;
+    border-radius:20px;
+
+    padding:24px 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5,37,78,.92),
+            rgba(2,17,40,.95)
+        );
+
+    box-shadow:inset 0 0 30px rgba(0,120,255,.06);
+}
+
+.section-title{
+    text-align:center;
+
+    font-size:22px;
+    font-weight:700;
+
+    margin-bottom:28px;
+}
+
+.section-title::after{
+    content:"";
+
+    display:block;
+
+    width:65px;
+    height:3px;
+
+    background:#65ff18;
+
+    margin:8px auto 0;
+
+    border-radius:5px;
+}
+
+.info-item{
+    display:flex;
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:20px;
+}
+
+.info-icon{
+    width:58px;
+    height:58px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #00baff;
+    border-radius:14px;
+
+    font-size:27px;
+
+    background:rgba(0,70,130,.25);
+
+    box-shadow:
+        0 0 12px rgba(0,190,255,.35),
+        inset 0 0 15px rgba(0,100,255,.12);
+}
+
+.info-icon.green{
+    color:#65ff18;
+}
+
+.info-text h3{
+    font-size:15px;
+    margin-bottom:4px;
+}
+
+.info-text p{
+    color:#d2dce8;
+    font-size:13px;
+    line-height:1.5;
+}
+
+/* ================= MESSAGE ================= */
+
+.message-box{
+    border:1px solid #079fd2;
+    border-radius:20px;
+
+    padding:24px 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(5,37,78,.92),
+            rgba(2,17,40,.95)
+        );
+
+    position:relative;
+}
+
+.message-box .section-title{
+    margin-bottom:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-box input,
+.input-box select,
+.input-box textarea{
+
+    width:100%;
+
+    background:rgba(2,18,42,.8);
+
+    border:1px solid #087db8;
+
+    border-radius:9px;
+
+    color:white;
+
+    padding:14px 15px 14px 48px;
+
+    outline:none;
+
+    font-family:'Poppins',sans-serif;
+
+    transition:.3s;
+}
+
+.input-box input:focus,
+.input-box select:focus,
+.input-box textarea:focus{
+    border-color:#65ff18;
+    box-shadow:0 0 10px rgba(101,255,24,.12);
+}
+
+.input-box textarea{
+    min-height:130px;
+    resize:none;
+}
+
+.input-icon{
+    position:absolute;
+
+    left:16px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#00aaff;
+
+    font-size:18px;
+
+    z-index:2;
+}
+
+.textarea-box{
+    grid-column:1 / -1;
+}
+
+.textarea-box .input-icon{
+    top:25px;
+}
+
+.send-btn{
+    width:100%;
+
+    margin-top:15px;
+
+    padding:13px;
+
+    border:none;
+    border-radius:9px;
+
+    background:linear-gradient(
+        135deg,
+        #61f51d,
+        #18a624
+    );
+
+    color:#041004;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:17px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.send-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(101,255,24,.4);
+}
+
+/* ================= SUPPORT IMAGE ================= */
+
+.support-image{
+    position:absolute;
+
+    right:25px;
+    bottom:20px;
+
+    width:230px;
+
+    opacity:.9;
+
+    pointer-events:none;
+}
+
+.message-box form{
+    position:relative;
+    z-index:2;
+}
+
+/* ================= BENEFITS ================= */
+
+.benefits{
+    width:94%;
+    max-width:1450px;
+
+    margin:0 auto 10px;
+
+    padding:16px 25px;
+
+    border:1px solid #078fc4;
+    border-radius:18px;
+
+    background:rgba(3,25,53,.9);
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.benefit{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:13px;
+
+    border-right:1px solid rgba(120,170,200,.25);
+}
+
+.benefit:last-child{
+    border:none;
+}
+
+.benefit-icon{
+    font-size:31px;
+    color:#65ff18;
+}
+
+.benefit h3{
+    font-size:15px;
+}
+
+.benefit p{
+    color:#aebccc;
+    font-size:12px;
+    margin-top:2px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    width:94%;
+    max-width:1450px;
+
+    margin:0 auto 15px;
+
+    border:1px solid #078fc4;
+    border-radius:15px;
+
+    padding:14px;
+
+    text-align:center;
+
+    background:rgba(3,25,53,.8);
+
+    color:#c9d7e7;
+
+    font-size:17px;
+}
+
+.footer span{
+    color:#65ff18;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    nav{
+        gap:20px;
+    }
+
+    .contact-section{
+        grid-template-columns:1fr;
+    }
+
+    .support-image{
+        display:none;
+    }
+
+}
+
+@media(max-width:700px){
+
+    header{
+        height:auto;
+        padding:12px 20px;
+        flex-wrap:wrap;
+    }
+
+    .logo{
+        width:80px;
+        height:80px;
+        margin:0;
+    }
+
+    nav{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:15px;
+        margin-top:10px;
+    }
+
+    nav a{
+        font-size:12px;
+    }
+
+    .contact-hero{
+        min-height:300px;
+        padding:40px 25px;
+    }
+
+    .contact-hero h1{
+        font-size:46px;
+    }
+
+    .contact-hero p{
+        font-size:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .textarea-box{
+        grid-column:auto;
+    }
+
+    .benefits{
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+    }
+
+    .benefit{
+        border:none;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .contact-hero h1{
+        font-size:38px;
+    }
+
+    .contact-section{
+        width:92%;
+    }
+
+    .contact-info,
+    .message-box{
+        padding:22px 18px;
+    }
+
+    .benefits{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+    <img src="logo.png" class="logo" alt="VJ Mobiles">
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="services.html">
+            Services
+        </a>
+
+        <a href="accessories.html">
+            Accessories
+        </a>
+
+        <a href="trackorder.html">
+            Track Order
+        </a>
+
+        <a href="contact.html" class="active">
+            Contact
+        </a>
+        <button >
+         <a href="adminlogin.html"
+           class="admin-login-btn">
+            <i class="fa-solid fa-user-shield"></i>
+            &nbsp; Admin Login
+        </a>    
+        </button>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="contact-hero">
+
+    <div class="hero-content">
+
+        <div class="get-touch">
+            💬 &nbsp; GET IN TOUCH
+        </div>
+
+        <h1>
+            CONTACT <span>US</span>
+        </h1>
+
+        <p>
+            We're here to help! Reach out to us
+            for any queries, support, or service bookings.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CONTACT SECTION ================= -->
+
+<section class="contact-section">
+
+
+    <!-- CONTACT INFORMATION -->
+
+    <div class="contact-info">
+
+        <h2 class="section-title">
+            CONTACT INFORMATION
+        </h2>
+
+
+        <div class="info-item">
+
+            <div class="info-icon green">
+                📞
+            </div>
+
+            <div class="info-text">
+
+                <h3>
+                    Phone Number
+                </h3>
+
+                <p>
+                    +91 63852 12888<br>
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-item">
+
+            <div class="info-icon green">
+                ✉
+            </div>
+
+            <div class="info-text">
+
+                <h3>
+                    Email Address
+                </h3>
+
+                <p>
+                    vjmobilesofficial@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-item">
+
+            <div class="info-icon green">
+                📍
+            </div>
+
+            <div class="info-text">
+
+                <h3>
+                    Our Location
+                </h3>
+
+                <p>
+                    Salem, Tamil Nadu, India<br>
+                    Pin Code - 636001
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-item">
+
+            <div class="info-icon green">
+                🕐
+            </div>
+
+            <div class="info-text">
+
+                <h3>
+                    Working Hours
+                </h3>
+
+                <p>
+                    Mon - Sun · 9:00 AM - 8:00 PM<br>
+
+                    <span style="color:#65ff18;">
+                        ( Open All Days )
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SEND MESSAGE -->
+
+    <div class="message-box">
+
+        <h2 class="section-title">
+            SEND US A MESSAGE
+        </h2>
+
+
+        <form id="contactForm">
+
+
+            <div class="form-grid">
+
+
+                <div class="input-box">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Your Name"
+                        required>
+
+                </div>
+
+
+
+                <div class="input-box">
+
+                    <span class="input-icon">
+                        📞
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Your Phone Number"
+                        required>
+
+                </div>
+
+
+
+                <div class="input-box">
+
+                    <span class="input-icon">
+                        ✉
+                    </span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Your Email">
+
+                </div>
+
+
+
+                <div class="input-box">
+
+                    <span class="input-icon">
+                        📋
+                    </span>
+
+                    <select id="subject">
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        <option>
+                            Mobile Service
+                        </option>
+
+                        <option>
+                            Display Problem
+                        </option>
+
+                        <option>
+                            Battery Problem
+                        </option>
+
+                        <option>
+                            Charging Problem
+                        </option>
+
+                        <option>
+                            Accessories
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="input-box textarea-box">
+
+                    <span class="input-icon">
+                        💬
+                    </span>
+
+                    <textarea
+                        id="message"
+                        placeholder="Type your message here..."
+                        required></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="send-btn">
+
+                ➤ &nbsp; SEND MESSAGE
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= BENEFITS ================= -->
+
+<section class="benefits">
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            🛡️
+        </div>
+
+        <div>
+
+            <h3>
+                Quick Response
+            </h3>
+
+            <p>
+                We reply fast
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            🏅
+        </div>
+
+        <div>
+
+            <h3>
+                Best Service
+            </h3>
+
+            <p>
+                Quality You Can Trust
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            🔒
+        </div>
+
+        <div>
+
+            <h3>
+                Secure & Safe
+            </h3>
+
+            <p>
+                Your Data is Safe
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            👍
+        </div>
+
+        <div>
+
+            <h3>
+                Customer Support
+            </h3>
+
+            <p>
+                Always Here for You
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    📍 &nbsp;
+
+    VJ Mobiles – Your Trusted Mobile Service Partner
+
+    <span>
+        ♥
+    </span>
+
+</footer>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+document
+.getElementById("contactForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+
+    const messageData = {
+
+        id: Date.now(),
+
+        type: "Contact",
+
+        name:
+            document.getElementById("name").value,
+
+        phone:
+            document.getElementById("phone").value,
+
+        email:
+            document.getElementById("email").value,
+
+        subject:
+            document.getElementById("subject").value,
+
+        message:
+            document.getElementById("message").value,
+
+        date:
+            new Date().toLocaleString(),
+
+        status:"New"
+
+    };
+
+
+    let messages =
+        JSON.parse(
+            localStorage.getItem("vjMobilesMessages")
+        ) || [];
+
+
+    messages.push(messageData);
+
+
+    localStorage.setItem(
+        "vjMobilesMessages",
+        JSON.stringify(messages)
+    );
+
+
+    alert(
+        "Thank you! Your message has been sent successfully."
+    );
+
+
+    document
+    .getElementById("contactForm")
+    .reset();
+
+});
+
+</script>
+
+
+</body>
+</html>
