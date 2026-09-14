@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -55,7 +55,7 @@
 
 
     <button class="admin-btn">
-        ♙ Admin Login
+        â™™ Admin Login
     </button>
 
 </header>
@@ -84,7 +84,7 @@
 
 
         <h2>
-            ₹<span id="productPrice">
+            â‚¹<span id="productPrice">
                 0
             </span>
         </h2>
@@ -92,9 +92,9 @@
 
         <div class="product-tags">
 
-            <span>✓ Best Quality</span>
+            <span>âœ“ Best Quality</span>
 
-            <span>✓ Warranty</span>
+            <span>âœ“ Warranty</span>
 
         </div>
 
@@ -222,7 +222,7 @@
                     </span>
 
                     <strong>
-                        ₹<span id="priceBox">
+                        â‚¹<span id="priceBox">
                             0
                         </span>
                     </strong>
@@ -252,7 +252,7 @@
                     </span>
 
                     <strong>
-                        ₹<span id="totalBox">
+                        â‚¹<span id="totalBox">
                             0
                         </span>
                     </strong>
@@ -291,7 +291,7 @@
 
         <div class="why-item">
 
-            <span>✓</span>
+            <span>âœ“</span>
 
             <div>
                 <b>Genuine</b>
@@ -303,7 +303,7 @@
 
         <div class="why-item">
 
-            <span>🔒</span>
+            <span>ðŸ”’</span>
 
             <div>
                 <b>Secure</b>
@@ -315,7 +315,7 @@
 
         <div class="why-item">
 
-            <span>🚚</span>
+            <span>ðŸšš</span>
 
             <div>
                 <b>Fast</b>
@@ -327,7 +327,7 @@
 
         <div class="why-item">
 
-            <span>✓</span>
+            <span>âœ“</span>
 
             <div>
                 <b>Quality</b>
@@ -343,6 +343,126 @@
 
 
 <script src="script.js"></script>
+
+<script type="module">
+
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* =============================================
+       OVERRIDE script.js placeOrder with Supabase
+    ============================================= */
+
+    // Wait for DOM + script.js to finish loading
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.getElementById("orderForm");
+        if (!form) return;
+
+        // Remove old submit listener added by script.js, replace with ours
+        const newForm = form.cloneNode(true);
+        form.parentNode.replaceChild(newForm, form);
+
+        newForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            await placeOrderSupabase();
+        });
+    });
+
+
+    async function placeOrderSupabase() {
+
+        // Read selected model from localStorage (set by script.js flow)
+        const modelRaw = localStorage.getItem("selectedModel");
+        const model    = modelRaw ? JSON.parse(modelRaw) : null;
+
+        const fullName = document.getElementById("fullName").value.trim();
+        const mobile   = document.getElementById("mobile").value.trim();
+        const email    = document.getElementById("email").value.trim();
+        const address  = document.getElementById("address").value.trim();
+        const qty      = parseInt(document.getElementById("quantity").value, 10) || 1;
+
+        if (!fullName || !mobile || !email || !address) {
+            alert("Please fill all the required fields.");
+            return;
+        }
+        if (!model) {
+            alert("No product selected. Please go back and choose a product.");
+            return;
+        }
+
+        const btn = document.querySelector(".place-order-button");
+        btn.textContent = "Placing Orderâ€¦";
+        btn.disabled    = true;
+
+        // Get logged-in user (optional)
+        const { data: { user } } = await supabase.auth.getUser();
+
+        // Get accessory id from DB by name
+        const { data: accRow } = await supabase
+            .from("accessories")
+            .select("id, price")
+            .ilike("product_name", model.name)
+            .single();
+
+        const unitPrice  = accRow?.price ?? model.price;
+        const totalAmt   = unitPrice * qty;
+
+        // INSERT into accessory_orders
+        const { data: order, error: orderErr } = await supabase
+            .from("accessory_orders")
+            .insert({
+                customer_id:      user?.id || null,
+                customer_name:    fullName,
+                mobile_number:    mobile,
+                email:            email,
+                delivery_address: address,
+                subtotal:         totalAmt,
+                total_amount:     totalAmt,
+                payment_method:   "Cash on Delivery",
+                payment_status:   "Pending",
+                order_status:     "Placed",
+            })
+            .select("id, order_number")
+            .single();
+
+        if (orderErr) {
+            alert("Error placing order: " + orderErr.message);
+            btn.textContent = "PLACE ORDER";
+            btn.disabled    = false;
+            return;
+        }
+
+        // INSERT order item
+        await supabase.from("accessory_order_items").insert({
+            order_id:     order.id,
+            accessory_id: accRow?.id || null,
+            product_name: model.name,
+            unit_price:   unitPrice,
+            quantity:     qty,
+            line_total:   totalAmt,
+        });
+
+        btn.textContent = "PLACE ORDER";
+        btn.disabled    = false;
+
+        // Clear localStorage
+        localStorage.removeItem("selectedModel");
+        localStorage.removeItem("selectedBrand");
+        localStorage.removeItem("selectedAccessory");
+
+        alert(
+            "Order placed successfully! ðŸŽ‰\n\n" +
+            "Order Number: " + order.order_number + "\n\n" +
+            "Save this number to track your order."
+        );
+
+        window.location.href = "trackorder.html";
+    }
+
+</script>
 
 </body>
 </html>

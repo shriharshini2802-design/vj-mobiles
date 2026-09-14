@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | VJ Mobiles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #020d1f; color: #fff; min-height: 100vh; display: flex; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px; min-height: 100vh; background: #031428;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100%;
+    }
+    .sidebar-logo {
+      padding: 22px 20px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo img { width: 46px; height: 46px; border-radius: 50%; background: #fff; }
+    .sidebar-logo span { font-size: 16px; font-weight: bold; color: #6ddd00; }
+    .sidebar nav { padding: 18px 0; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 13px;
+      padding: 13px 22px; color: #c5d0dd; text-decoration: none;
+      font-size: 14px; transition: 0.2s;
+    }
+    .nav-item:hover, .nav-item.active { background: rgba(100,255,0,0.08); color: #7fff00; border-left: 3px solid #7fff00; }
+    .nav-item i { width: 18px; text-align: center; }
+    .sidebar-footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .logout-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: 1px solid rgba(255,80,80,0.4);
+      color: #ff6b6b; padding: 10px 16px; border-radius: 7px;
+      cursor: pointer; font-size: 13px; width: 100%; transition: 0.2s;
+    }
+    .logout-btn:hover { background: rgba(255,80,80,0.1); }
+
+    /* ── MAIN ── */
+    .main { margin-left: 240px; flex: 1; padding: 28px 32px; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .topbar h1 { font-size: 22px; }
+    .topbar h1 span { color: #6ddd00; }
+    .admin-badge {
+      background: rgba(100,255,0,0.1); border: 1px solid rgba(100,255,0,0.3);
+      padding: 8px 16px; border-radius: 20px; font-size: 13px; color: #a8ff6b;
+    }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 32px;
+    }
+    .stat-card {
+      background: #041b36; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 22px 18px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .stat-icon {
+      width: 50px; height: 50px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .stat-icon.green  { background: rgba(100,255,0,0.12);  color: #6ddd00; }
+    .stat-icon.blue   { background: rgba(0,150,255,0.12);  color: #3ab4ff; }
+    .stat-icon.orange { background: rgba(255,160,0,0.12);  color: #ffaa00; }
+    .stat-icon.red    { background: rgba(255,80,80,0.12);  color: #ff6b6b; }
+    .stat-info .num   { font-size: 26px; font-weight: bold; }
+    .stat-info .lbl   { font-size: 12px; color: #8fa0b3; margin-top: 2px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 16px; font-weight: bold; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px; color: #cdd8e4;
+    }
+    .section-title i { color: #6ddd00; }
+
+    /* ── RECENT TABLES ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .table-card {
+      background: #041b36; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 20px; overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 9px 10px;
+      background: rgba(255,255,255,0.04); color: #7fa0c0;
+      font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cdd8e4; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── STATUS BADGE ── */
+    .badge {
+      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold;
+    }
+    .badge-placed    { background: rgba(0,150,255,0.15); color: #3ab4ff; }
+    .badge-approved  { background: rgba(100,255,0,0.15); color: #6ddd00; }
+    .badge-packed    { background: rgba(255,200,0,0.15); color: #ffc800; }
+    .badge-shipped   { background: rgba(150,80,255,0.15); color: #c080ff; }
+    .badge-delivered { background: rgba(0,220,80,0.15);  color: #00dc50; }
+    .badge-cancelled { background: rgba(255,80,80,0.15); color: #ff6b6b; }
+    .badge-received  { background: rgba(0,150,255,0.15); color: #3ab4ff; }
+    .badge-repair    { background: rgba(255,160,0,0.15); color: #ffaa00; }
+    .badge-completed { background: rgba(100,255,0,0.15); color: #6ddd00; }
+    .badge-pickup    { background: rgba(150,80,255,0.15); color: #c080ff; }
+
+    /* ── VIEW ALL ── */
+    .view-all {
+      display: inline-block; margin-top: 14px;
+      color: #6ddd00; font-size: 13px; text-decoration: none; font-weight: bold;
+    }
+    .view-all:hover { text-decoration: underline; }
+
+    /* ── LOADING ── */
+    .loading { color: #5a7a9a; font-size: 13px; padding: 12px 0; }
+
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .two-col    { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .sidebar { display: none; }
+      .main    { margin-left: 0; padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="../logo.png" alt="VJ Mobiles" />
+    <span>VJ MOBILES</span>
+  </div>
+
+  <nav>
+    <a href="dashboard.html" class="nav-item active">
+      <i class="fa-solid fa-gauge"></i> Dashboard
+    </a>
+    <a href="orders.html" class="nav-item">
+      <i class="fa-solid fa-bag-shopping"></i> Orders
+    </a>
+    <a href="bookings.html" class="nav-item">
+      <i class="fa-solid fa-screwdriver-wrench"></i> Service Bookings
+    </a>
+    <a href="../index.html" class="nav-item">
+      <i class="fa-solid fa-globe"></i> View Website
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════ -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <h1>Admin <span>Dashboard</span></h1>
+    <div class="admin-badge" id="adminBadge">
+      <i class="fa-solid fa-user-shield"></i>&nbsp; Admin
+    </div>
+  </div>
+
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue"><i class="fa-solid fa-bag-shopping"></i></div>
+      <div class="stat-info">
+        <div class="num" id="totalOrders">—</div>
+        <div class="lbl">Total Orders</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon orange"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+      <div class="stat-info">
+        <div class="num" id="totalBookings">—</div>
+        <div class="lbl">Service Bookings</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <div class="stat-info">
+        <div class="num" id="totalRevenue">—</div>
+        <div class="lbl">Revenue (Delivered)</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon red"><i class="fa-solid fa-clock-rotate-left"></i></div>
+      <div class="stat-info">
+        <div class="num" id="pendingCount">—</div>
+        <div class="lbl">Pending (Orders + Services)</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- RECENT TABLES -->
+  <div class="two-col">
+
+    <!-- RECENT ORDERS -->
+    <div class="table-card">
+      <div class="section-title">
+        <i class="fa-solid fa-bag-shopping"></i> Recent Orders
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="recentOrdersBody">
+          <tr><td colspan="4" class="loading">Loading...</td></tr>
+        </tbody>
+      </table>
+      <a href="orders.html" class="view-all">View All Orders →</a>
+    </div>
+
+    <!-- RECENT BOOKINGS -->
+    <div class="table-card">
+      <div class="section-title">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Recent Service Bookings
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Service ID</th>
+            <th>Customer</th>
+            <th>Brand</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="recentBookingsBody">
+          <tr><td colspan="4" class="loading">Loading...</td></tr>
+        </tbody>
+      </table>
+      <a href="bookings.html" class="view-all">View All Bookings →</a>
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- ═══════════════════════════════════
+     SCRIPT
+═══════════════════════════════════ -->
+<script type="module">
+  import { requireAdmin, getAdminName, adminLogout } from "../backend/auth/adminAuth.js";
+  import { getAllOrders, getOrderStats, getTotalRevenue } from "../backend/admin/adminOrders.js";
+  import { getAllBookings, getBookingStats } from "../backend/admin/adminBookings.js";
+
+  // Guard
+  requireAdmin();
+
+  // Show admin name
+  document.getElementById("adminBadge").innerHTML =
+    `<i class="fa-solid fa-user-shield"></i>&nbsp; ${getAdminName()}`;
+
+  // Status → badge class
+  function badgeClass(status) {
+    const map = {
+      "Order Placed":        "badge-placed",
+      "Admin Approved":      "badge-approved",
+      "Order Packed":        "badge-packed",
+      "Shipped":             "badge-shipped",
+      "Out for Delivery":    "badge-shipped",
+      "Delivered":           "badge-delivered",
+      "Cancelled":           "badge-cancelled",
+      "Booking Received":    "badge-received",
+      "Technician Assigned": "badge-approved",
+      "Under Repair":        "badge-repair",
+      "Repair Completed":    "badge-completed",
+      "Ready for Pickup":    "badge-pickup",
+    };
+    return map[status] || "badge-placed";
+  }
+
+  // Load stats
+  async function loadStats() {
+    const [orderStats, bookingStats, revenue] = await Promise.all([
+      getOrderStats(),
+      getBookingStats(),
+      getTotalRevenue(),
+    ]);
+
+    if (orderStats.success) {
+      document.getElementById("totalOrders").textContent = orderStats.data.total;
+    }
+    if (bookingStats.success) {
+      document.getElementById("totalBookings").textContent = bookingStats.data.total;
+    }
+    if (revenue.success) {
+      document.getElementById("totalRevenue").textContent = `₹${revenue.data.toLocaleString("en-IN")}`;
+    }
+
+    // Pending = order placed + booking received
+    const pending =
+      (orderStats.data?.orderPlaced  || 0) +
+      (bookingStats.data?.bookingReceived || 0);
+    document.getElementById("pendingCount").textContent = pending;
+  }
+
+  // Load recent orders
+  async function loadRecentOrders() {
+    const result = await getAllOrders();
+    const tbody  = document.getElementById("recentOrdersBody");
+
+    if (!result.success || result.data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="loading">No orders yet.</td></tr>`;
+      return;
+    }
+
+    const recent = result.data.slice(0, 5);
+    tbody.innerHTML = recent.map((o) => `
+      <tr>
+        <td>${o.order_id}</td>
+        <td>${o.full_name}</td>
+        <td>₹${o.total_amount?.toLocaleString("en-IN")}</td>
+        <td><span class="badge ${badgeClass(o.status)}">${o.status}</span></td>
+      </tr>
+    `).join("");
+  }
+
+  // Load recent bookings
+  async function loadRecentBookings() {
+    const result = await getAllBookings();
+    const tbody  = document.getElementById("recentBookingsBody");
+
+    if (!result.success || result.data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="loading">No bookings yet.</td></tr>`;
+      return;
+    }
+
+    const recent = result.data.slice(0, 5);
+    tbody.innerHTML = recent.map((b) => `
+      <tr>
+        <td>${b.service_id}</td>
+        <td>${b.full_name}</td>
+        <td>${b.mobile_brand}</td>
+        <td><span class="badge ${badgeClass(b.status)}">${b.status}</span></td>
+      </tr>
+    `).join("");
+  }
+
+  // Logout
+  window.handleLogout = function () {
+    adminLogout();
+  };
+
+  // Init
+  loadStats();
+  loadRecentOrders();
+  loadRecentBookings();
+</script>
+
+</body>
+</html>

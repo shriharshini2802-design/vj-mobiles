@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Bookings | VJ Mobiles Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #020d1f; color: #fff; min-height: 100vh; display: flex; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px; min-height: 100vh; background: #031428;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100%;
+    }
+    .sidebar-logo {
+      padding: 22px 20px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo img { width: 46px; height: 46px; border-radius: 50%; background: #fff; }
+    .sidebar-logo span { font-size: 16px; font-weight: bold; color: #6ddd00; }
+    .sidebar nav { padding: 18px 0; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 13px;
+      padding: 13px 22px; color: #c5d0dd; text-decoration: none;
+      font-size: 14px; transition: 0.2s;
+    }
+    .nav-item:hover, .nav-item.active { background: rgba(100,255,0,0.08); color: #7fff00; border-left: 3px solid #7fff00; }
+    .nav-item i { width: 18px; text-align: center; }
+    .sidebar-footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .logout-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: 1px solid rgba(255,80,80,0.4);
+      color: #ff6b6b; padding: 10px 16px; border-radius: 7px;
+      cursor: pointer; font-size: 13px; width: 100%; transition: 0.2s;
+    }
+    .logout-btn:hover { background: rgba(255,80,80,0.1); }
+
+    /* ── MAIN ── */
+    .main { margin-left: 240px; flex: 1; padding: 28px 32px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .topbar h1 { font-size: 22px; }
+    .topbar h1 span { color: #ff9f00; }
+
+    /* ── FILTERS ── */
+    .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .search-box {
+      flex: 1; min-width: 220px; display: flex;
+      background: #041b36; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; overflow: hidden;
+    }
+    .search-box input {
+      flex: 1; background: none; border: none; color: #fff;
+      padding: 10px 14px; font-size: 14px; outline: none;
+    }
+    .search-box input::placeholder { color: #5a7a9a; }
+    .search-box button {
+      background: #ff9f00; border: none; color: #021225;
+      padding: 0 16px; cursor: pointer; font-size: 15px;
+    }
+
+    /* ── STATUS PILLS ── */
+    .stat-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .pill {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold;
+      border: 1px solid; cursor: pointer; transition: 0.2s;
+    }
+    .pill.all       { border-color: #7fa0c0; color: #7fa0c0; }
+    .pill.received  { border-color: #3ab4ff; color: #3ab4ff; }
+    .pill.assigned  { border-color: #6ddd00; color: #6ddd00; }
+    .pill.repair    { border-color: #ffc800; color: #ffc800; }
+    .pill.completed { border-color: #00dc50; color: #00dc50; }
+    .pill.pickup    { border-color: #c080ff; color: #c080ff; }
+    .pill.delivered { border-color: #00dc50; color: #00dc50; }
+    .pill.cancelled { border-color: #ff6b6b; color: #ff6b6b; }
+    .pill.active    { background: rgba(255,255,255,0.08); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: #041b36; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 12px 14px;
+      background: rgba(255,255,255,0.04); color: #7fa0c0;
+      font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.07);
+      white-space: nowrap;
+    }
+    td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cdd8e4; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── BADGE ── */
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+    .badge-received  { background: rgba(0,150,255,0.15);  color: #3ab4ff; }
+    .badge-assigned  { background: rgba(100,255,0,0.15);  color: #6ddd00; }
+    .badge-repair    { background: rgba(255,200,0,0.15);  color: #ffc800; }
+    .badge-completed { background: rgba(0,220,80,0.15);   color: #00dc50; }
+    .badge-pickup    { background: rgba(150,80,255,0.15); color: #c080ff; }
+    .badge-delivered { background: rgba(0,220,80,0.15);   color: #00dc50; }
+    .badge-cancelled { background: rgba(255,80,80,0.15);  color: #ff6b6b; }
+
+    /* ── DROPDOWNS ── */
+    .status-select {
+      background: #031428; border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; padding: 5px 10px; border-radius: 6px;
+      font-size: 12px; cursor: pointer; outline: none;
+    }
+    .status-select:focus { border-color: #ff9f00; }
+
+    .cost-input {
+      background: #031428; border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; padding: 5px 10px; border-radius: 6px;
+      font-size: 12px; width: 90px; outline: none;
+    }
+    .cost-input:focus { border-color: #ff9f00; }
+    .save-cost-btn {
+      background: #ff9f00; border: none; color: #021225;
+      padding: 5px 10px; border-radius: 6px; font-size: 11px;
+      font-weight: bold; cursor: pointer; margin-left: 5px;
+    }
+
+    /* ── DETAIL EXPAND ── */
+    .detail-row td {
+      background: rgba(0,0,0,0.2); padding: 12px 20px;
+      font-size: 12px; color: #a0b5c8; line-height: 1.8;
+    }
+
+    .expand-btn {
+      background: none; border: none; color: #5a7a9a;
+      cursor: pointer; font-size: 13px; padding: 0;
+    }
+    .expand-btn:hover { color: #ff9f00; }
+
+    /* ── EMPTY ── */
+    .empty { text-align: center; color: #5a7a9a; padding: 30px; font-size: 14px; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 25px; right: 25px;
+      padding: 12px 20px; background: #041b36;
+      border-left: 4px solid #ff9f00; border-radius: 8px;
+      font-size: 13px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transform: translateX(400px); transition: 0.4s; z-index: 9999;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.error { border-left-color: #ff6b6b; }
+
+    @media (max-width: 700px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="../logo.png" alt="VJ Mobiles" />
+    <span>VJ MOBILES</span>
+  </div>
+  <nav>
+    <a href="dashboard.html" class="nav-item">
+      <i class="fa-solid fa-gauge"></i> Dashboard
+    </a>
+    <a href="orders.html" class="nav-item">
+      <i class="fa-solid fa-bag-shopping"></i> Orders
+    </a>
+    <a href="bookings.html" class="nav-item active">
+      <i class="fa-solid fa-screwdriver-wrench"></i> Service Bookings
+    </a>
+    <a href="../index.html" class="nav-item">
+      <i class="fa-solid fa-globe"></i> View Website
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="topbar">
+    <h1>Service <span>Bookings</span></h1>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="filters">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search by name, mobile or service ID…" />
+      <button onclick="doSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+  </div>
+
+  <!-- STATUS PILLS -->
+  <div class="stat-pills">
+    <span class="pill all active"   onclick="filterByStatus('')">All</span>
+    <span class="pill received"     onclick="filterByStatus('Booking Received')">Received</span>
+    <span class="pill assigned"     onclick="filterByStatus('Technician Assigned')">Technician Assigned</span>
+    <span class="pill repair"       onclick="filterByStatus('Under Repair')">Under Repair</span>
+    <span class="pill completed"    onclick="filterByStatus('Repair Completed')">Repair Completed</span>
+    <span class="pill pickup"       onclick="filterByStatus('Ready for Pickup')">Ready for Pickup</span>
+    <span class="pill delivered"    onclick="filterByStatus('Delivered')">Delivered</span>
+    <span class="pill cancelled"    onclick="filterByStatus('Cancelled')">Cancelled</span>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Service ID</th>
+          <th>Customer</th>
+          <th>Mobile</th>
+          <th>Brand / Model</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Est. Cost</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody id="bookingsBody">
+        <tr><td colspan="10" class="empty">Loading bookings…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<script type="module">
+  import { requireAdmin, adminLogout } from "../backend/auth/adminAuth.js";
+  import { getAllBookings, updateBookingStatus, updateEstimatedCost, searchBookings } from "../backend/admin/adminBookings.js";
+
+  requireAdmin();
+
+  const SERVICE_STATUSES = [
+    "Booking Received", "Technician Assigned", "Under Repair",
+    "Repair Completed", "Ready for Pickup", "Delivered", "Cancelled",
+  ];
+
+  let allBookings = [];
+
+  function badgeClass(status) {
+    const map = {
+      "Booking Received":    "badge-received",
+      "Technician Assigned": "badge-assigned",
+      "Under Repair":        "badge-repair",
+      "Repair Completed":    "badge-completed",
+      "Ready for Pickup":    "badge-pickup",
+      "Delivered":           "badge-delivered",
+      "Cancelled":           "badge-cancelled",
+    };
+    return map[status] || "badge-received";
+  }
+
+  function formatDate(ts) {
+    if (!ts) return "—";
+    return new Date(ts).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  }
+
+  function renderTable(bookings) {
+    const tbody = document.getElementById("bookingsBody");
+    if (!bookings || bookings.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="10" class="empty">No bookings found.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = bookings.map((b) => `
+      <!-- MAIN ROW -->
+      <tr id="row-${b.service_id}">
+        <td>
+          <button class="expand-btn" onclick="toggleDetail('${b.service_id}')">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </td>
+        <td><b>${b.service_id}</b></td>
+        <td>${b.full_name}</td>
+        <td>${b.mobile}</td>
+        <td>${b.mobile_brand} ${b.mobile_model}</td>
+        <td>${b.service_type}</td>
+        <td>${formatDate(b.created_at)}</td>
+        <td>
+          <input
+            type="number"
+            class="cost-input"
+            id="cost-${b.service_id}"
+            value="${b.estimated_cost ?? ""}"
+            placeholder="₹ Cost"
+          />
+          <button class="save-cost-btn" onclick="saveCost('${b.service_id}')">Save</button>
+        </td>
+        <td><span class="badge ${badgeClass(b.status)}">${b.status}</span></td>
+        <td>
+          <select class="status-select" onchange="changeStatus('${b.service_id}', this.value)">
+            ${SERVICE_STATUSES.map((s) => `<option value="${s}" ${s === b.status ? "selected" : ""}>${s}</option>`).join("")}
+          </select>
+        </td>
+      </tr>
+
+      <!-- DETAIL ROW (hidden by default) -->
+      <tr id="detail-${b.service_id}" style="display:none;">
+        <td colspan="10">
+          <strong>Problem Description:</strong> ${b.problem_description || "Not provided"}<br/>
+          <strong>Address:</strong> ${b.address}<br/>
+          <strong>Email:</strong> ${b.email}<br/>
+          <strong>Preferred Date:</strong> ${b.preferred_date ? formatDate(b.preferred_date + "T00:00:00") : "Not specified"}
+          ${b.image_url ? `<br/><strong>Image:</strong> <a href="${b.image_url}" target="_blank" style="color:#ff9f00;">View Photo</a>` : ""}
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  async function loadBookings() {
+    const result = await getAllBookings();
+    if (result.success) {
+      allBookings = result.data;
+      renderTable(allBookings);
+    } else {
+      document.getElementById("bookingsBody").innerHTML =
+        `<tr><td colspan="10" class="empty">Error loading bookings.</td></tr>`;
+    }
+  }
+
+  // Toggle detail row
+  window.toggleDetail = function (serviceId) {
+    const row = document.getElementById(`detail-${serviceId}`);
+    const btn = document.querySelector(`#row-${serviceId} .expand-btn i`);
+    if (row.style.display === "none") {
+      row.style.display = "table-row";
+      btn.className = "fa-solid fa-chevron-up";
+    } else {
+      row.style.display = "none";
+      btn.className = "fa-solid fa-chevron-down";
+    }
+  };
+
+  // Filter by status
+  window.filterByStatus = function (status) {
+    document.querySelectorAll(".pill").forEach((p) => p.classList.remove("active"));
+    event.target.classList.add("active");
+    if (!status) {
+      renderTable(allBookings);
+    } else {
+      renderTable(allBookings.filter((b) => b.status === status));
+    }
+  };
+
+  // Search
+  window.doSearch = async function () {
+    const q = document.getElementById("searchInput").value.trim();
+    if (!q) { renderTable(allBookings); return; }
+    const result = await searchBookings(q);
+    if (result.success) renderTable(result.data);
+  };
+
+  document.getElementById("searchInput").addEventListener("keyup", (e) => {
+    if (e.key === "Enter") window.doSearch();
+  });
+
+  // Update status
+  window.changeStatus = async function (serviceId, newStatus) {
+    const result = await updateBookingStatus(serviceId, newStatus);
+    showToast(
+      result.success ? `✓ ${serviceId} → ${newStatus}` : "Error: " + result.message,
+      result.success ? "" : "error"
+    );
+    if (result.success) {
+      const idx = allBookings.findIndex((b) => b.service_id === serviceId);
+      if (idx !== -1) allBookings[idx].status = newStatus;
+    }
+  };
+
+  // Save estimated cost
+  window.saveCost = async function (serviceId) {
+    const val = document.getElementById(`cost-${serviceId}`).value;
+    const cost = parseInt(val, 10);
+    if (isNaN(cost) || cost < 0) { showToast("Enter a valid cost", "error"); return; }
+    const result = await updateEstimatedCost(serviceId, cost);
+    showToast(
+      result.success ? `✓ Cost saved: ₹${cost}` : "Error: " + result.message,
+      result.success ? "" : "error"
+    );
+  };
+
+  // Toast
+  function showToast(msg, type = "") {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show" + (type ? " " + type : "");
+    setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  window.handleLogout = function () { adminLogout(); };
+
+  loadBookings();
+</script>
+
+</body>
+</html>

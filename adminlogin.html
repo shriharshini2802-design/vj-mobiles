@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -467,7 +467,7 @@
                             <span
                                 class="toggle-password"
                                 onclick="togglePassword()">
-                                👁
+                                ðŸ‘
                             </span>
 
                         </div>
@@ -482,7 +482,7 @@
 
 
                 <div class="secure">
-                    <span>♙</span>
+                    <span>â™™</span>
                     Secure Admin Access
                 </div>
 
@@ -493,65 +493,69 @@
     </main>
 
 
-    <script>
+    <script type="module">
 
-        // SHOW / HIDE PASSWORD
-        function togglePassword() {
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-            const password =
-                document.getElementById("password");
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            if (password.type === "password") {
-                password.type = "text";
-            } else {
-                password.type = "password";
-            }
-        }
+        // â”€â”€ SHOW / HIDE PASSWORD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        window.togglePassword = function () {
+            const pw = document.getElementById("password");
+            pw.type = pw.type === "password" ? "text" : "password";
+        };
 
-
-        // LOGIN
-        document
-            .getElementById("adminLoginForm")
-            .addEventListener("submit", function(event) {
+        // â”€â”€ LOGIN SUBMIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        document.getElementById("adminLoginForm")
+            .addEventListener("submit", async function (event) {
 
                 event.preventDefault();
 
-                const username =
-                    document.getElementById("username").value.trim();
+                const email    = document.getElementById("username").value.trim();
+                const password = document.getElementById("password").value.trim();
+                const errEl    = document.getElementById("errorMessage");
+                const btn      = document.querySelector(".login-btn");
 
-                const password =
-                    document.getElementById("password").value.trim();
+                errEl.style.display = "none";
+                btn.textContent     = "Logging inâ€¦";
+                btn.disabled        = true;
 
-                const errorMessage =
-                    document.getElementById("errorMessage");
+                // 1. Sign in with Supabase Auth
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-
-                /*
-                   DEMO LOGIN
-
-                   Username: admin
-                   Password: admin123
-
-                   Later, if you have backend/database,
-                   replace this with API authentication.
-                */
-
-                if (username === "admin" && password === "admin123") {
-
-                    localStorage.setItem(
-                        "adminLoggedIn",
-                        "true"
-                    );
-
-                    window.location.href =
-                        "admin-dashboard.html";
-
-                } else {
-
-                    errorMessage.style.display = "block";
-
+                if (error) {
+                    errEl.textContent   = "Invalid email or password.";
+                    errEl.style.display = "block";
+                    btn.textContent     = "LOGIN";
+                    btn.disabled        = false;
+                    return;
                 }
 
+                // 2. Check if this user is in admins table
+                const { data: adminRow } = await supabase
+                    .from("admins")
+                    .select("id, full_name, is_active")
+                    .eq("user_id", data.user.id)
+                    .single();
+
+                if (!adminRow || !adminRow.is_active) {
+                    await supabase.auth.signOut();
+                    errEl.textContent   = "Access denied. You are not an admin.";
+                    errEl.style.display = "block";
+                    btn.textContent     = "LOGIN";
+                    btn.disabled        = false;
+                    return;
+                }
+
+                // 3. Update last_login_at
+                await supabase
+                    .from("admins")
+                    .update({ last_login_at: new Date().toISOString() })
+                    .eq("user_id", data.user.id);
+
+                // 4. Redirect to dashboard
+                window.location.href = "admin/dashboard.html";
             });
 
     </script>

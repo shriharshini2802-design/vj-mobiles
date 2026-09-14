@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Orders | VJ Mobiles Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #020d1f; color: #fff; min-height: 100vh; display: flex; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px; min-height: 100vh; background: #031428;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; height: 100%; z-index: 100;
+    }
+    .sidebar-logo { padding: 22px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; gap: 12px; }
+    .sidebar-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: contain; background: #fff; padding: 2px; }
+    .sidebar-logo span { font-size: 15px; font-weight: bold; color: #6ddd00; }
+    .sidebar nav { padding: 18px 0; flex: 1; }
+    .nav-item { display: flex; align-items: center; gap: 13px; padding: 13px 22px; color: #c5d0dd; text-decoration: none; font-size: 14px; transition: 0.2s; border-left: 3px solid transparent; }
+    .nav-item:hover { background: rgba(100,255,0,0.07); color: #7fff00; border-left-color: rgba(100,255,0,0.4); }
+    .nav-item.active { background: rgba(100,255,0,0.1); color: #7fff00; border-left-color: #6ddd00; }
+    .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+    .sidebar-footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .logout-btn { display: flex; align-items: center; gap: 10px; background: none; border: 1px solid rgba(255,80,80,0.4); color: #ff6b6b; padding: 10px 16px; border-radius: 7px; cursor: pointer; font-size: 13px; width: 100%; transition: 0.2s; }
+    .logout-btn:hover { background: rgba(255,80,80,0.1); }
+
+    /* MAIN */
+    .main { margin-left: 240px; flex: 1; padding: 28px 32px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .topbar h1 { font-size: 22px; font-weight: 700; }
+    .topbar h1 span { color: #6ddd00; }
+
+    /* FILTERS */
+    .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .search-box { flex: 1; min-width: 220px; display: flex; background: #041b36; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+    .search-box input { flex: 1; background: none; border: none; color: #fff; padding: 10px 14px; font-size: 14px; outline: none; }
+    .search-box input::placeholder { color: #5a7a9a; }
+    .search-box button { background: #6ddd00; border: none; color: #021225; padding: 0 16px; cursor: pointer; font-size: 14px; }
+
+    /* STATUS PILLS */
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .pill { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid; cursor: pointer; transition: 0.2s; background: transparent; }
+    .pill.active { filter: brightness(1.5); background: rgba(255,255,255,0.08); }
+    .p-all       { border-color: #7fa0c0; color: #7fa0c0; }
+    .p-placed    { border-color: #3ab4ff; color: #3ab4ff; }
+    .p-confirmed { border-color: #6ddd00; color: #6ddd00; }
+    .p-shipped   { border-color: #c080ff; color: #c080ff; }
+    .p-delivery  { border-color: #ff9f00; color: #ff9f00; }
+    .p-delivered { border-color: #00dc50; color: #00dc50; }
+    .p-cancelled { border-color: #ff6b6b; color: #ff6b6b; }
+
+    /* TABLE */
+    .table-wrap { background: #041b36; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 900px; }
+    th { text-align: left; padding: 12px 14px; background: rgba(255,255,255,0.04); color: #7fa0c0; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.07); white-space: nowrap; }
+    td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cdd8e4; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* BADGE */
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+    .b-placed    { background: rgba(0,150,255,0.15);  color: #3ab4ff; }
+    .b-confirmed { background: rgba(100,255,0,0.15);  color: #6ddd00; }
+    .b-shipped   { background: rgba(150,80,255,0.15); color: #c080ff; }
+    .b-delivery  { background: rgba(255,160,0,0.15);  color: #ff9f00; }
+    .b-delivered { background: rgba(0,220,80,0.15);   color: #00dc50; }
+    .b-cancelled { background: rgba(255,80,80,0.15);  color: #ff6b6b; }
+
+    /* STATUS SELECT */
+    .status-select { background: #031428; border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 5px 8px; border-radius: 6px; font-size: 12px; cursor: pointer; outline: none; }
+    .status-select:focus { border-color: #6ddd00; }
+
+    .empty-row { text-align: center; color: #5a7a9a; padding: 30px !important; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 25px; right: 25px; padding: 12px 20px; background: #041b36; border-left: 4px solid #6ddd00; border-radius: 8px; font-size: 13px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transform: translateX(400px); transition: 0.4s; z-index: 9999; }
+    .toast.show { transform: translateX(0); }
+    .toast.err  { border-left-color: #ff6b6b; }
+
+    @media (max-width: 700px) { .sidebar { display: none; } .main { margin-left: 0; padding: 16px; } }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="../logo.png" alt="VJ Mobiles" />
+    <span>VJ MOBILES</span>
+  </div>
+  <nav>
+    <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+    <a href="orders.html"    class="nav-item active"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+    <a href="bookings.html"  class="nav-item"><i class="fa-solid fa-screwdriver-wrench"></i> Service Bookings</a>
+    <a href="../index.html"  class="nav-item"><i class="fa-solid fa-globe"></i> View Website</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="topbar">
+    <h1>Manage <span>Orders</span></h1>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="filters">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search by name, mobile or order numberâ€¦" />
+      <button onclick="doSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+  </div>
+
+  <!-- STATUS PILLS -->
+  <div class="pills">
+    <button class="pill p-all active"    onclick="filterStatus(this,'')">All</button>
+    <button class="pill p-placed"        onclick="filterStatus(this,'Placed')">Placed</button>
+    <button class="pill p-confirmed"     onclick="filterStatus(this,'Confirmed')">Confirmed</button>
+    <button class="pill p-shipped"       onclick="filterStatus(this,'Shipped')">Shipped</button>
+    <button class="pill p-delivered"     onclick="filterStatus(this,'Delivered')">Delivered</button>
+    <button class="pill p-cancelled"     onclick="filterStatus(this,'Cancelled')">Cancelled</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Order No.</th><th>Customer</th><th>Mobile</th>
+          <th>Product(s)</th><th>Total</th><th>Date</th>
+          <th>Status</th><th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody id="ordersBody">
+        <tr><td colspan="8" class="empty-row">Loadingâ€¦</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const STATUSES = ["Placed","Confirmed","Shipped","Delivered","Cancelled"];
+  let allOrders = [];
+
+  // â”€â”€ GUARD â”€â”€
+  async function guardAdmin() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { window.location.href = "../adminlogin.html"; return false; }
+    const { data } = await supabase.from("admins").select("id").eq("user_id", user.id).eq("is_active", true).single();
+    if (!data) { window.location.href = "../adminlogin.html"; return false; }
+    return true;
+  }
+
+  function badgeClass(s) {
+    return { Placed:"b-placed", Confirmed:"b-confirmed", Shipped:"b-shipped", Delivered:"b-delivered", Cancelled:"b-cancelled" }[s] || "b-placed";
+  }
+  function fmtDate(ts) { return ts ? new Date(ts).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) : "â€”"; }
+
+  // â”€â”€ RENDER â”€â”€
+  function render(orders) {
+    const tb = document.getElementById("ordersBody");
+    if (!orders.length) { tb.innerHTML = `<tr><td colspan="8" class="empty-row">No orders found.</td></tr>`; return; }
+
+    tb.innerHTML = orders.map(o => {
+      const items = (o.accessory_order_items || [])
+        .map(i => `${i.product_name} Ã—${i.quantity}`)
+        .join(", ") || o.customer_name;
+      return `
+      <tr>
+        <td><b>${o.order_number}</b></td>
+        <td>${o.customer_name}</td>
+        <td>${o.mobile_number}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${items}">${items}</td>
+        <td>â‚¹${(+o.total_amount).toLocaleString("en-IN")}</td>
+        <td>${fmtDate(o.created_at)}</td>
+        <td><span class="badge ${badgeClass(o.order_status)}">${o.order_status}</span></td>
+        <td>
+          <select class="status-select" onchange="changeStatus('${o.id}','${o.order_number}',this.value)">
+            ${STATUSES.map(s=>`<option value="${s}" ${s===o.order_status?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </td>
+      </tr>`;
+    }).join("");
+  }
+
+  // â”€â”€ LOAD â”€â”€
+  async function load() {
+    const { data, error } = await supabase
+      .from("accessory_orders")
+      .select(`*, accessory_order_items(product_name, quantity)`)
+      .order("created_at", { ascending: false });
+
+    if (error) { showToast("Error loading orders", true); return; }
+    allOrders = data || [];
+    render(allOrders);
+  }
+
+  // â”€â”€ FILTER â”€â”€
+  window.filterStatus = function (btn, status) {
+    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    render(status ? allOrders.filter(o => o.order_status === status) : allOrders);
+  };
+
+  // â”€â”€ SEARCH â”€â”€
+  window.doSearch = async function () {
+    const q = document.getElementById("searchInput").value.trim().toLowerCase();
+    if (!q) { render(allOrders); return; }
+    render(allOrders.filter(o =>
+      o.order_number.toLowerCase().includes(q) ||
+      o.customer_name.toLowerCase().includes(q) ||
+      o.mobile_number.includes(q)
+    ));
+  };
+  document.getElementById("searchInput").addEventListener("keyup", e => { if (e.key === "Enter") window.doSearch(); });
+
+  // â”€â”€ UPDATE STATUS â”€â”€
+  window.changeStatus = async function (id, orderNum, newStatus) {
+    const { error } = await supabase
+      .from("accessory_orders")
+      .update({ order_status: newStatus })
+      .eq("id", id);
+
+    if (error) { showToast("Update failed: " + error.message, true); return; }
+    const idx = allOrders.findIndex(o => o.id == id);
+    if (idx !== -1) allOrders[idx].order_status = newStatus;
+    showToast(`âœ“ ${orderNum} â†’ ${newStatus}`);
+  };
+
+  // â”€â”€ TOAST â”€â”€
+  function showToast(msg, err = false) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show" + (err ? " err" : "");
+    setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  window.doLogout = async function () { await supabase.auth.signOut(); window.location.href = "../adminlogin.html"; };
+
+  (async () => { const ok = await guardAdmin(); if (ok) load(); })();
+</script>
+
+</body>
+</html>
+

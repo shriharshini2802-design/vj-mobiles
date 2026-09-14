@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | VJ Mobiles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Arial', sans-serif; background: #020d1f; color: #fff; min-height: 100vh; display: flex; }
+
+    /* â”€â”€ SIDEBAR â”€â”€ */
+    .sidebar {
+      width: 240px; min-height: 100vh; background: #031428;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; height: 100%; z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 22px 20px; border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo img { width: 46px; height: 46px; border-radius: 50%; object-fit: contain; background: #fff; padding: 2px; }
+    .sidebar-logo span { font-size: 15px; font-weight: bold; color: #6ddd00; }
+    .sidebar nav { padding: 18px 0; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 13px;
+      padding: 13px 22px; color: #c5d0dd; text-decoration: none;
+      font-size: 14px; transition: 0.2s; border-left: 3px solid transparent;
+    }
+    .nav-item:hover { background: rgba(100,255,0,0.07); color: #7fff00; border-left-color: rgba(100,255,0,0.4); }
+    .nav-item.active { background: rgba(100,255,0,0.1); color: #7fff00; border-left-color: #6ddd00; }
+    .nav-item i { width: 18px; text-align: center; font-size: 15px; }
+    .sidebar-footer { padding: 18px 22px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .logout-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: 1px solid rgba(255,80,80,0.4);
+      color: #ff6b6b; padding: 10px 16px; border-radius: 7px;
+      cursor: pointer; font-size: 13px; width: 100%; transition: 0.2s;
+    }
+    .logout-btn:hover { background: rgba(255,80,80,0.1); }
+
+    /* â”€â”€ MAIN â”€â”€ */
+    .main { margin-left: 240px; flex: 1; padding: 28px 32px; }
+
+    /* â”€â”€ TOPBAR â”€â”€ */
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .topbar h1 { font-size: 22px; font-weight: 700; }
+    .topbar h1 span { color: #6ddd00; }
+    .admin-badge {
+      background: rgba(100,255,0,0.1); border: 1px solid rgba(100,255,0,0.3);
+      padding: 8px 16px; border-radius: 20px; font-size: 13px; color: #a8ff6b;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* â”€â”€ STAT CARDS â”€â”€ */
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 32px; }
+    .stat-card {
+      background: #041b36; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 22px 18px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .stat-icon {
+      width: 50px; height: 50px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+    }
+    .green  { background: rgba(100,255,0,0.12);  color: #6ddd00; }
+    .blue   { background: rgba(0,150,255,0.12);  color: #3ab4ff; }
+    .orange { background: rgba(255,160,0,0.12);  color: #ffaa00; }
+    .red    { background: rgba(255,80,80,0.12);  color: #ff6b6b; }
+    .stat-info .num { font-size: 26px; font-weight: bold; }
+    .stat-info .lbl { font-size: 12px; color: #8fa0b3; margin-top: 2px; }
+
+    /* â”€â”€ TWO COL â”€â”€ */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .table-card {
+      background: #041b36; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 20px;
+    }
+    .card-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px; color: #cdd8e4;
+    }
+    .card-title i { color: #6ddd00; }
+
+    /* â”€â”€ TABLE â”€â”€ */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 9px 10px;
+      background: rgba(255,255,255,0.04); color: #7fa0c0;
+      font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cdd8e4; }
+    tr:last-child td { border-bottom: none; }
+    .empty-row { text-align: center; color: #5a7a9a; padding: 20px !important; }
+
+    /* â”€â”€ BADGE â”€â”€ */
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; white-space: nowrap; }
+    .b-placed    { background: rgba(0,150,255,0.15);  color: #3ab4ff; }
+    .b-confirmed { background: rgba(100,255,0,0.15);  color: #6ddd00; }
+    .b-shipped   { background: rgba(150,80,255,0.15); color: #c080ff; }
+    .b-delivered { background: rgba(0,220,80,0.15);   color: #00dc50; }
+    .b-cancelled { background: rgba(255,80,80,0.15);  color: #ff6b6b; }
+    .b-pending   { background: rgba(255,200,0,0.15);  color: #ffc800; }
+    .b-progress  { background: rgba(255,160,0,0.15);  color: #ffaa00; }
+    .b-ready     { background: rgba(150,80,255,0.15); color: #c080ff; }
+    .b-completed { background: rgba(0,220,80,0.15);   color: #00dc50; }
+
+    /* â”€â”€ VIEW ALL â”€â”€ */
+    .view-all {
+      display: inline-block; margin-top: 14px;
+      color: #6ddd00; font-size: 13px; text-decoration: none; font-weight: bold;
+    }
+    .view-all:hover { text-decoration: underline; }
+
+    @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2,1fr); } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 700px)  { .sidebar { display: none; } .main { margin-left: 0; padding: 16px; } }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <img src="../logo.png" alt="VJ Mobiles" />
+    <span>VJ MOBILES</span>
+  </div>
+  <nav>
+    <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+    <a href="orders.html"    class="nav-item"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+    <a href="bookings.html"  class="nav-item"><i class="fa-solid fa-screwdriver-wrench"></i> Service Bookings</a>
+    <a href="../index.html"  class="nav-item"><i class="fa-solid fa-globe"></i> View Website</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="topbar">
+    <h1>Admin <span>Dashboard</span></h1>
+    <div class="admin-badge" id="adminBadge">
+      <i class="fa-solid fa-user-shield"></i> Admin
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue"><i class="fa-solid fa-bag-shopping"></i></div>
+      <div class="stat-info"><div class="num" id="totalOrders">â€”</div><div class="lbl">Total Orders</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orange"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+      <div class="stat-info"><div class="num" id="totalBookings">â€”</div><div class="lbl">Service Bookings</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <div class="stat-info"><div class="num" id="totalRevenue">â€”</div><div class="lbl">Revenue (Delivered)</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon red"><i class="fa-solid fa-clock"></i></div>
+      <div class="stat-info"><div class="num" id="pendingCount">â€”</div><div class="lbl">Pending Actions</div></div>
+    </div>
+  </div>
+
+  <!-- RECENT TABLES -->
+  <div class="two-col">
+
+    <!-- RECENT ORDERS -->
+    <div class="table-card">
+      <div class="card-title"><i class="fa-solid fa-bag-shopping"></i> Recent Orders</div>
+      <table>
+        <thead><tr><th>Order No.</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody id="recentOrdersBody"><tr><td colspan="4" class="empty-row">Loadingâ€¦</td></tr></tbody>
+      </table>
+      <a href="orders.html" class="view-all">View All Orders â†’</a>
+    </div>
+
+    <!-- RECENT BOOKINGS -->
+    <div class="table-card">
+      <div class="card-title"><i class="fa-solid fa-screwdriver-wrench"></i> Recent Service Bookings</div>
+      <table>
+        <thead><tr><th>Booking No.</th><th>Customer</th><th>Brand</th><th>Status</th></tr></thead>
+        <tbody id="recentBookingsBody"><tr><td colspan="4" class="empty-row">Loadingâ€¦</td></tr></tbody>
+      </table>
+      <a href="bookings.html" class="view-all">View All Bookings â†’</a>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // â”€â”€ GUARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function guardAdmin() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { window.location.href = "../adminlogin.html"; return false; }
+    const { data } = await supabase.from("admins").select("id").eq("user_id", user.id).eq("is_active", true).single();
+    if (!data) { window.location.href = "../adminlogin.html"; return false; }
+    document.getElementById("adminBadge").innerHTML =
+      `<i class="fa-solid fa-user-shield"></i> ${user.email}`;
+    return true;
+  }
+
+  // â”€â”€ BADGE CLASS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  function badgeClass(status) {
+    const map = {
+      "Placed":"b-placed","Confirmed":"b-confirmed","Shipped":"b-shipped",
+      "Delivered":"b-delivered","Cancelled":"b-cancelled",
+      "Pending":"b-pending","In Progress":"b-progress",
+      "Ready":"b-ready","Completed":"b-completed",
+    };
+    return map[status] || "b-placed";
+  }
+
+  function fmtDate(ts) {
+    return ts ? new Date(ts).toLocaleDateString("en-IN",{day:"2-digit",month:"short"}) : "â€”";
+  }
+
+  // â”€â”€ STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function loadStats() {
+    const [{ count: oCount }, { count: bCount }, { data: revData }, { count: pendO }, { count: pendB }] =
+      await Promise.all([
+        supabase.from("accessory_orders").select("*", { count:"exact", head:true }),
+        supabase.from("service_bookings").select("*", { count:"exact", head:true }),
+        supabase.from("accessory_orders").select("total_amount").eq("order_status","Delivered"),
+        supabase.from("accessory_orders").select("*", { count:"exact", head:true }).eq("order_status","Placed"),
+        supabase.from("service_bookings").select("*", { count:"exact", head:true }).eq("status","Pending"),
+      ]);
+
+    document.getElementById("totalOrders").textContent   = oCount ?? 0;
+    document.getElementById("totalBookings").textContent = bCount ?? 0;
+    document.getElementById("pendingCount").textContent  = (pendO ?? 0) + (pendB ?? 0);
+
+    const revenue = (revData || []).reduce((s, r) => s + (+r.total_amount || 0), 0);
+    document.getElementById("totalRevenue").textContent  = "â‚¹" + revenue.toLocaleString("en-IN");
+  }
+
+  // â”€â”€ RECENT ORDERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function loadRecentOrders() {
+    const { data } = await supabase
+      .from("accessory_orders")
+      .select("order_number, customer_name, total_amount, order_status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    const tb = document.getElementById("recentOrdersBody");
+    if (!data || !data.length) { tb.innerHTML = `<tr><td colspan="4" class="empty-row">No orders yet.</td></tr>`; return; }
+    tb.innerHTML = data.map(o => `
+      <tr>
+        <td><b>${o.order_number}</b></td>
+        <td>${o.customer_name}</td>
+        <td>â‚¹${(+o.total_amount).toLocaleString("en-IN")}</td>
+        <td><span class="badge ${badgeClass(o.order_status)}">${o.order_status}</span></td>
+      </tr>`).join("");
+  }
+
+  // â”€â”€ RECENT BOOKINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  async function loadRecentBookings() {
+    const { data } = await supabase
+      .from("service_bookings")
+      .select("booking_number, customer_name, status, created_at, brands(brand_name)")
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    const tb = document.getElementById("recentBookingsBody");
+    if (!data || !data.length) { tb.innerHTML = `<tr><td colspan="4" class="empty-row">No bookings yet.</td></tr>`; return; }
+    tb.innerHTML = data.map(b => `
+      <tr>
+        <td><b>${b.booking_number}</b></td>
+        <td>${b.customer_name}</td>
+        <td>${b.brands?.brand_name || "â€”"}</td>
+        <td><span class="badge ${badgeClass(b.status)}">${b.status}</span></td>
+      </tr>`).join("");
+  }
+
+  // â”€â”€ LOGOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  window.doLogout = async function () {
+    await supabase.auth.signOut();
+    window.location.href = "../adminlogin.html";
+  };
+
+  // â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  (async () => {
+    const ok = await guardAdmin();
+    if (!ok) return;
+    loadStats();
+    loadRecentOrders();
+    loadRecentBookings();
+  })();
+</script>
+
+</body>
+</html>
+

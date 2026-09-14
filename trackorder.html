@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -932,7 +932,7 @@
 
             <!-- ADMIN LOGIN -->
             <button class="admin-btn" onclick="window.location.href='adminlogin.html'">
-    ♙ Admin Login
+    â™™ Admin Login
 </button>
         </nav>
 
@@ -1050,7 +1050,7 @@
 
                 <div class="info">
 
-                    ℹ️ &nbsp;
+                    â„¹ï¸ &nbsp;
 
                     You will see real-time updates of your
                     order / service status
@@ -1107,7 +1107,7 @@
                 >
 
                     <div class="step-icon">
-                        📋
+                        ðŸ“‹
                     </div>
 
                     <p class="step-text">
@@ -1126,7 +1126,7 @@
                 >
 
                     <div class="step-icon">
-                        📄
+                        ðŸ“„
                     </div>
 
                     <p class="step-text">
@@ -1145,7 +1145,7 @@
                 >
 
                     <div class="step-icon">
-                        📦
+                        ðŸ“¦
                     </div>
 
                     <p class="step-text">
@@ -1164,7 +1164,7 @@
                 >
 
                     <div class="step-icon">
-                        🚚
+                        ðŸšš
                     </div>
 
                     <p class="step-text">
@@ -1183,7 +1183,7 @@
                 >
 
                     <div class="step-icon">
-                        🛵
+                        ðŸ›µ
                     </div>
 
                     <p class="step-text">
@@ -1202,7 +1202,7 @@
                 >
 
                     <div class="step-icon">
-                        ✓
+                        âœ“
                     </div>
 
                     <p class="step-text">
@@ -1243,7 +1243,7 @@
     >
 
         <div class="popup-icon">
-            ✓
+            âœ“
         </div>
 
 
@@ -1272,332 +1272,188 @@
          JAVASCRIPT
     ===================================================== -->
 
-    <script>
+    <script type="module">
 
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-        /* =====================================================
-           CURRENT TAB
-        ===================================================== */
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        /* ── TAB ─────────────────────────────────── */
         let currentTab = "order";
 
-
-
-        /* =====================================================
-           SELECT ORDER / SERVICE
-        ===================================================== */
-
-        function selectTab(type) {
-
+        window.selectTab = function (type) {
             currentTab = type;
+            document.getElementById("orderTab").classList.toggle("active",   type === "order");
+            document.getElementById("serviceTab").classList.toggle("active", type === "service");
+            document.getElementById("idInput").placeholder =
+                type === "order" ? "e.g. VJO-2026-000001" : "e.g. VJS-2026-000001";
+        };
 
 
-            const orderTab =
-                document.getElementById("orderTab");
+        /* ── ORDER STATUS → STEP (1-6) ─────────── */
+        function orderStep(status) {
+            return { Placed:1, Confirmed:2, Shipped:3, Delivered:4, Cancelled:0 }[status] ?? 1;
+        }
 
-            const serviceTab =
-                document.getElementById("serviceTab");
-
-            const input =
-                document.getElementById("idInput");
-
-
-            orderTab.classList.remove("active");
-
-            serviceTab.classList.remove("active");
-
-
-            if (type === "order") {
-
-                orderTab.classList.add("active");
-
-                input.placeholder =
-                    "e.g. ORD-10025";
-
-            }
-
-
-            else {
-
-                serviceTab.classList.add("active");
-
-                input.placeholder =
-                    "e.g. SER-10025";
-
-            }
-
+        /* ── BOOKING STATUS → STEP (1-6) ─────────  */
+        function bookingStep(status) {
+            return { Pending:1, Confirmed:2, "In Progress":3, Ready:4, Completed:5, Cancelled:0 }[status] ?? 1;
         }
 
 
+        /* ── TRACK BY ID ────────────────────────── */
+        window.trackById = async function () {
+            const value = document.getElementById("idInput").value.trim().toUpperCase();
+            if (!value) { showPopup("Enter Details", "Please enter your Order or Service ID."); return; }
 
-        /* =====================================================
-           TRACK BY ORDER / SERVICE ID
-        ===================================================== */
-
-        function trackById() {
-
-            const input =
-                document.getElementById("idInput");
-
-            const value =
-                input.value.trim();
-
-
-            if (value === "") {
-
-                showPopup(
-                    "Enter Details",
-                    "Please enter your Order ID or Service ID."
-                );
-
-                input.focus();
-
-                return;
-            }
-
+            resetSteps();
 
             if (currentTab === "order") {
+                const { data, error } = await supabase
+                    .from("accessory_orders")
+                    .select("order_number, customer_name, order_status, created_at, total_amount")
+                    .eq("order_number", value)
+                    .single();
 
+                if (error || !data) { showPopup("Not Found", "No order found for: " + value); return; }
+
+                const step = orderStep(data.order_status);
+                animateToStep(step);
                 showPopup(
-                    "Order Found",
-                    "Tracking started for Order ID: " + value
+                    "Order Found ✓",
+                    "Order: " + data.order_number +
+                    "\nCustomer: " + data.customer_name +
+                    "\nAmount: ₹" + (+data.total_amount).toLocaleString("en-IN") +
+                    "\nStatus: " + data.order_status
                 );
 
+            } else {
+                const { data, error } = await supabase
+                    .from("service_bookings")
+                    .select("booking_number, customer_name, status, preferred_date, brands(brand_name)")
+                    .eq("booking_number", value)
+                    .single();
+
+                if (error || !data) { showPopup("Not Found", "No service booking found for: " + value); return; }
+
+                const step = bookingStep(data.status);
+                animateToStep(step);
+                showPopup(
+                    "Booking Found ✓",
+                    "Booking: " + data.booking_number +
+                    "\nCustomer: " + data.customer_name +
+                    "\nBrand: " + (data.brands?.brand_name || "—") +
+                    "\nStatus: " + data.status
+                );
             }
+        };
 
 
-            else {
+        /* ── TRACK BY MOBILE ────────────────────── */
+        window.trackByMobile = async function () {
+            const mobile = document.getElementById("mobileInput").value.trim();
+            if (!mobile) { showPopup("Enter Mobile", "Please enter your mobile number."); return; }
+            if (!/^[0-9]{10}$/.test(mobile)) { showPopup("Invalid Number", "Enter a valid 10-digit mobile number."); return; }
 
-                showPopup(
-                    "Service Found",
-                    "Tracking started for Service ID: " + value
-                );
+            resetSteps();
 
-            }
+            // Search in both orders and bookings
+            const [ordRes, bokRes] = await Promise.all([
+                supabase.from("accessory_orders")
+                    .select("order_number, customer_name, order_status, total_amount")
+                    .eq("mobile_number", mobile)
+                    .order("created_at", { ascending: false })
+                    .limit(1),
+                supabase.from("service_bookings")
+                    .select("booking_number, customer_name, status, brands(brand_name)")
+                    .eq("mobile_number", mobile)
+                    .order("created_at", { ascending: false })
+                    .limit(1)
+            ]);
 
+            const order   = ordRes.data?.[0];
+            const booking = bokRes.data?.[0];
 
-            startTracking();
-
-        }
-
-
-
-        /* =====================================================
-           TRACK BY MOBILE NUMBER
-        ===================================================== */
-
-        function trackByMobile() {
-
-            const input =
-                document.getElementById("mobileInput");
-
-            const mobile =
-                input.value.trim();
-
-
-            if (mobile === "") {
-
-                showPopup(
-                    "Enter Mobile Number",
-                    "Please enter your mobile number."
-                );
-
-                input.focus();
-
+            if (!order && !booking) {
+                showPopup("Not Found", "No records found for mobile: " + mobile);
                 return;
             }
 
+            let msg = "";
 
-            if (!/^[0-9]{10}$/.test(mobile)) {
-
-                showPopup(
-                    "Invalid Number",
-                    "Please enter a valid 10-digit mobile number."
-                );
-
-                input.focus();
-
-                return;
+            if (order) {
+                animateToStep(orderStep(order.order_status));
+                msg += "Latest Order: " + order.order_number +
+                       "\nStatus: " + order.order_status +
+                       "\nAmount: ₹" + (+order.total_amount).toLocaleString("en-IN");
             }
 
+            if (booking) {
+                if (msg) msg += "\n\n";
+                msg += "Latest Service: " + booking.booking_number +
+                       "\nStatus: " + booking.status +
+                       "\nBrand: " + (booking.brands?.brand_name || "—");
+                if (!order) animateToStep(bookingStep(booking.status));
+            }
 
-            showPopup(
-                "Tracking Started",
-                "Tracking details found for mobile number: " + mobile
-            );
-
-
-            startTracking();
-
-        }
-
-
-
-        /* =====================================================
-           START TRACKING ANIMATION
-        ===================================================== */
-
-        function startTracking() {
-
-            const steps =
-                document.querySelectorAll(".step");
-
-            const progressLine =
-                document.getElementById("progressLine");
+            showPopup("Records Found ✓", msg);
+        };
 
 
-            /* RESET */
-
-            steps.forEach(function(step, index) {
-
-                if (index !== 0) {
-
-                    step.classList.remove("active");
-
-                    step.classList.remove("completed");
-
-                }
-
+        /* ── ANIMATE STEPS ──────────────────────── */
+        function resetSteps() {
+            document.querySelectorAll(".step").forEach(function (s) {
+                s.classList.remove("active","completed");
             });
+            document.getElementById("progressLine").style.width = "0%";
+        }
 
+        function animateToStep(targetStep) {
+            if (targetStep === 0) {
+                showCancelled();
+                return;
+            }
+            const steps = document.querySelectorAll(".step");
+            const progressLine = document.getElementById("progressLine");
+            let current = 0;
 
-            progressLine.style.width = "0%";
+            const timer = setInterval(function () {
+                if (current >= targetStep || current >= steps.Length) {
+                    clearInterval(timer);
+                    return;
+                }
+                steps[current].classList.add("active");
+                if (current > 0) steps[current - 1].classList.add("completed");
+                const pct = (current / (steps.length - 1)) * 100;
+                progressLine.style.width = pct + "%";
+                current++;
+            }, 500);
+        }
 
-
-            let currentStep = 0;
-
-
-            const timer =
-                setInterval(function() {
-
-
-                    if (currentStep >= steps.length) {
-
-                        clearInterval(timer);
-
-                        return;
-
-                    }
-
-
-                    steps[currentStep]
-                        .classList.add("active");
-
-
-                    if (currentStep > 0) {
-
-                        steps[currentStep - 1]
-                            .classList.add("completed");
-
-                    }
-
-
-                    /* Calculate progress */
-
-                    const percentage =
-                        (currentStep /
-                        (steps.length - 1)) * 100;
-
-
-                    progressLine.style.width =
-                        "calc(" + percentage + "% - 0px)";
-
-
-                    currentStep++;
-
-
-                }, 700);
-
+        function showCancelled() {
+            document.querySelectorAll(".step").forEach(function (s) {
+                s.style.opacity = "0.4";
+            });
+            showPopup("Cancelled", "This order/booking has been cancelled.");
         }
 
 
-
-        /* =====================================================
-           POPUP
-        ===================================================== */
-
+        /* ── POPUP ──────────────────────────────── */
         function showPopup(title, message) {
-
-            document.getElementById("popupTitle")
-                .textContent = title;
-
-
-            document.getElementById("popupMessage")
-                .textContent = message;
-
-
-            document.getElementById("popup")
-                .classList.add("show");
-
-
-            document.getElementById("overlay")
-                .classList.add("show");
-
+            document.getElementById("popupTitle").textContent   = title;
+            document.getElementById("popupMessage").textContent = message;
+            document.getElementById("popup").classList.add("show");
+            document.getElementById("overlay").classList.add("show");
         }
 
-
-
-        /* =====================================================
-           CLOSE POPUP
-        ===================================================== */
-
-        function closePopup() {
-
-            document.getElementById("popup")
-                .classList.remove("show");
-
-
-            document.getElementById("overlay")
-                .classList.remove("show");
-
-        }
-
-
-
-        /* =====================================================
-           ADMIN LOGIN
-        ===================================================== */
-
-        function openAdminLogin() {
-
-            window.location.href =
-                "admin-login.html";
-
-        }
-
-
-
-        /* =====================================================
-           ENTER KEY SUPPORT
-        ===================================================== */
-
-        document
-            .getElementById("idInput")
-            .addEventListener("keydown", function(event) {
-
-                if (event.key === "Enter") {
-
-                    trackById();
-
-                }
-
-            });
-
-
-        document
-            .getElementById("mobileInput")
-            .addEventListener("keydown", function(event) {
-
-                if (event.key === "Enter") {
-
-                    trackByMobile();
-
-                }
-
-            });
-
+        window.closePopup = function () {
+            document.getElementById("popup").classList.remove("show");
+            document.getElementById("overlay").classList.remove("show");
+        };
 
     </script>
 
 </body>
 </html>
+

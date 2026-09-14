@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1593,7 +1593,7 @@
 
             Expert mobile repair, genuine spare parts,
             quality accessories and convenient doorstep
-            service — all in one place.
+            service â€” all in one place.
 
         </p>
 
@@ -1813,7 +1813,7 @@
         </h2>
 
         <div class="stars">
-            ★★★★★
+            â˜…â˜…â˜…â˜…â˜…
         </div>
 
     </div>
@@ -1829,7 +1829,7 @@
             </h3>
 
             <div class="stars">
-                ★★★★★
+                â˜…â˜…â˜…â˜…â˜…
             </div>
 
             <p>
@@ -1850,7 +1850,7 @@
             </h3>
 
             <div class="stars">
-                ★★★★★
+                â˜…â˜…â˜…â˜…â˜…
             </div>
 
             <p>
@@ -1870,7 +1870,7 @@
             </h3>
 
             <div class="stars">
-                ★★★★★
+                â˜…â˜…â˜…â˜…â˜…
             </div>
 
             <p>
@@ -2467,64 +2467,62 @@
 
 
 
-<script>
+<script type="module">
 
-    /* =====================================================
-       USER DATABASE
-       
-       localStorage structure:
+    // =====================================================
+    // SUPABASE SETUP
+    // =====================================================
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
 
-       vjMobilesUsers = {
-           email: {
-               name,
-               email,
-               phone,
-               password,
-               createdAt,
-               activities: []
-           }
-       }
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-       Current user:
-       vjCurrentUser
-    ===================================================== */
+    // =====================================================
+    // STATE
+    // =====================================================
+    let currentUser    = null;   // Supabase auth user
+    let currentProfile = null;   // users table row
+
+    /* Legacy â€” kept so old localStorage-based
+       activity code still compiles without errors */
+    let users = {};
 
 
-    let users =
-        JSON.parse(
-            localStorage.getItem("vjMobilesUsers")
-        ) || {};
-
-
-    let currentUserEmail =
-        localStorage.getItem("vjCurrentUser");
-
-
-    /* =====================================================
-       SAVE USERS
-    ===================================================== */
-
-    function saveUsers() {
-
-        localStorage.setItem(
-            "vjMobilesUsers",
-            JSON.stringify(users)
-        );
-    }
-
-
-    /* =====================================================
-       PAGE LOAD
-    ===================================================== */
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
-
-            updateUserUI();
-
+    // =====================================================
+    // PAGE LOAD â€” check existing session
+    // =====================================================
+    document.addEventListener("DOMContentLoaded", async function () {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            currentUser = session.user;
+            await loadProfile(session.user.id);
         }
-    );
+        updateUserUI();
+    });
+
+    // Listen for login / logout across tabs
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+        if (session) {
+            currentUser = session.user;
+            await loadProfile(session.user.id);
+        } else {
+            currentUser    = null;
+            currentProfile = null;
+        }
+        updateUserUI();
+    });
+
+    // =====================================================
+    // LOAD PROFILE from customers table
+    // =====================================================
+    async function loadProfile(userId) {
+        const { data } = await supabase
+            .from("customers")
+            .select("*")
+            .eq("id", userId)
+            .single();
+        currentProfile = data;
+    }
 
 
     /* =====================================================
@@ -2588,195 +2586,90 @@
        SIGN UP
     ===================================================== */
 
-    function signupUser() {
+    async function signupUser() {
 
-        const name =
-            document
-                .getElementById("signupName")
-                .value
-                .trim();
-
-
-        const email =
-            document
-                .getElementById("signupEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
-
-        const phone =
-            document
-                .getElementById("signupPhone")
-                .value
-                .trim();
-
-
-        const password =
-            document
-                .getElementById("signupPassword")
-                .value;
-
-
-        const confirmPassword =
-            document
-                .getElementById("signupConfirmPassword")
-                .value;
-
-
-        const error =
-            document.getElementById(
-                "signupError"
-            );
-
+        const name  = document.getElementById("signupName").value.trim();
+        const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+        const phone = document.getElementById("signupPhone").value.trim();
+        const password        = document.getElementById("signupPassword").value;
+        const confirmPassword = document.getElementById("signupConfirmPassword").value;
+        const errorEl = document.getElementById("signupError");
 
         /* VALIDATION */
+        if (!name || !email || !phone || !password || !confirmPassword) {
+            showError(errorEl, "Please fill all the fields."); return;
+        }
+        if (!email.includes("@")) {
+            showError(errorEl, "Please enter a valid email."); return;
+        }
+        if (phone.length < 10) {
+            showError(errorEl, "Please enter a valid 10-digit mobile number."); return;
+        }
+        if (password.length < 6) {
+            showError(errorEl, "Password must be at least 6 characters."); return;
+        }
+        if (password !== confirmPassword) {
+            showError(errorEl, "Passwords do not match."); return;
+        }
 
-        if (
-            !name ||
-            !email ||
-            !phone ||
-            !password ||
-            !confirmPassword
-        ) {
+        /* Show loading */
+        const btn = document.querySelector("#signupForm .form-submit");
+        if (btn) { btn.textContent = "Creating account..."; btn.disabled = true; }
 
-            showError(
-                error,
-                "Please fill all the fields."
-            );
+        /* 1. Create Supabase Auth user â€” pass name & phone as metadata
+              The on_auth_user_created trigger reads these and inserts
+              a row into public.customers automatically */
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: name,
+                    phone:     phone,
+                },
+                // emailRedirectTo not needed when email confirm is OFF
+            },
+        });
 
+        if (authError) {
+            showError(errorEl, authError.message);
+            if (btn) { btn.textContent = "Create Account"; btn.disabled = false; }
             return;
         }
 
-
-        if (
-            !email.includes("@")
-        ) {
-
-            showError(
-                error,
-                "Please enter a valid email."
-            );
-
+        // If user already exists but unconfirmed â€” try signing in directly
+        if (!authData.user && !authData.session) {
+            showError(errorEl, "Account may already exist. Try logging in instead.");
+            if (btn) { btn.textContent = "Create Account"; btn.disabled = false; }
             return;
         }
 
+        /* 2. Insert profile into users table */
+        if (authData.user) {
+            const { error: profileError } = await supabase
+                .from("users")
+                .insert({
+                    id:        authData.user.id,
+                    full_name: name,
+                    email:     email,
+                    mobile:    phone,
+                });
 
-        if (
-            phone.length < 10
-        ) {
-
-            showError(
-                error,
-                "Please enter a valid mobile number."
-            );
-
-            return;
+            if (profileError) {
+                // Profile insert failed â€” not critical, still continue
+                console.warn("Profile insert error:", profileError.message);
+            }
         }
 
-
-        if (
-            password.length < 6
-        ) {
-
-            showError(
-                error,
-                "Password must contain at least 6 characters."
-            );
-
-            return;
-        }
-
-
-        if (
-            password !==
-            confirmPassword
-        ) {
-
-            showError(
-                error,
-                "Passwords do not match."
-            );
-
-            return;
-        }
-
-
-        if (users[email]) {
-
-            showError(
-                error,
-                "An account with this email already exists."
-            );
-
-            return;
-        }
-
-
-        /* CREATE ACCOUNT */
-
-        users[email] = {
-
-            name: name,
-
-            email: email,
-
-            phone: phone,
-
-            password: password,
-
-            createdAt:
-                new Date().toISOString(),
-
-            activities: []
-
-        };
-
-
-        saveUsers();
-
-
-        /* LOGIN USER AUTOMATICALLY */
-
-        currentUserEmail = email;
-
-        localStorage.setItem(
-            "vjCurrentUser",
-            email
-        );
-
-
+        /* 3. Done */
         closeModal("authModal");
+        showToast("Account created! Welcome to VJ Mobiles ðŸŽ‰");
 
-        updateUserUI();
+        /* Clear form */
+        ["signupName","signupEmail","signupPhone","signupPassword","signupConfirmPassword"]
+            .forEach(id => document.getElementById(id).value = "");
 
-        showToast(
-            "Account created successfully!"
-        );
-
-
-        /* CLEAR FORM */
-
-        document
-            .getElementById("signupName")
-            .value = "";
-
-        document
-            .getElementById("signupEmail")
-            .value = "";
-
-        document
-            .getElementById("signupPhone")
-            .value = "";
-
-        document
-            .getElementById("signupPassword")
-            .value = "";
-
-        document
-            .getElementById("signupConfirmPassword")
-            .value = "";
-
+        if (btn) { btn.textContent = "Create Account"; btn.disabled = false; }
     }
 
 
@@ -2784,87 +2677,45 @@
        LOGIN
     ===================================================== */
 
-    function loginUser() {
+    async function loginUser() {
 
-        const email =
-            document
-                .getElementById("loginEmail")
-                .value
-                .trim()
-                .toLowerCase();
+        const email    = document.getElementById("loginEmail").value.trim().toLowerCase();
+        const password = document.getElementById("loginPassword").value;
+        const errorEl  = document.getElementById("loginError");
 
+        if (!email || !password) {
+            showError(errorEl, "Please enter email and password."); return;
+        }
 
-        const password =
-            document
-                .getElementById("loginPassword")
-                .value;
+        const btn = document.querySelector("#loginForm .form-submit");
+        if (btn) { btn.textContent = "Logging in..."; btn.disabled = true; }
 
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-        const error =
-            document.getElementById(
-                "loginError"
-            );
-
-
-        if (
-            !email ||
-            !password
-        ) {
-
-            showError(
-                error,
-                "Please enter email and password."
-            );
-
+        if (error) {
+            // "Email not confirmed" â€” user created but email not verified
+            if (error.message.toLowerCase().includes("email not confirmed")) {
+                showError(errorEl, "Email not confirmed. Please check your inbox or contact support.");
+            } else {
+                showError(errorEl, "Invalid email or password.");
+            }
+            if (btn) { btn.textContent = "Login"; btn.disabled = false; }
             return;
         }
 
-
-        const user =
-            users[email];
-
-
-        if (
-            !user ||
-            user.password !== password
-        ) {
-
-            showError(
-                error,
-                "Invalid email or password."
-            );
-
-            return;
-        }
-
-
-        currentUserEmail = email;
-
-
-        localStorage.setItem(
-            "vjCurrentUser",
-            email
-        );
-
+        currentUser = data.user;
+        await loadProfile(data.user.id);
 
         closeModal("authModal");
-
         updateUserUI();
 
-        showToast(
-            "Login successful. Welcome back, " +
-            user.name + "!"
-        );
+        const displayName = currentProfile?.full_name?.split(" ")[0] || email;
+        showToast("Welcome back, " + displayName + "!");
 
+        document.getElementById("loginEmail").value    = "";
+        document.getElementById("loginPassword").value = "";
 
-        document
-            .getElementById("loginEmail")
-            .value = "";
-
-        document
-            .getElementById("loginPassword")
-            .value = "";
-
+        if (btn) { btn.textContent = "Login"; btn.disabled = false; }
     }
 
 
@@ -2872,26 +2723,17 @@
        LOGOUT
     ===================================================== */
 
-    function logout() {
+    async function logout() {
 
-        currentUserEmail = null;
+        await supabase.auth.signOut();
 
-        localStorage.removeItem(
-            "vjCurrentUser"
-        );
+        currentUser    = null;
+        currentProfile = null;
 
-
-        document
-            .getElementById("userDropdown")
-            .classList.remove("show");
-
+        document.getElementById("userDropdown").classList.remove("show");
 
         updateUserUI();
-
-        showToast(
-            "You have been logged out."
-        );
-
+        showToast("You have been logged out.");
     }
 
 
@@ -2901,68 +2743,29 @@
 
     function updateUserUI() {
 
-        const loginButton =
-            document.getElementById(
-                "loginButton"
-            );
+        const loginButton = document.getElementById("loginButton");
+        const userButton  = document.getElementById("userButton");
 
-        const userButton =
-            document.getElementById(
-                "userButton"
-            );
+        if (currentUser && currentProfile) {
 
+            loginButton.style.display = "none";
+            userButton.style.display  = "flex";
 
-        if (
-            currentUserEmail &&
-            users[currentUserEmail]
-        ) {
+            document.getElementById("userButtonName").textContent =
+                currentProfile.full_name?.split(" ")[0] || "User";
 
-            const user =
-                users[currentUserEmail];
+            document.getElementById("dropdownUserName").textContent =
+                currentProfile.full_name || "User";
 
+            document.getElementById("dropdownUserEmail").textContent =
+                currentProfile.email || currentUser.email;
 
-            loginButton.style.display =
-                "none";
+        } else {
 
-            userButton.style.display =
-                "flex";
-
-
-            document
-                .getElementById(
-                    "userButtonName"
-                )
-                .textContent =
-                user.name.split(" ")[0];
-
-
-            document
-                .getElementById(
-                    "dropdownUserName"
-                )
-                .textContent =
-                user.name;
-
-
-            document
-                .getElementById(
-                    "dropdownUserEmail"
-                )
-                .textContent =
-                user.email;
+            loginButton.style.display = "block";
+            userButton.style.display  = "none";
 
         }
-
-        else {
-
-            loginButton.style.display =
-                "block";
-
-            userButton.style.display =
-                "none";
-
-        }
-
     }
 
 
@@ -2985,22 +2788,14 @@
 
     function requireLogin() {
 
-        if (
-            !currentUserEmail ||
-            !users[currentUserEmail]
-        ) {
+        if (!currentUser) {
 
             openLogin();
-
-            showToast(
-                "Please login to continue."
-            );
-
+            showToast("Please login to continue.");
             return false;
         }
 
         return true;
-
     }
 
 
@@ -3098,13 +2893,7 @@ function bookService() {
         };
 
 
-        users[currentUserEmail]
-            .activities
-            .unshift(activity);
-
-
-        saveUsers();
-
+        // (Activity display only â€” actual booking goes to Supabase via book-service.html)
 
         closeModal("serviceModal");
 
@@ -3222,13 +3011,9 @@ function bookService() {
         };
 
 
-        users[currentUserEmail]
-            .activities
-            .unshift(activity);
+        users[currentUser?.id]?.activities?.unshift(activity);
 
-
-        saveUsers();
-
+        // (Order goes to Supabase via order.html)
 
         closeModal("orderModal");
 
@@ -3262,170 +3047,20 @@ function bookService() {
         }
 
 
-        document
-            .getElementById(
-                "userDropdown"
-            )
-            .classList.remove("show");
+        document.getElementById("userDropdown").classList.remove("show");
 
+        const list = document.getElementById("activityList");
+        list.innerHTML = `
+            <div class="empty-activity">
+                <i class="fa-solid fa-clock-rotate-left" style="font-size:40px;margin-bottom:12px;"></i>
+                <br>Your orders and service bookings will appear here.<br>
+                <small style="color:#6ddd00;margin-top:8px;display:block;">
+                    Track orders via <a href="trackorder.html" style="color:#6ddd00;">Track Order</a> page.
+                </small>
+            </div>
+        `;
 
-        const user =
-            users[currentUserEmail];
-
-
-        const list =
-            document.getElementById(
-                "activityList"
-            );
-
-
-        list.innerHTML = "";
-
-
-        if (
-            !user.activities ||
-            user.activities.length === 0
-        ) {
-
-            list.innerHTML = `
-
-                <div class="empty-activity">
-
-                    <i
-                        class="fa-solid fa-clock-rotate-left"
-                        style="
-                            font-size:40px;
-                            margin-bottom:12px;
-                        "
-                    ></i>
-
-                    <br>
-
-                    No activities yet.
-
-                    <br>
-
-                    Your orders and service
-                    bookings will appear here.
-
-                </div>
-
-            `;
-
-        }
-
-        else {
-
-            user.activities.forEach(
-                function(activity) {
-
-                    const date =
-                        new Date(
-                            activity.date
-                        );
-
-
-                    const formattedDate =
-                        date.toLocaleString();
-
-
-                    let icon =
-                        "fa-circle-check";
-
-
-                    if (
-                        activity.type ===
-                        "ORDER"
-                    ) {
-
-                        icon =
-                            "fa-box";
-
-                    }
-
-                    else if (
-                        activity.type ===
-                        "SERVICE"
-                    ) {
-
-                        icon =
-                            "fa-screwdriver-wrench";
-
-                    }
-
-
-                    list.innerHTML += `
-
-                        <div class="activity-item">
-
-                            <h4>
-
-                                <i
-                                    class="fa-solid ${icon}"
-                                ></i>
-
-                                ${activity.type}
-
-                                -
-                                
-                                ${activity.title}
-
-                            </h4>
-
-                            <p>
-
-                                ${activity.details}
-
-                            </p>
-
-                            ${
-                                activity.orderId
-                                ?
-                                `<p>
-                                    <strong>
-                                        Order ID:
-                                    </strong>
-                                    ${activity.orderId}
-                                </p>`
-                                :
-                                ""
-                            }
-
-                            <p>
-
-                                <strong>
-                                    Status:
-                                </strong>
-
-                                ${activity.status}
-
-                            </p>
-
-                            <p>
-
-                                <i
-                                    class="fa-regular fa-clock"
-                                ></i>
-
-                                ${formattedDate}
-
-                            </p>
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-        }
-
-
-        document
-            .getElementById(
-                "activityModal"
-            )
-            .classList.add("show");
+        document.getElementById("activityModal").classList.add("show");
 
     }
 
@@ -3436,64 +3071,18 @@ function bookService() {
 
     function openAccount() {
 
-        if (!requireLogin()) {
+        if (!requireLogin()) { return; }
 
-            return;
+        const p = currentProfile || {};
 
-        }
+        document.getElementById("accountName").textContent    = p.full_name  || "â€”";
+        document.getElementById("accountEmail").textContent   = p.email      || currentUser?.email || "â€”";
+        document.getElementById("accountPhone").textContent   = p.phone      || "â€”";
+        document.getElementById("accountCreated").textContent =
+            p.created_at ? new Date(p.created_at).toLocaleString() : "â€”";
 
-
-        const user =
-            users[currentUserEmail];
-
-
-        document
-            .getElementById(
-                "accountName"
-            )
-            .textContent =
-            user.name;
-
-
-        document
-            .getElementById(
-                "accountEmail"
-            )
-            .textContent =
-            user.email;
-
-
-        document
-            .getElementById(
-                "accountPhone"
-            )
-            .textContent =
-            user.phone;
-
-
-        document
-            .getElementById(
-                "accountCreated"
-            )
-            .textContent =
-            new Date(
-                user.createdAt
-            ).toLocaleString();
-
-
-        document
-            .getElementById(
-                "userDropdown"
-            )
-            .classList.remove("show");
-
-
-        document
-            .getElementById(
-                "accountModal"
-            )
-            .classList.add("show");
-
+        document.getElementById("userDropdown").classList.remove("show");
+        document.getElementById("accountModal").classList.add("show");
     }
 
 
@@ -3633,6 +3222,27 @@ function bookService() {
 
         }
     );
+    /* =====================================================
+       EXPOSE FUNCTIONS TO GLOBAL SCOPE
+       (needed because type="module" is scoped)
+    ===================================================== */
+
+    window.openLogin          = openLogin;
+    window.showLogin          = showLogin;
+    window.showSignup         = showSignup;
+    window.signupUser         = signupUser;
+    window.loginUser          = loginUser;
+    window.logout             = logout;
+    window.toggleUserDropdown = toggleUserDropdown;
+    window.openActivities     = openActivities;
+    window.openAccount        = openAccount;
+    window.closeModal         = closeModal;
+    window.bookService        = bookService;
+    window.orderAccessory     = orderAccessory;
+    window.saveServiceBooking = saveServiceBooking;
+    window.saveOrder          = saveOrder;
+    window.toggleMenu         = toggleMenu;
+    window.adminLogin         = function () { window.location.href = "adminlogin.html"; };
 
 
 </script>
